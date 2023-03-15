@@ -1,0 +1,16 @@
+{
+    "titulo":  "BICISTAR COLOMBIA",
+    "cat1": {"titulo": "Administración", "item1": "Ajuste de Stock", "item2": "Compras", "item3": "Productos", "item4": "Proveedores"},
+    "cat2":  {"titulo": "Facturación", "item1": "Clientes", "item2": "Promociones", "item3": "Ventas"},
+    "cat3": {"titulo": "Empleados y cuentas", "item1": "Salir", "item2": "Añadir"},
+    "info": {"titulo": "Aquí podria ir un mensage imortante", "cuerpo": "¡Hay 8 productos que necesitan de nuevos pedidos!. PELIGRO", "path": "proveedores"},
+
+
+    "notification":{"info":"4 Nuevas Notificaciones", "item1": "Actualizacion incompleta", "item2":"Cualquier cosa", "item3":"Ingresó","item4":"Nueva conexión"},
+    
+    "MSM":{"info":"4 Nuevos Mensajes", "item1": "Vanessa Tuncker", "item2":"Miguel Moreno", "item3":"Daniel Mendez","item4":"Ana Alferez"},
+
+
+    "footer":{"titulo":"MIKHERS", "url": "miguel-moreno.card.co"}
+
+}

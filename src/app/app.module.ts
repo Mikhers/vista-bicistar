@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-//routing
+//peticiones http
+import { HttpClientModule } from '@angular/common/http';
+
+//rutas
 import { AppRoutingModule } from './app-routing.module';
 
-
+//components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -13,6 +16,7 @@ import { ProductosComponent } from './pages/productos/productos.component';
 import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
+import { ComprasComponent } from './pages/compras/compras.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +27,14 @@ import { SorryComponent } from './pages/sorry/sorry.component';
     ProductosComponent,
     ProveedoresComponent,
     EmpleadosComponent,
-    SorryComponent
+    SorryComponent,
+    ComprasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
