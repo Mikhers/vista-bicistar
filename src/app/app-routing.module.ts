@@ -5,11 +5,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
+import { SorryComponent } from './pages/sorry/sorry.component';
 
 const routes: Routes = [
   {path: 'productos', component: ProductosComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'proveedores', component: ProveedoresComponent},
+  {path: 'sorry', component: SorryComponent},
   {path: '**', pathMatch: 'full', redirectTo: ''},
 ];
 
