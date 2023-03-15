@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InfoPaginaService } from '../../services/info-pagina.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+
+  constructor(public _servicio: InfoPaginaService){
+    
+  }
 }

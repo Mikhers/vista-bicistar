@@ -18,7 +18,7 @@
                         py-0"
                         aria-labelledby="alertsDropdown">
                         <div class="dropdown-menu-header">
-                            4 New Notifications
+                            {{_service.info.notification?.info }}
                         </div>
                         <div class="list-group">
                             <a href="#" class="list-group-item">
@@ -28,7 +28,7 @@
                                             data-feather="alert-circle"></i>
                                     </div>
                                     <div class="col-10">
-                                        <div class="text-dark">Update completed</div>
+                                        <div class="text-dark">{{_service.info.notification?.item1}}</div>
                                         <div class="text-muted small mt-1">Restart
                                             server 12 to complete
                                             the update.</div>
@@ -42,7 +42,7 @@
                                         <i class="text-warning" data-feather="bell"></i>
                                     </div>
                                     <div class="col-10">
-                                        <div class="text-dark">Lorem ipsum</div>
+                                        <div class="text-dark">{{_service.info.notification?.item2}}</div>
                                         <div class="text-muted small mt-1">Aliquam
                                             ex eros, imperdiet
                                             vulputate hendrerit et.</div>
@@ -56,7 +56,7 @@
                                         <i class="text-primary" data-feather="home"></i>
                                     </div>
                                     <div class="col-10">
-                                        <div class="text-dark">Login from
+                                        <div class="text-dark">{{_service.info.notification?.item3}}
                                             192.186.1.8</div>
                                         <div class="text-muted small mt-1">5h ago</div>
                                     </div>
@@ -69,7 +69,7 @@
                                             data-feather="user-plus"></i>
                                     </div>
                                     <div class="col-10">
-                                        <div class="text-dark">New connection</div>
+                                        <div class="text-dark">{{_service.info.notification?.item4}}</div>
                                         <div class="text-muted small mt-1">Christina
                                             accepted your request.</div>
                                         <div class="text-muted small mt-1">14h ago</div>
@@ -95,7 +95,7 @@
                         aria-labelledby="messagesDropdown">
                         <div class="dropdown-menu-header">
                             <div class="position-relative">
-                                4 New Messages
+                                {{_service.info.MSM?.info}}
                             </div>
                         </div>
                         <div class="list-group">
@@ -107,7 +107,7 @@
                                             rounded-circle" alt="Vanessa Tucker">
                                     </div>
                                     <div class="col-10 ps-2">
-                                        <div class="text-dark">Vanessa Tucker</div>
+                                        <div class="text-dark">{{_service.info.MSM?.item1}}</div>
                                         <div class="text-muted small mt-1">Nam
                                             pretium turpis et arcu. Duis
                                             arcu tortor.</div>
@@ -123,7 +123,7 @@
                                             rounded-circle" alt="William Harris">
                                     </div>
                                     <div class="col-10 ps-2">
-                                        <div class="text-dark">William Harris</div>
+                                        <div class="text-dark">{{_service.info.MSM?.item2}}</div>
                                         <div class="text-muted small mt-1">Curabitur
                                             ligula sapien euismod
                                             vitae.</div>
@@ -139,7 +139,7 @@
                                             rounded-circle" alt="Christina Mason">
                                     </div>
                                     <div class="col-10 ps-2">
-                                        <div class="text-dark">Christina Mason</div>
+                                        <div class="text-dark">{{_service.info.MSM?.item3}}</div>
                                         <div class="text-muted small mt-1">Pellentesque
                                             auctor neque nec
                                             urna.</div>
@@ -155,7 +155,7 @@
                                             rounded-circle" alt="Sharon Lessman">
                                     </div>
                                     <div class="col-10 ps-2">
-                                        <div class="text-dark">Sharon Lessman</div>
+                                        <div class="text-dark">{{_service.info.MSM?.item4}}</div>
                                         <div class="text-muted small mt-1">Aenean
                                             tellus metus, bibendum
                                             sed, posuere ac, mattis non.</div>

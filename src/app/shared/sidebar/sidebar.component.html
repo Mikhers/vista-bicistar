@@ -1,18 +1,18 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" routerLink="">
-            <span class="align-middle">BICISTAR COLOMBIA</span>
+            <span class="align-middle">{{ _servicio.info.titulo }}</span>
         </a>
 
         <ul class="sidebar-nav">
             <li class="sidebar-header">
-                Administración
+                {{ _servicio.info.cat1?.titulo }}
             </li>
 
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="productos">
                     <i class="align-middle" data-feather="sliders"></i> <span
-                        class="align-middle">Ajuste de stock</span>
+                        class="align-middle">{{_servicio.info.cat1?.item1}}</span> 
                 </a>
             </li>
 
@@ -20,52 +20,52 @@
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="shopping-cart"></i> <span
-                    class="align-middle">Compras</span>
+                    class="align-middle">{{_servicio.info.cat1?.item2}}</span>
                 </a>
             </li>
             
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="productos">
                     <i class="align-middle" data-feather="package"></i> <span
-                    class="align-middle">Productos</span>
+                    class="align-middle">{{_servicio.info.cat1?.item3}}</span>
                 </a>
             </li>
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="list"></i> <span
-                        class="align-middle">Categorias</span>
+                        class="align-middle">{{_servicio.info.cat1?.item4}}</span>
                 </a>
             </li>
             
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="proveedores">
                     <i class="align-middle" data-feather="truck"></i> <span
-                        class="align-middle">Provedores</span>
+                        class="align-middle">{{_servicio.info.cat1?.item5}}</span>
                 </a>
             </li>
 
             <li class="sidebar-header">
-                Facturación
+                {{_servicio.info.cat2?.titulo}}
             </li>
 
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="user-check"></i> <span
-                        class="align-middle">Clientes</span>
+                        class="align-middle">{{_servicio.info.cat2?.item1}}</span>
                 </a>
             </li>
 
             <li  routerLinkActive="active"class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="percent"></i> <span
-                        class="align-middle">Promociones</span>
+                        class="align-middle">{{_servicio.info.cat2?.item2}}</span>
                 </a>
             </li>
 
             <li  routerLinkActive="active"class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="grid"></i> <span
-                        class="align-middle">Ventas</span>
+                        class="align-middle">{{_servicio.info.cat2?.item3}}</span>
                 </a>
             </li>
 
@@ -84,19 +84,19 @@
             </li> -->
 
             <li class="sidebar-header">
-                Empleados y cuentas
+                {{_servicio.info.cat3?.titulo}}
             </li>
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="log-in"></i> <span
-                        class="align-middle">Salir</span>
+                        class="align-middle">{{_servicio.info.cat3?.item1}}</span>
                 </a>
             </li>
 
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="empleados">
                     <i class="align-middle" data-feather="user-plus"></i> <span
-                        class="align-middle">Añadir</span>
+                        class="align-middle">{{_servicio.info.cat3?.item2}}</span>
                 </a>
             </li>
 
@@ -117,9 +117,9 @@
 
         <div class="sidebar-cta">
             <div class="sidebar-cta-content">
-                <strong class="d-inline-block mb-2">Aquí podria ir un mensage imortante</strong>
+                <strong class="d-inline-block mb-2">{{_servicio.info.info?.titulo}}</strong>
                 <div class="mb-3 text-sm">
-                    ¡Hay 8 productos que necesitan de nuevos pedidos!. PELIGRO
+                    {{_servicio.info.info?.cuerpo}}
                 </div>
                 <div class="d-grid">
                     <a  class="btn btn-primary">Hacer pedido</a>
