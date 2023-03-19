@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from 'src/app/services/productos.service';
-import { productoInteface, categoriaInterface } from '../../interfaces/producto-Interface';
+import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-api.Interface';
 import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
