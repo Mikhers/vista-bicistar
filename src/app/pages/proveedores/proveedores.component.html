@@ -1,33 +1,71 @@
 <div class="animate__animated animate__fadeIn animate__faster">
-  <div class="card">
-    <div class="card-body text-center">
-      <span class="titulo">LISTADO DE PRODUCTOS</span>
-      <button class="btn btn-success float-end" routerLink="crear-producto">NUEVO</button>
-      <table class="table table-striped mt-3">
-        <thead>
+  <div class="card" >
+    <div class="card-body">
+        <div class="card-title">
+            <p class="float-start mb-0 mt-1">Nuevo Producto</p>
+            <button class="btn btn-success ms-2"
+            data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa-solid fa-cart-plus"></i></button>
+        </div>
+
+        <div id="collapseExample" class="collapse card-text">
+            <form>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+  <div class="card-body">
+      <div class="card-title">
+          <p class="float-start mb-2 mt-1">Lista de Porductos</p>
+      </div>
+      <div class="card-text text-center">
+          <table class="table table-striped mt-4">
+              <thead>
           <tr>
             <th scope="col">Producto</th>
+            <th scope="col">Descripción</th>
             <th scope="col">Cadegoria</th>
-            <th scope="col">Ubicacion</th>
             <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Stock</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Coca Cola</th>
+            <td>Coca Cola</td>
+            <td></td>
             <td>Bebida</td>
-            <td>Colombia</td>
             <td>1.200</td>
+            <td>50</td>
+            <td><span class="badge bg-success">20</span></td>
             <td>
               <i class="fa-solid fa-pen-to-square text-primary"></i>
               <i class="fa-solid fa-trash text-danger"></i></td>
           </tr>
-          <tr>
-            <th scope="row">Malboro</th>
-            <td>Cigarrillo</td>
-            <td>Colombia</td>
-            <td>2.200</td>
+          <tr>            
+            <td>Coca Cola</td>
+            <td></td>
+            <td>Bebida</td>
+            <td>1.200</td>
+            <td>5</td>
+            <td><span class="badge bg-danger">10</span></td>
             <td>
               <i class="fa-solid fa-pen-to-square text-primary"></i>
               <i class="fa-solid fa-trash text-danger"></i></td>
@@ -35,5 +73,20 @@
         </tbody>
       </table>
     </div>
+    <ul class="list-group list-group-horizontal center text-center justify-content-center">
+      <li class="list-group-item"><i class="align-middle" data-feather="arrow-left"></i></li>
+
+
+
+      <li class="list-group-item"><a>1</a></li>
+      <li class="list-group-item"><a>2</a></li>
+      <li class="list-group-item"><a>3</a></li>
+      <li class="list-group-item"><a>4</a></li>
+      <li class="list-group-item"><a>5</a></li>
+      <li class="list-group-item"><a>6</a></li>
+
+      <li class="list-group-item"><i class="align-middle" data-feather="arrow-right"></i></li>
+
+    </ul>
   </div>
 </div>

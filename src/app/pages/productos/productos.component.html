@@ -1,195 +1,106 @@
+<div class="animate__animated animate__fadeIn animate__faster">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <p class="float-start mb-0 mt-1">Nuevo Producto</p>
+                <button class="btn btn-success ms-2"
+                    data-bs-toggle="collapse" href="#collapseExample"
+                    role="button" aria-expanded="false"
+                    aria-controls="collapseExample"><i class="fa-solid
+                        fa-cart-plus"></i></button>
+            </div>
 
-<div class="container-fluid p-0 animate__animated animate__fadeIn animate__faster">
+            <div id="collapseExample" class="collapse card-text">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
 
-    <h1 class="h3 mb-3"><strong>Productos</strong></h1>
-
-    <div class="row">
-        <div class="col-xl-6 col-xxl-5 d-flex">
-            <div class="w-100">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Calí</h5>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle"
-                                                data-feather="truck"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">2.382</h1>
-                                <div class="mb-0">
-                                    <span class="text-danger"> <i class="mdi
-                                            mdi-arrow-bottom-right"></i>
-                                        -3.65% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
+                                <p class="mt-2 mb-0">Nombre del producto:</p><input type="text" class="form-control">
+                                <p class="mt-2 mb-0">Descripción del producto:</p><textarea type="text" class="form-control" cols="7" rows="7"></textarea>
+                                
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Fontibon</h5>
-                                    </div>
+                            <div class="col-6">
+                                <p class="mt-2 mb-0">Precio:</p><input type="number" class="form-control">
+                                <p class="mt-2 mb-0">Cantidad:</p><input type="number" class="form-control">
+                                <p class="mt-2 mb-0">Stock:</p><input type="number" class="form-control">
 
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle"
-                                                data-feather="users"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">14.212</h1>
-                                <div class="mb-0">
-                                    <span class="text-success"> <i class="mdi
-                                            mdi-arrow-bottom-right"></i>
-                                        5.25% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
+                                <p class="mt-2 mb-0">Categoria:</p>
+                                <select id="country" name="country" >
+                                        <option *ngFor="let categoria of categorias" value="australia">{{categoria.nombre_categoria_producto}}</option>
+                                  </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Soacha</h5>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle"
-                                                data-feather="dollar-sign"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">$21.300</h1>
-                                <div class="mb-0">
-                                    <span class="text-success"> <i class="mdi
-                                            mdi-arrow-bottom-right"></i>
-                                        6.65% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Suba</h5>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle"
-                                                data-feather="shopping-cart"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">64</h1>
-                                <div class="mb-0">
-                                    <span class="text-danger"> <i class="mdi
-                                            mdi-arrow-bottom-right"></i>
-                                        -2.25% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <br>
+                    <br>
+                
+                    <button type="submit" class="btn btn-success">Crear</button>
+                </form>
             </div>
         </div>
-
-
     </div>
 
 
-
-    <div class="row">
-        <div class="col-12 col-lg-8 col-xxl-9 d-flex">
-            <div class="card flex-fill">
-                <div class="card-header">
-
-                    <h5 class="card-title mb-0">Latest Projectss</h5>
-                </div>
-                <table class="table table-hover my-0">
-                    <thead>
+    <div class="card">
+        <div class="card-body ">
+            <div class="card-title m-20">
+                <p class="float-start mt-1">Lista de Porductos
+                    ({{totalItems}} productos)</p>
+            </div>
+            <div class="card-text text-center">
+                <table class="table table-striped mt-25">
+                    <thead class="bg-blue">
                         <tr>
-                            <th>Name</th>
-                            <th class="d-none d-xl-table-cell">Start Date</th>
-                            <th class="d-none d-xl-table-cell">End Date</th>
-                            <th>Status</th>
-                            <th class="d-none d-md-table-cell">Assignee</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Cadegoria</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Project Apollo</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Vanessa Tucker</td>
+                        <!-- rengo-tabla -->
+                        <tr *ngFor="let producto of productos.slice(minToShow,
+                            maxToShow)">
+                            <td class="p-0">{{producto.nombre_producto}}</td>
+                            <td>{{producto.descripcion_producto}}</td>
+                            <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
+                            <td>{{producto.precio_producto}}</td>
+                            <td>{{producto.cantidad_producto}}</td>
+                            <td><span class="badge bg-success">{{producto.stock}}</span></td>
+                            <td>
+                                <a><i class="fa-solid fa-pen-to-square
+                                        text-primary me-2"></i></a>
+                                <a><i class="fa-solid fa-trash text-danger"></i></a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Project Fireball</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-danger">Cancelled</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                        <tr>
-                            <td>Project Hades</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                        </tr>
-                        <tr>
-                            <td>Project Nitro</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-warning">In progress</span></td>
-                            <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                        </tr>
-                        <tr>
-                            <td>Project Phoenix</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                        <tr>
-                            <td>Project X</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                        </tr>
-                        <tr>
-                            <td>Project Romeo</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Christina Mason</td>
-                        </tr>
-                        <tr>
-                            <td>Project Wombat</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-warning">In progress</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
+
+
                     </tbody>
                 </table>
+
             </div>
+            <ul class="list-group list-group-horizontal center text-center
+                justify-content-center">
+                <li class="list-group-item p-0 mb-0"><button [disabled]="ini ===
+                        1"
+                        (click)="izqFelcha()" class="btn
+                        btn-light"><i class="fa-sharp fa-solid fa-arrow-left"></i></button></li>
+                
+                <!-- Rango-lista -->
+                <div *ngFor="let i of ranges(ini, fin)">
+                    <li class="list-group-item p-0 mb-0"><button
+                            (click)="showTable(i)" class="btn
+                            btn-colorAPP me-1 ms-1 " [disabled]="i*20 === maxToShow">{{i}}</button></li>
+                </div>
+
+                <li class="list-group-item p-0
+                    mb-0"><button [disabled]="fin === itemsLista"
+                        (click)="derFelcha()" class="btn
+                        btn-light"><i class="fa-solid fa-arrow-right"></i></button></li>
+            </ul>
         </div>
     </div>
-
-</div>
