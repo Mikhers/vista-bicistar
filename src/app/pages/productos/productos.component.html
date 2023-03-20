@@ -16,25 +16,32 @@
                         <div class="row">
                             <div class="col-6">
 
-                                <p class="mt-2 mb-0">Nombre del producto:</p><input type="text" class="form-control">
-                                <p class="mt-2 mb-0">Descripción del producto:</p><textarea type="text" class="form-control" cols="7" rows="7"></textarea>
-                                
+                                <p class="mt-2 mb-0">Nombre del producto:</p><input
+                                    type="text" class="form-control">
+                                <p class="mt-2 mb-0">Descripción del producto:</p><textarea
+                                    type="text" class="form-control" cols="7"
+                                    rows="7"></textarea>
+
                             </div>
                             <div class="col-6">
-                                <p class="mt-2 mb-0">Precio:</p><input type="number" class="form-control">
-                                <p class="mt-2 mb-0">Cantidad:</p><input type="number" class="form-control">
-                                <p class="mt-2 mb-0">Stock:</p><input type="number" class="form-control">
+                                <p class="mt-2 mb-0">Precio:</p><input
+                                    type="number" class="form-control">
+                                <p class="mt-2 mb-0">Cantidad:</p><input
+                                    type="number" class="form-control">
+                                <p class="mt-2 mb-0">Stock:</p><input
+                                    type="number" class="form-control">
 
                                 <p class="mt-2 mb-0">Categoria:</p>
-                                <select id="country" name="country" >
-                                        <option *ngFor="let categoria of categorias" value="australia">{{categoria.nombre_categoria_producto}}</option>
-                                  </select>
+                                <select id="country" name="country">
+                                    <option *ngFor="let categoria of categorias"
+                                        value="australia">{{categoria.nombre_categoria_producto}}</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <br>
                     <br>
-                
+
                     <button type="submit" class="btn btn-success">Crear</button>
                 </form>
             </div>
@@ -65,17 +72,18 @@
                         <!-- rengo-tabla -->
                         <tr *ngFor="let producto of productos.slice(minToShow,
                             maxToShow)">
-                            <td class="p-0">{{producto.nombre_producto}}</td>
-                            <td>{{producto.descripcion_producto}}</td>
-                            <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
-                            <td>{{producto.precio_producto}}</td>
-                            <td>{{producto.cantidad_producto}}</td>
-                            <td><span class="badge bg-success">{{producto.stock}}</span></td>
-                            <td>
-                                <a><i class="fa-solid fa-pen-to-square
-                                        text-primary me-2"></i></a>
-                                <a><i class="fa-solid fa-trash text-danger"></i></a>
-                            </td>
+
+                                <td class="p-0">{{producto.nombre_producto}}</td>
+                                <td>{{producto.descripcion_producto}}</td>
+                                <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
+                                <td>{{producto.precio_producto}}</td>
+                                <td>{{producto.cantidad_producto}}</td>
+                                <td><span class="badge bg-success">{{producto.stock}}</span></td>
+                                <td>
+                                    <a><i class="fa-solid fa-pen-to-square
+                                            text-primary me-2"></i></a>
+                                    <a><i class="fa-solid fa-trash text-danger"></i></a>
+                                </td>
                         </tr>
 
 
@@ -89,12 +97,12 @@
                         1"
                         (click)="izqFelcha()" class="btn
                         btn-light"><i class="fa-sharp fa-solid fa-arrow-left"></i></button></li>
-                
                 <!-- Rango-lista -->
                 <div *ngFor="let i of ranges(ini, fin)">
                     <li class="list-group-item p-0 mb-0"><button
                             (click)="showTable(i)" class="btn
-                            btn-colorAPP me-1 ms-1 " [disabled]="i*20 === maxToShow">{{i}}</button></li>
+                            btn-colorAPP me-1 ms-1 " [disabled]="i*20 ===
+                            maxToShow">{{i}}</button></li>
                 </div>
 
                 <li class="list-group-item p-0
@@ -104,3 +112,5 @@
             </ul>
         </div>
     </div>
+
+</div>
