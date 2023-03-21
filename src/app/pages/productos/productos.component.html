@@ -11,38 +11,77 @@
             </div>
 
             <div id="collapseExample" class="collapse card-text">
-                <form>
+                <!-- FORMULARIO -->
+                <form [formGroup]="formProducto" (ngSubmit)="agregarProducto()">
                     <div class="container">
                         <div class="row">
                             <div class="col-6">
 
-                                <p class="mt-2 mb-0">Nombre del producto:</p><input
+                                <p class="mt-2 mb-0">Nombre del producto:</p>
+                                <input
+                                    formControlName="nombre_producto"
                                     type="text" class="form-control">
-                                <p class="mt-2 mb-0">Descripción del producto:</p><textarea
-                                    type="text" class="form-control" cols="7"
-                                    rows="7"></textarea>
 
+                                <div class="text-danger"
+                                    *ngIf="formProducto.get('nombre_producto')?.hasError('required')
+                                    &&
+                                    formProducto.get('nombre_producto')?.touched">
+                                    <span>El nombre del producto es <strong>es
+                                            obligatorio</strong></span><!-- <-- SPAM -->
+                                </div>
+
+                                <p class="mt-2 mb-0">Descripción del producto:</p>
+                                <textarea
+                                    type="text" class="form-control" cols="7"
+                                    rows="7"
+                                    formControlName="descripcion_producto"></textarea>
                             </div>
                             <div class="col-6">
-                                <p class="mt-2 mb-0">Precio:</p><input
+                                <p class="mt-2 mb-0">Precio:</p>
+                                <input
+                                    formControlName="precio_producto"
                                     type="number" class="form-control">
-                                <p class="mt-2 mb-0">Cantidad:</p><input
+
+                                <div class="text-danger"
+                                    *ngIf="formProducto.get('precio_producto')?.hasError('required')
+                                    &&
+                                    formProducto.get('precio_producto')?.touched">
+                                    <span>El precio del producto es <strong>es
+                                            obligatorio</strong></span><!-- <-- SPAM -->
+                                </div>
+
+                                <p class="mt-2 mb-0">Cantidad:</p>
+                                <input
+                                    formControlName="cantidad_producto"
                                     type="number" class="form-control">
-                                <p class="mt-2 mb-0">Stock:</p><input
+
+                                <p class="mt-2 mb-0">Stock:</p>
+                                <input
+                                    formControlName="stock"
                                     type="number" class="form-control">
 
                                 <p class="mt-2 mb-0">Categoria:</p>
-                                <select id="country" name="country">
+                                <select formControlName="id_categoria_producto">
                                     <option *ngFor="let categoria of categorias"
-                                        value="australia">{{categoria.nombre_categoria_producto}}</option>
+                                        value="categoria.id_categoria_producto">{{categoria.nombre_categoria_producto}}</option>
                                 </select>
+
+                                <div class="text-danger"
+                                    *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
+                                    &&
+                                    formProducto.get('id_categoria_producto')?.touched">
+                                    <span>La categoria del producto es <strong>es
+                                            obligatoria</strong></span><!-- <-- SPAM -->
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <br>
                     <br>
 
-                    <button type="submit" class="btn btn-success">Crear</button>
+                    <button type="submit" class="btn btn-success"
+                        [disabled]="formProducto.invalid">Crear</button>
                 </form>
             </div>
         </div>
@@ -73,17 +112,17 @@
                         <tr *ngFor="let producto of productos.slice(minToShow,
                             maxToShow)">
 
-                                <td class="p-0">{{producto.nombre_producto}}</td>
-                                <td>{{producto.descripcion_producto}}</td>
-                                <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
-                                <td>{{producto.precio_producto}}</td>
-                                <td>{{producto.cantidad_producto}}</td>
-                                <td><span class="badge bg-success">{{producto.stock}}</span></td>
-                                <td>
-                                    <a><i class="fa-solid fa-pen-to-square
-                                            text-primary me-2"></i></a>
-                                    <a><i class="fa-solid fa-trash text-danger"></i></a>
-                                </td>
+                            <td class="p-0">{{producto.nombre_producto}}</td>
+                            <td>{{producto.descripcion_producto}}</td>
+                            <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
+                            <td>{{producto.precio_producto}}</td>
+                            <td>{{producto.cantidad_producto}}</td>
+                            <td><span class="badge bg-success">{{producto.stock}}</span></td>
+                            <td>
+                                <a><i class="fa-solid fa-pen-to-square
+                                        text-primary me-2"></i></a>
+                                <a><i class="fa-solid fa-trash text-danger"></i></a>
+                            </td>
                         </tr>
 
 
@@ -112,5 +151,4 @@
             </ul>
         </div>
     </div>
-
 </div>

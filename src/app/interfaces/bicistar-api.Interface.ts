@@ -49,7 +49,7 @@ export interface productoInteface {
     descripcion_producto: string;
     precio_producto: number;
     cantidad_producto: number;
-    stock: Notification;
+    stock: number;
     codigo_producto: string;
     id_categoria_producto: number;
     

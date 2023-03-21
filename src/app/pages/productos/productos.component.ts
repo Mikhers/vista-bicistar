@@ -6,6 +6,8 @@ import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-
 //SERVICE
 import { ProductoService } from 'src/app/services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
+import { FormGroup, Validators,FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-productos',
@@ -14,6 +16,13 @@ import { CategoriaService } from '../../services/categoria.service';
 
 })
 export class ProductosComponent implements OnInit {
+
+  ngOnInit(): void {
+    this.getP()
+    this.getC()
+  }
+
+  formProducto: FormGroup;
 
   productos: productoInteface[] = [];
   categorias: categoriaInterface[] = [];
@@ -24,54 +33,67 @@ export class ProductosComponent implements OnInit {
   fin = 7;
   totalItems: number = 0;
   itemsLista: number = 0;
-  constructor(private _producto: ProductoService,
-              private _categoria: CategoriaService ){}
-  
+  constructor(private fp: FormBuilder,
+    private _producto: ProductoService,
+    private _categoria: CategoriaService) {
 
-    getP(){
-      this._producto.getProducto().subscribe( (data: productoInteface[]) =>{
-      this.productos=data;
+      
+
+    this.formProducto = this.fp.group({
+      nombre_producto: ['',Validators.required, Validators.maxLength(50)],
+      descripcion_producto: ['', Validators.maxLength(100)],
+      precio_producto: ['',Validators.required],
+      cantidad_producto: [0],
+      stock: [0],
+      id_categoria_producto: ['',Validators.required]
+    })
+  }
+
+
+  getP() {
+    this._producto.getProducto().subscribe((data: productoInteface[]) => {
+      this.productos = data;
       this.totalItems = this.productos.length
-      this.itemsLista = Math.ceil(this.totalItems/20+1);
-      console.log(this.itemsLista)
-      },error =>{
-        console.log(error)
-      })
-    }
-    getC(){
-      this._categoria.getCategoria().subscribe( (data: categoriaInterface[]) =>{
-      this.categorias=data;
-      },error =>{
-        console.log(error)
-      })
-    }
+      this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
+    }, error => {
+      console.log(error)
+    })
+  }
+  getC() {
+    this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
+      this.categorias = data;
+    }, error => {
+      console.log(error)
+    })
+  }
 
-    showTable(index: number){
-      this.maxToShow =  index*20;
-      this.minToShow =  this.maxToShow-20;
-    }
-    derFelcha(){
-      this.fin +=1;
-      this.ini += 1;
-    }
-    izqFelcha(){
-      this.ini -= 1;
-      this.fin -= 1;
-    }
-  
-    ngOnInit(): void {
-      this.getP()
-      this.getC()
-    }
+  showTable(index: number) {
+    this.maxToShow = index * 20;
+    this.minToShow = this.maxToShow - 20;
+  }
+  derFelcha() {
+    this.fin += 1;
+    this.ini += 1;
+  }
+  izqFelcha() {
+    this.ini -= 1;
+    this.fin -= 1;
+  }
 
-    range(max: number): number[] {
-      return Array.from({length: max}, (_, i) => i);
-    }
 
-    ranges(start: number, end: number): number[] {
-      return Array.from({length: end - start}, (_, i) => start + i);
-    }
-    
+
+  range(max: number): number[] {
+    return Array.from({ length: max }, (_, i) => i);
+  }
+
+  ranges(start: number, end: number): number[] {
+    return Array.from({ length: end - start }, (_, i) => start + i);
+  }
+
+  agregarProducto(){
+    console.log(this.formProducto.get('nombre_producto')?.value);
+  }
+
 
 }
 

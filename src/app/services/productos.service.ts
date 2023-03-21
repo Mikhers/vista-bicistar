@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 //INTERFACE
-import { productoInteface } from '../interfaces/bicistar-api.Interface';
+// import { productoInteface } from '../interfaces/bicistar-api.Interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,12 @@ export class ProductoService {
   getProducto(): Observable<any>{
     return this.http.get(this.url);
   }
-  postProducto(data: productoInteface): Observable<any>{
-    return this.http.post<productoInteface>(this.url, data);
-  }
-  putProducto(data: productoInteface): Observable<any>{
-    return this.http.put<productoInteface>(this.url, data);
-  }
+  // postProducto(data: productoInteface): Observable<any>{
+  //   return this.http.post<productoInteface>(this.url, data);
+  // }
+  // putProducto(data: productoInteface): Observable<any>{
+  //   return this.http.put<productoInteface>(this.url, data);
+  // }
 
 }
 
