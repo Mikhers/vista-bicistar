@@ -17,6 +17,7 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ComprasComponent } from './pages/compras/compras.component';
     BrowserModule,
     AppRoutingModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
