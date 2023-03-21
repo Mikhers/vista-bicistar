@@ -10,6 +10,9 @@ import { CategoriaService } from '../../services/categoria.service';
 //FROMs
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
+//MENSAJE BONITO
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -31,6 +34,7 @@ export class ProductosComponent implements OnInit {
   totalItems: number = 0;
   itemsLista: number = 0;
   constructor(
+    private toastr: ToastrService,
     private _producto: ProductoService,
     private _categoria: CategoriaService) {}
 
@@ -92,8 +96,18 @@ formProducto = new FormGroup({
   }
 
   agregarProducto(){
-    console.log(this.formProducto.get('nombre_producto')?.value);
+    this.toastr.success('El producto ' + this.formProducto.get('nombre_producto')?.value + ' fue agregado exitosamente!', 'PRODUCTO AGREGADO');
+    this.formProducto.reset({
+      nombre_producto: "",
+      descripcion_producto: "",
+      precio_producto: "",
+      cantidad_producto: "",
+      stock: "",
+      id_categoria_producto: ""
+    });
+
   }
+
 
 
 }
