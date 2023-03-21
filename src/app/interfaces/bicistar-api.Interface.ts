@@ -44,13 +44,13 @@ export interface categoriaInterface{
 }
 
 export interface productoInteface {
-    id_producto: number;
-    nombre_producto: string;
-    descripcion_producto: string;
-    precio_producto: number;
-    cantidad_producto: number;
-    stock: number;
-    codigo_producto: string;
+    id_producto?: number;
+    nombre_producto?: string;
+    descripcion_producto?: string;
+    precio_producto?: number;
+    cantidad_producto?: number;
+    stock?: number;
+    codigo_producto?: string;
     id_categoria_producto: number;
     
 }

@@ -1,19 +1,40 @@
-<div class="animate__animated animate__fadeIn animate__faster">
+<div class="animate__animated animate__fadeIn animate__faster" #top>
     <div class="card">
         <div class="card-body">
-            <div class="card-title">
-                <p class="float-start mb-0 mt-1">Nuevo Producto</p>
-                <button class="btn btn-success ms-2"
-                    data-bs-toggle="collapse" href="#collapseExample"
-                    role="button" aria-expanded="false"
-                    aria-controls="collapseExample"><i class="fa-solid
-                        fa-cart-plus"></i></button>
-            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 mb-2">
+                        <div class="card-title ">
+                            <h3 *ngIf="showPut" class="float-start mb-0 mt-1">Editar
+                                producto </h3>
+                            <button class="btn btn-danger text-white ms-2 float-end me-3"
+                                (click)="closed()" *ngIf="showPut"
+                                data-bs-toggle="collapse"
+                                href="#collapseExample"
+                                role="button" aria-expanded="false"
+                                aria-controls="collapseExample"><i
+                                    class="fa-sharp
+                                    fa-solid fa-xmark"></i></button>
+                            <h3 *ngIf="!showPut" class="float-start mb-0 mt-1">Nuevo
+                                Producto</h3>
+                            <button class="btn btn-success ms-2"
+                                *ngIf="!showPut"
+                                data-bs-toggle="collapse"
+                                href="#collapseExample"
+                                role="button" aria-expanded="false"
+                                aria-controls="collapseExample"><i
+                                    class="fa-solid
+                                    fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
 
-            <div id="collapseExample" class="collapse card-text">
-                <!-- FORMULARIO -->
-                <form [formGroup]="formProducto" (ngSubmit)="agregarProducto()">
-                    <div class="container">
+
+                <div id="collapseExample" class="collapse card-text">
+
+                    <!-- FORMULARIO -->
+                    <form [formGroup]="formProducto"
+                        (ngSubmit)="agregarProducto()">
                         <div class="row">
                             <p>Los campos marcados con (<span
                                     class="text-danger"><strong>*</strong></span>)
@@ -32,76 +53,80 @@
                                     formProducto.get('nombre_producto')?.touched">El
                                     nombre del producto es <strong>es
                                         obligatorio</strong></span><!-- <-- SPAM -->
-
                                 <span class="text-danger"
-                                *ngIf="formProducto.get('nombre_producto')?.errors?.['maxlength']">El
-                                Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
-                            
-
+                                    *ngIf="formProducto.get('nombre_producto')?.errors?.['maxlength']">El
+                                    Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
                                 <p class="mt-2 mb-0">Descripción del producto:</p>
                                 <textarea
                                     type="text" class="form-control" cols="7"
-                                    rows="7"
+                                    rows="6"
                                     formControlName="descripcion_producto"></textarea>
-                                    <span class="text-danger"
-                                *ngIf="formProducto.get('descripcion_producto')?.errors?.['maxlength']">El
-                                Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
+                                <span class="text-danger"
+                                    *ngIf="formProducto.get('descripcion_producto')?.errors?.['maxlength']">El
+                                    Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
                             </div>
                             <div class="col-6">
-                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio:</p>
-                                <input
-                                    formControlName="precio_producto"
-                                    type="number" class="form-control">
 
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('precio_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('precio_producto')?.touched">El
-                                    precio del producto es <strong>es
-                                        obligatorio</strong></span><!-- <-- SPAM -->
+                                    <p class="mt-2 mb-0"><span
+                                            class="text-danger"><strong>*</strong></span>Precio:</p>
+                                    <input
+                                        formControlName="precio_producto"
+                                        type="number" class="form-control">
+                                    <span class="text-danger"
+                                        *ngIf="formProducto.get('precio_producto')?.hasError('required')
+                                        &&
+                                        formProducto.get('precio_producto')?.touched">El
+                                        precio del producto es <strong>es
+                                            obligatorio</strong></span><!-- <-- SPAM -->
+                                    <p class="mt-2 mb-0">Cantidad:</p>
+                                    <input
+                                        formControlName="cantidad_producto"
+                                        type="number" class="form-control">
 
-                                <p class="mt-2 mb-0">Cantidad:</p>
-                                <input
-                                    formControlName="cantidad_producto"
-                                    type="number" class="form-control">
+                                    <p class="mt-2 mb-0">Stock:</p>
+                                    <input
+                                        formControlName="stock"
+                                        type="number" class="form-control">
 
-                                <p class="mt-2 mb-0">Stock:</p>
-                                <input
-                                    formControlName="stock"
-                                    type="number" class="form-control">
+                                    <p class="mt-2 mb-0"><span
+                                            class="text-danger"><strong>*</strong></span>Categoria:</p>
+                                    <select
+                                        formControlName="id_categoria_producto">
+                                        <option *ngFor="let categoria of
+                                            categorias"
+                                            value="{{categoria.id_categoria_producto}}">{{categoria.nombre_categoria_producto}}</option>
+                                    </select>
+                                    <br>
 
-                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Categoria:</p>
-                                <select formControlName="id_categoria_producto">
-                                    <option *ngFor="let categoria of categorias"
-                                        value="categoria.id_categoria_producto">{{categoria.nombre_categoria_producto}}</option>
-                                </select>
-                                <br>
-
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('id_categoria_producto')?.touched">La
-                                    categoria del producto es <strong>es
-                                        obligatoria</strong></span><!-- <-- SPAM -->
+                                    <span class="text-danger"
+                                        *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
+                                        &&
+                                        formProducto.get('id_categoria_producto')?.touched">La
+                                        categoria del producto es <strong>es
+                                            obligatoria</strong></span><!-- <-- SPAM -->
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
+                            <br>
 
-                    <button type="submit" class="btn btn-success"
-                        [disabled]="formProducto.invalid">Crear</button>
-                </form>
+                            <button *ngIf="!showPut" type="submit" class="btn
+                                btn-success"
+                                [disabled]="formProducto.invalid">Crear</button>
+                            <button *ngIf="showPut" type="submit" class="btn
+                                btn-warning"
+                                [disabled]="formProducto.invalid" (click)="putP(id_pro)">Actualizar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 
-    <div class="card" *ngIf="productos.length > 0">
+    <div class="card" *ngIf="productos.length> 0">
         <div class="card-body ">
             <div class="card-title m-20">
-                <p class="float-start mt-1">Lista de Porductos
-                    ({{totalItems}} productos)</p>
+                <h3 class="float-start mt-1">Lista de Porductos
+                    ({{totalItems}} productos)</h3>
             </div>
             <div class="card-text text-center">
                 <table class="table table-striped mt-25">
@@ -128,9 +153,16 @@
                             <td>{{producto.cantidad_producto}}</td>
                             <td><span class="badge bg-success">{{producto.stock}}</span></td>
                             <td>
-                                <a><i class="fa-solid fa-pen-to-square
+                                <a data-bs-toggle="collapse"
+                                    href="#collapseExample"
+                                    role="button" aria-expanded="true"
+                                    aria-controls="collapseExample"
+                                    (click)="obtenerId(producto.id_producto)"><i
+                                        class="fa-solid
+                                        fa-pen-to-square
                                         text-primary me-2"></i></a>
-                                <a><i class="fa-solid fa-trash text-danger"></i></a>
+                                <a (click)="dropP(producto.id_producto)"><i
+                                        class="fa-solid fa-trash text-danger"></i></a>
                             </td>
                         </tr>
 
@@ -154,14 +186,13 @@
                 </div>
 
                 <li class="list-group-item p-0
-                    mb-0"><button data-bs-toggle="collapse" href="#collapseExample" [disabled]="fin === itemsLista"
-                        (click)="derFelcha()"  class="btn
+                    mb-0"><button [disabled]="fin === itemsLista"
+                        (click)="derFelcha()" class="btn
                         btn-light"><i class="fa-solid fa-arrow-right"></i></button></li>
             </ul>
         </div>
     </div>
     <div class="card" *ngIf="productos.length == 0">
-    <h1 class="text-center pt-5 pb-5" >No hay productos por el momento</h1>
+        <h1 class="text-center pt-5 pb-5">No hay productos por el momento</h1>
     </div>
 
-</div>
