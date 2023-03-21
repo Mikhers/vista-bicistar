@@ -15,40 +15,50 @@
                 <form [formGroup]="formProducto" (ngSubmit)="agregarProducto()">
                     <div class="container">
                         <div class="row">
+                            <p>Los campos marcados con (<span
+                                    class="text-danger"><strong>*</strong></span>)
+                                son obligatorios</p>
                             <div class="col-6">
 
-                                <p class="mt-2 mb-0">Nombre del producto:</p>
+                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                                    del producto: </p>
                                 <input
                                     formControlName="nombre_producto"
                                     type="text" class="form-control">
 
-                                <div class="text-danger"
+                                <span class="text-danger"
                                     *ngIf="formProducto.get('nombre_producto')?.hasError('required')
                                     &&
-                                    formProducto.get('nombre_producto')?.touched">
-                                    <span>El nombre del producto es <strong>es
-                                            obligatorio</strong></span><!-- <-- SPAM -->
-                                </div>
+                                    formProducto.get('nombre_producto')?.touched">El
+                                    nombre del producto es <strong>es
+                                        obligatorio</strong></span><!-- <-- SPAM -->
+
+                                <span class="text-danger"
+                                *ngIf="formProducto.get('nombre_producto')?.errors?.['maxlength']">El
+                                Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
+                            
 
                                 <p class="mt-2 mb-0">Descripción del producto:</p>
                                 <textarea
                                     type="text" class="form-control" cols="7"
                                     rows="7"
                                     formControlName="descripcion_producto"></textarea>
+                                    <span class="text-danger"
+                                *ngIf="formProducto.get('descripcion_producto')?.errors?.['maxlength']">El
+                                Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
                             </div>
                             <div class="col-6">
-                                <p class="mt-2 mb-0">Precio:</p>
+                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio:</p>
                                 <input
                                     formControlName="precio_producto"
                                     type="number" class="form-control">
 
-                                <div class="text-danger"
+                                <span class="text-danger"
                                     *ngIf="formProducto.get('precio_producto')?.hasError('required')
                                     &&
-                                    formProducto.get('precio_producto')?.touched">
-                                    <span>El precio del producto es <strong>es
-                                            obligatorio</strong></span><!-- <-- SPAM -->
-                                </div>
+                                    formProducto.get('precio_producto')?.touched">El
+                                    precio del producto es <strong>es
+                                        obligatorio</strong></span><!-- <-- SPAM -->
 
                                 <p class="mt-2 mb-0">Cantidad:</p>
                                 <input
@@ -60,20 +70,19 @@
                                     formControlName="stock"
                                     type="number" class="form-control">
 
-                                <p class="mt-2 mb-0">Categoria:</p>
+                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Categoria:</p>
                                 <select formControlName="id_categoria_producto">
                                     <option *ngFor="let categoria of categorias"
                                         value="categoria.id_categoria_producto">{{categoria.nombre_categoria_producto}}</option>
                                 </select>
+                                <br>
 
-                                <div class="text-danger"
+                                <span class="text-danger"
                                     *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
                                     &&
-                                    formProducto.get('id_categoria_producto')?.touched">
-                                    <span>La categoria del producto es <strong>es
-                                            obligatoria</strong></span><!-- <-- SPAM -->
-                                </div>
-
+                                    formProducto.get('id_categoria_producto')?.touched">La
+                                    categoria del producto es <strong>es
+                                        obligatoria</strong></span><!-- <-- SPAM -->
                             </div>
                         </div>
                     </div>
@@ -88,7 +97,7 @@
     </div>
 
 
-    <div class="card">
+    <div class="card" *ngIf="productos.length > 0">
         <div class="card-body ">
             <div class="card-title m-20">
                 <p class="float-start mt-1">Lista de Porductos
@@ -115,7 +124,7 @@
                             <td class="p-0">{{producto.nombre_producto}}</td>
                             <td>{{producto.descripcion_producto}}</td>
                             <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
-                            <td>{{producto.precio_producto}}</td>
+                            <td>{{producto.precio_producto | currency: 'USD'}}</td>
                             <td>{{producto.cantidad_producto}}</td>
                             <td><span class="badge bg-success">{{producto.stock}}</span></td>
                             <td>
@@ -151,4 +160,8 @@
             </ul>
         </div>
     </div>
+    <div class="card" *ngIf="productos.length == 0">
+    <h1 class="text-center pt-5 pb-5" >No hay productos por el momento</h1>
+    </div>
+
 </div>

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+//FORMS
+import { ReactiveFormsModule } from '@angular/forms';
+
 //peticiones http
 import { HttpClientModule } from '@angular/common/http';
 
@@ -17,7 +20,6 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

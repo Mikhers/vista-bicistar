@@ -6,8 +6,9 @@ import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-
 //SERVICE
 import { ProductoService } from 'src/app/services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
-import { FormGroup, Validators,FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
+
+//FROMs
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-productos',
@@ -17,36 +18,36 @@ import { Observable } from 'rxjs';
 })
 export class ProductosComponent implements OnInit {
 
-  ngOnInit(): void {
-    this.getP()
-    this.getC()
-  }
 
-  formProducto: FormGroup;
 
+  
   productos: productoInteface[] = [];
   categorias: categoriaInterface[] = [];
-
+  
   maxToShow = 20;
   minToShow = 0;
   ini = 1;
   fin = 7;
   totalItems: number = 0;
   itemsLista: number = 0;
-  constructor(private fp: FormBuilder,
+  constructor(
     private _producto: ProductoService,
-    private _categoria: CategoriaService) {
+    private _categoria: CategoriaService) {}
 
-      
 
-    this.formProducto = this.fp.group({
-      nombre_producto: ['',Validators.required, Validators.maxLength(50)],
-      descripcion_producto: ['', Validators.maxLength(100)],
-      precio_producto: ['',Validators.required],
-      cantidad_producto: [0],
-      stock: [0],
-      id_categoria_producto: ['',Validators.required]
+
+formProducto = new FormGroup({
+      nombre_producto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      descripcion_producto: new FormControl('', [Validators.maxLength(300)]),
+      precio_producto: new FormControl('', [Validators.required]),
+      cantidad_producto: new FormControl(''),
+      stock: new FormControl(''),
+      id_categoria_producto: new FormControl('', [Validators.required]),
     })
+
+  ngOnInit(): void {
+    this.getP()
+    this.getC()
   }
 
 
