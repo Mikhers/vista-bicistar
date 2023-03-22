@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
-//PIPES
-// import { FiltrarYContarPipe } from '../../pipes/filter.pipe';
-
 //INTERFACE
 import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-api.Interface';
 
@@ -10,7 +7,7 @@ import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-
 import { ProductoService } from 'src/app/services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
 
-//FROMs
+//FROMS
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 //MENSAJE BONITO
@@ -53,9 +50,7 @@ export class ProductosComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private _producto: ProductoService,
-    private _categoria: CategoriaService) {
-
-    }
+    private _categoria: CategoriaService) {}
 
 formProducto = new FormGroup({
       nombre_producto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -115,7 +110,6 @@ formProducto = new FormGroup({
   }
 
   agregarProducto(){
-
     const PRODUCTO: productoInteface[] = [{
       nombre_producto: this.formProducto.get('nombre_producto')?.value ?? "",
       descripcion_producto: this.formProducto.get('descripcion_producto')?.value ?? "",
@@ -126,20 +120,18 @@ formProducto = new FormGroup({
     }]
 
     this._producto.postProducto(PRODUCTO).subscribe(data => {
-      this.toastr.success('El producto ' + this.formProducto.get('nombre_producto')?.value + ' fue agregado exitosamente!', 'PRODUCTO AGREGADO');
+      this.toastr.success('El producto ' + PRODUCTO[0].nombre_producto + ' fue agregado exitosamente!', 'PRODUCTO AGREGADO');
       this.getP()
-
+      this.formProducto.reset();
     }, error => {
       console.log(error)
     })
-    this.formProducto.reset();
 
   }
   dropP(id: any){
     this._producto.deleteProducto(id).subscribe(data => {
       this.toastr.error('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
       this.getP()
-
     }, error => {
       console.log(error)
     })
@@ -174,7 +166,6 @@ formProducto = new FormGroup({
     this.formProducto.reset()
   }
   putP(id: any){
-    console.log(id)
     const PRODUCTO: productoInteface = {
       nombre_producto: this.formProducto.get('nombre_producto')?.value ?? "",
       descripcion_producto: this.formProducto.get('descripcion_producto')?.value ?? "",
@@ -184,13 +175,13 @@ formProducto = new FormGroup({
       id_categoria_producto: parseInt(this.formProducto.get('id_categoria_producto')?.value as string)
     }
       this._producto.putProducto(id, PRODUCTO).subscribe(data => {
-        this.toastr.info('El producto fue actualizado exitosamente!', 'PRODUCTO ACTUALIZADO');
+        this.toastr.info('El producto ' + PRODUCTO.nombre_producto + ' fue actualizado exitosamente!', 'PRODUCTO ACTUALIZADO');
         this.showPut = false;
         this.getP()
+        this.formProducto.reset();
       }, error => {
         console.log(error)
       })
-      this.formProducto.reset();
   }
 
   

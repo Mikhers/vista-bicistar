@@ -25,7 +25,10 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
-import { FilterPipe } from './pipes/filter.pipe';
+import { CategoriasComponent } from './pages/categorias/categorias.component';
+
+//PIPES
+import { FilterPipe, FilterPipeCP } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     EmpleadosComponent,
     SorryComponent,
     ComprasComponent,
-    FilterPipe
+    FilterPipe,
+    CategoriasComponent
   ],
   imports: [
     BrowserModule,

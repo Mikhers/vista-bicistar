@@ -1,0 +1,171 @@
+<div class="animate__animated animate__fadeIn animate__faster" #top>
+    <div class="container">
+
+
+
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title ">
+                        <h3 *ngIf="showPut" class="float-start mb-0">Editar
+                            Categoria </h3>
+                        <button class="btn btn-danger text-white ms-2
+                            float-end me-3"
+                            (click)="closed()" *ngIf="showPut"
+                            data-bs-toggle="collapse"
+                            href="#collapseExample"
+                            role="button" aria-expanded="false"
+                            aria-controls="collapseExample"><i
+                                class="fa-sharp
+                                fa-solid fa-xmark"></i></button>
+                        <h3 *ngIf="!showPut" class="float-start mb-0">Nueva Categoria</h3>
+                        <button class="btn btn-success ms-2"
+                            *ngIf="!showPut"
+                            data-bs-toggle="collapse"
+                            href="#collapseExample"
+                            role="button" aria-expanded="false"
+                            aria-controls="collapseExample"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div id="collapseExample" class="collapse card-text">
+
+                        <!-- FORMULARIO -->
+                        <form [formGroup]="formCategoria">
+                            <p>Los campos marcados con (<span
+                                    class="text-danger"><strong>*</strong></span>)
+                                son obligatorios</p>
+
+                            <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                                de la categoria: </p>
+                            <input
+                                formControlName="nombre_categoria_producto"
+                                type="text" class="form-control">
+
+                            <span class="text-danger"
+                                *ngIf="formCategoria.get('nombre_categoria_producto')?.hasError('required')
+                                &&
+                                formCategoria.get('nombre_categoria_producto')?.touched">El
+                                Nombre de la categoria es <strong>es
+                                    obligatorio</strong></span><!-- <-- SPAM -->
+                            <span class="text-danger"
+                                *ngIf="formCategoria.get('nombre_categoria_producto')?.errors?.['maxlength']">El
+                                Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
+                            <p class="mt-2 mb-0">Descripción de la categoria:</p>
+                            <textarea
+                                type="text" class="form-control" cols="7"
+                                rows="4"
+                                formControlName="descripcion_categoria_producto"></textarea>
+                            <span class="text-danger"
+                                *ngIf="formCategoria.get('descripcion_categoria_producto')?.errors?.['maxlength']">El
+                                Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
+                            <br>
+
+                            <button *ngIf="!showPut" type="submit" class="btn
+                                btn-success"
+                                [disabled]="formCategoria.invalid" (click)="postCP()">Crear</button>
+                            <button *ngIf="showPut" type="submit" class="btn
+                                btn-warning"
+                                [disabled]="formCategoria.invalid"
+                                (click)="putCP(idCategoria)">Actualizar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+                <div class="card" *ngIf="categoriasP.length> 0">
+                    <div class="card-body ">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="card-title">
+                                        <h3 class="float-start mt-1">Tabla Categoria
+                                            de Porductos
+                                            ({{totalItemsP}}) </h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="input-group rounded">
+                                        <input type="search"
+                                            placeholder="Buscar"
+                                            class="form-control"
+                                            [(ngModel)]="searchTerm" />
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-text text-center">
+                        <!-- TABLE -->
+                        <table class="table table-striped mt-25">
+                            <thead class="bg-blue">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- rengo-tabla -->
+                                <tr *ngFor="let categoriaP of
+                                    categoriaPFiltrados.slice(minToShow,
+                                    maxToShow)">
+                                    <td class="p-0">{{categoriaP.id_categoria_producto}}</td>
+                                    <td class="p-0">{{categoriaP.nombre_categoria_producto}}</td>
+                                    <td>{{categoriaP.descripcion_categoria_producto}}</td>
+                                    <td>
+                                        <a data-bs-toggle="collapse"
+                                            href="#collapseExample"
+                                            role="button" aria-expanded="true"
+                                            aria-controls="collapseExample"
+                                            (click)="obtenerId(categoriaP.id_categoria_producto)"><i
+                                                class="fa-solid
+                                                fa-pen-to-square
+                                                text-primary me-2"></i></a>
+                                        <a><i (click)="deleteCP(categoriaP.id_categoria_producto)"
+                                                class="fa-solid fa-trash
+                                                text-danger"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <ul class="list-group list-group-horizontal center
+                        text-center
+                        justify-content-center">
+                        <li class="list-group-item p-0 mb-0"><button
+                                [disabled]="ini ===
+                                1"
+                                (click)="izqFelcha()" class="btn
+                                btn-light"><i class="fa-sharp fa-solid
+                                    fa-arrow-left"></i></button></li>
+                        <div *ngFor="let i of ranges(ini, fin).slice(0, 6)">
+                            <li class="list-group-item p-0 mb-0"><button
+                                    (click)="showTable(i)" class="btn
+                                    btn-colorAPP me-1 ms-1 " [disabled]="i*10 === maxToShow">{{i}}</button></li>
+                        </div>
+
+                        <li class="list-group-item p-0
+                            mb-0"><button [disabled]="fin === itemsLista"
+                                (click)="derFelcha()" class="btn
+                                btn-light"><i class="fa-solid fa-arrow-right"></i></button></li>
+                    </ul>
+                </div>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="card" *ngIf="categoriasP.length == 0">
+        <h1 class="text-center pt-5 pb-5">No hay categorias por el momento</h1>
+    </div>
+</div>

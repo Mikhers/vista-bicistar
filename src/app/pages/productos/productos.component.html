@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-12 mb-2">
                         <div class="card-title ">
-                            <h3 *ngIf="showPut" class="float-start mb-0 mt-1">Editar
+                            <h3 *ngIf="showPut" class="float-start mb-0">Editar
                                 producto </h3>
                             <button class="btn btn-danger text-white ms-2
                                 float-end me-3"
@@ -19,16 +19,14 @@
                                 aria-controls="collapseExample"><i
                                     class="fa-sharp
                                     fa-solid fa-xmark"></i></button>
-                            <h3 *ngIf="!showPut" class="float-start mb-0 mt-1">Nuevo
+                            <h3 *ngIf="!showPut" class="float-start mb-0">Nuevo
                                 Producto</h3>
                             <button class="btn btn-success ms-2"
                                 *ngIf="!showPut"
                                 data-bs-toggle="collapse"
                                 href="#collapseExample"
                                 role="button" aria-expanded="false"
-                                aria-controls="collapseExample"><i
-                                    class="fa-solid
-                                    fa-cart-plus"></i></button>
+                                aria-controls="collapseExample"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -94,7 +92,7 @@
 
                                 <p class="mt-2 mb-0"><span
                                         class="text-danger"><strong>*</strong></span>Categoria:</p>
-                                <select
+                                <select class="form-control"
                                     formControlName="id_categoria_producto">
                                     <option *ngFor="let categoria of
                                         categorias"
@@ -131,20 +129,17 @@
         <div class="card-body ">
             <div class="container">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-9">
                         <div class="card-title">
-                            <h3 class="float-start mt-1">Lista de Porductos
-                                ({{totalItems}} productos)</h3>
+                            <h3 class="float-start mt-1">Tabla Productos
+                                ({{totalItems}})</h3>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
 
                         <div class="input-group rounded">
                             <input type="search" placeholder="Buscar"
                                 class="form-control" [(ngModel)]="searchTerm" />
-                            <button type="button" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
                         </div>
 
 

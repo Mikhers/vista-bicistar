@@ -15,6 +15,20 @@ export class FilterPipe implements PipeTransform {
   }
 }
 
+@Pipe({
+  name: 'filterCP'
+})
+export class FilterPipeCP implements PipeTransform {
+  transform(items: any[], searchText: string): any[] {
+    if (!items) return [];
+    if (!searchText) return items;
+    searchText = searchText.toLowerCase();
+    return items.filter(item => {
+      return (item.nombre_categoria_producto && item.nombre_categoria_producto.toLowerCase().includes(searchText));
+    });
+  }
+}
+
 
   // @Pipe({
   //   name: 'filtrarYContar'
