@@ -7,7 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 
 //FORMS
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 //peticiones http
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +25,7 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ComprasComponent } from './pages/compras/compras.component';
     ProveedoresComponent,
     EmpleadosComponent,
     SorryComponent,
-    ComprasComponent
+    ComprasComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,7 @@ import { ComprasComponent } from './pages/compras/compras.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],

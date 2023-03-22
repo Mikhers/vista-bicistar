@@ -38,9 +38,9 @@ export interface EmpleadosInterface{
 }
 
 export interface categoriaInterface{
-    id_categoria_producto:number
-    nombre_categoria_producto:string
-    descripcion_categoria_producto:string
+    id_categoria_producto: number
+    nombre_categoria_producto: string
+    descripcion_categoria_producto: string
 }
 
 export interface productoInteface {

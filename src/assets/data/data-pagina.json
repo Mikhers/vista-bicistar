@@ -1,6 +1,6 @@
 {
     "titulo":  "BICISTAR COLOMBIA",
-    "cat1": {"titulo": "Administración", "item1": "Ajuste de Stock", "item2": "Compras", "item3": "Productos", "item4": "Categorias", "item5": "Proveedores"},
+    "cat1": {"titulo": "Administración", "item1": "Inicio", "item2": "Compras", "item3": "Productos", "item4": "Categorias", "item5": "Proveedores"},
     "cat2":  {"titulo": "Facturación", "item1": "Clientes", "item2": "Promociones", "item3": "Ventas"},
     "cat3": {"titulo": "Empleados y cuentas", "item1": "Salir", "item2": "Añadir"},
     "info": {"titulo": "Aquí podria ir un mensage imortante", "cuerpo": "¡Hay 8 productos que necesitan de nuevos pedidos!. PELIGRO", "path": "proveedores"},

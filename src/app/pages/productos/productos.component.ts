@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
+//PIPES
+// import { FiltrarYContarPipe } from '../../pipes/filter.pipe';
+
 //INTERFACE
 import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-api.Interface';
 
@@ -8,7 +11,7 @@ import { ProductoService } from 'src/app/services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
 
 //FROMs
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 //MENSAJE BONITO
 import { ToastrService } from 'ngx-toastr';
@@ -21,10 +24,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductosComponent implements OnInit {
   @ViewChild('top', {static: false}) topElement!: ElementRef;
- 
-  productos: productoInteface[] = [];
-  categorias: categoriaInterface[] = [];
-  
+  searchTerm: string = '';
+  pageSize: number = 20;
   maxToShow = 20;
   minToShow = 0;
   showPut = false;
@@ -33,12 +34,28 @@ export class ProductosComponent implements OnInit {
   fin = 7;
   totalItems: number = 0;
   itemsLista: number = 0;
+  
+  productos: productoInteface[] = [];
+  categorias: categoriaInterface[] = [];
+
+
+
+  currentPage: number = 1;
+
+  get productosFiltrados(): productoInteface[] {
+    return this.productos.filter(p => {
+      return p.nombre_producto?.toLowerCase().includes(this.searchTerm.toLowerCase());
+    });
+  }
+
+
+
   constructor(
     private toastr: ToastrService,
     private _producto: ProductoService,
-    private _categoria: CategoriaService) {}
+    private _categoria: CategoriaService) {
 
-
+    }
 
 formProducto = new FormGroup({
       nombre_producto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -48,6 +65,7 @@ formProducto = new FormGroup({
       stock: new FormControl(''),
       id_categoria_producto: new FormControl('', [Validators.required]),
     })
+
 
   ngOnInit(): void {
   this.showPut = false;
@@ -179,5 +197,6 @@ formProducto = new FormGroup({
 
 
 
-}
 
+
+}
