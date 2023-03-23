@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 //INTERFACE
-import { productoInteface, categoriaInterface, CategoriaServicioInterface } from '../../interfaces/bicistar-api.Interface';
+import { categoriaInterface } from '../../interfaces/bicistar-api.Interface';
 
 //SERVICE
-import { ProductoService } from 'src/app/services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
 
 //FROMS
@@ -12,7 +11,6 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 //MENSAJE BONITO
 import { ToastrService } from 'ngx-toastr';
-import { CategoriaServicioService } from '../../services/categoria-servicio.service';
 
 @Component({
   selector: 'app-categorias',
@@ -22,7 +20,6 @@ import { CategoriaServicioService } from '../../services/categoria-servicio.serv
 export class CategoriasComponent implements OnInit {
   searchTerm: string = '';
   categoriasP: categoriaInterface[] = [];
-  categoriasS: CategoriaServicioInterface[] = [];
   idCategoria=0;
 
   showPut = false;

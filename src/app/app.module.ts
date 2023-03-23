@@ -29,6 +29,7 @@ import { CategoriasComponent } from './pages/categorias/categorias.component';
 
 //PIPES
 import { FilterPipe, FilterPipeCP } from './pipes/filter.pipe';
+import { SedeComponent } from './pages/sede/sede.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { FilterPipe, FilterPipeCP } from './pipes/filter.pipe';
     SorryComponent,
     ComprasComponent,
     FilterPipe,
-    CategoriasComponent
+    CategoriasComponent,
+    SedeComponent
   ],
   imports: [
     BrowserModule,

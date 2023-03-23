@@ -1,0 +1,37 @@
+<div class=".animate__animated animate__fadeIn animate__faster">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-sm-6" *ngFor="let sede of sedes">
+                <div class="card">
+                        <a >
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">{{sede.id_sede}}</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <!-- <div class="stat text-primary"> -->
+                                    {{sede.direccion_sede}}
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                            <h1 class="mt-1 mb-3">{{sede.nombre_sede}}</h1>
+                            <div class="mb-0">
+                                <span class="text-muted">{{sede.ciudad_sede}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
