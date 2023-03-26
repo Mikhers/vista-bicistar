@@ -75,7 +75,7 @@
 
 
 
-        <div class="row">
+        <div class="row mb-5">
                 <div class="card" *ngIf="categoriasP.length> 0">
                     <div class="card-body ">
                         <div class="container">
@@ -109,7 +109,7 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col"></th>
+                                    <th scope="col"><button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,7 +164,6 @@
 
         </div>
     </div>
-
 
 
     <div class="card" *ngIf="categoriasP.length == 0">

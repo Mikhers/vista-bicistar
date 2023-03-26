@@ -28,8 +28,9 @@ import { ComprasComponent } from './pages/compras/compras.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
 
 //PIPES
-import { FilterPipe, FilterPipeCP } from './pipes/filter.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { SedeComponent } from './pages/sede/sede.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SedeComponent } from './pages/sede/sede.component';
     ComprasComponent,
     FilterPipe,
     CategoriasComponent,
-    SedeComponent
+    SedeComponent,
+    ClientesComponent
   ],
   imports: [
     BrowserModule,

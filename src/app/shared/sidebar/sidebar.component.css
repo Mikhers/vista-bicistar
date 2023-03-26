@@ -1,0 +1,89 @@
+.sidebar-brand .logo-img {
+    transition: all 500ms ease;
+    visibility: hidden;
+    display: none;
+}
+
+.sidebar-brand:hover .logo-img {
+    display: flex;
+    visibility: visible;
+    transition: all 500ms ease;
+}
+
+.sidebar-brand:hover {
+    display: flex;
+    background-color: white;
+    transition: all 500ms ease;
+    padding: 0%;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.sidebar-brand:hover .align-middle {
+    visibility: hidden;
+    display: none;
+    transition: all 500ms ease;
+}
+
+.sidebar-brand {
+    transition: all 500ms ease;
+
+}
+
+.logo-img {
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.sidebar-per,
+a.sidebar-per {
+    background: #222e3c;
+    border-left: 3px solid transparent;
+    color: rgba(233, 236, 239, .5);
+    cursor: pointer;
+    display: block;
+    font-weight: 400;
+    padding: .625rem 2.5rem;
+    position: relative;
+    text-decoration: none;
+    transition: background .1s ease-in-out
+}
+
+.sidebar-per i,
+.sidebar-per svg,
+a.sidebar-per i,
+a.sidebar-per svg {
+    color: rgba(233, 236, 239, .5);
+    margin-right: .75rem
+}
+
+.sidebar-per:focus {
+    outline: 0
+}
+
+.sidebar-per:hover {
+    background: #222e3c;
+    border-left-color: transparent
+}
+
+.sidebar-per:hover,
+.sidebar-per:hover i,
+.sidebar-per:hover svg {
+    color: rgba(233, 236, 239, .75)
+}
+
+.sidebar-item.active .sidebar-per:hover,
+.sidebar-item.active>.sidebar-per {
+    background: linear-gradient(90deg, rgba(59, 125, 221, .1), rgba(59, 125, 221, .088) 50%, transparent);
+    border-left-color: #3b7ddd;
+    color: #e9ecef
+}
+
+.sidebar-item.active .sidebar-per:hover i,
+.sidebar-item.active .sidebar-per:hover svg,
+.sidebar-item.active>.sidebar-per i,
+.sidebar-item.active>.sidebar-per svg {
+    color: #e9ecef
+}

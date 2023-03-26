@@ -125,7 +125,7 @@
 
 
 
-    <div class="card" *ngIf="productos.length> 0">
+    <div class="card pb-2" *ngIf="productos.length> 0">
         <div class="card-body ">
             <div class="container">
                 <div class="row">
@@ -157,9 +157,8 @@
                         <th scope="col">Descripción</th>
                         <th scope="col">Cadegoria</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
                         <th scope="col">Stock</th>
-                        <th scope="col"></th>
+                        <th scope="col"><button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -170,7 +169,6 @@
                         <td>{{producto.descripcion_producto}}</td>
                         <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
                         <td>{{producto.precio_producto | currency: 'USD'}}</td>
-                        <td>{{producto.cantidad_producto}}</td>
                         <td><span class="badge bg-success">{{producto.stock}}</span></td>
                         <td>
                             <a data-bs-toggle="collapse"
