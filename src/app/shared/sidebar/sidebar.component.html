@@ -1,6 +1,6 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" routerLink="">
+        <a class="sidebar-brand" routerLink="sede">
             <span class="align-middle">{{_servicio.info.titulo}}</span>
             <img class="logo-img" src="assets/img/photos/logo.png" width="46%">
         </a>
@@ -15,6 +15,9 @@
                     <i class="align-middle" data-feather="sliders"></i> <span
                         class="align-middle">{{_servicio.info.cat1?.item1}}</span>
                 </a>
+            </li>
+            <li class="sidebar-header">
+                {{_servicio.info.cat1?.titulo}} de sedes
             </li>
 
             <li class="sidebar-item">
@@ -69,7 +72,9 @@
                     </li>
                 </ul>
 
-
+            <li class="sidebar-header">
+                General
+            </li>
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="categorias">
                     <i class="fa-solid fa-circle-nodes"></i> <span

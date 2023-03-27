@@ -23,6 +23,9 @@ import { SedeService } from 'src/app/services/sede.service';
 })
 export class SedeProductoComponent {
   @ViewChild('top', {static: false}) topElement!: ElementRef;
+  titulo = '';
+
+
   searchTerm: string = '';
   pageSize: number = 20;
   maxToShow = 20;
@@ -72,6 +75,7 @@ formSedeProducto = new FormGroup({
     this.getPSede();
     this.getP();
     this.getC();
+    this.getSede()
   }
 
 //PRODUCTOS DE UNA SEDE
@@ -153,6 +157,7 @@ dropSedeProducto(num:any){
 getSede(){
   this._sede.getSede().subscribe((data: SedeInterface[]) =>{
     this.sedes=data;
+    this.titulo = data[this.id-1].nombre_sede;
   },error=>{
     console.log(error)
   })

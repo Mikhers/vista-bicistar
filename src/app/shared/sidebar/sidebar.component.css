@@ -1,10 +1,31 @@
+.sidebar-brand{
+    transition: all 500ms ease;
+
+}
 .sidebar-brand .logo-img {
     transition: all 500ms ease;
     visibility: hidden;
     display: none;
 }
 /* #70AD47 */
-
+.sidebar-brand:hover .logo-img{
+    transition: all 500ms ease;
+    visibility: visible;
+    display: flex;
+}
+.sidebar-brand:hover{
+    display: flex;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    transition: all 500ms ease;
+    background-color: white;
+}
+.sidebar-brand:hover .align-middle{
+    transition: all 500ms ease;
+    visibility: hidden;
+    display: none;
+}
 
 .sidebar-inside-one,
 a.sidebar-inside-one {

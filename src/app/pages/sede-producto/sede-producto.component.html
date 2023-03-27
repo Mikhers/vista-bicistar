@@ -1,6 +1,6 @@
 <div class="animate__animated animate__fadeIn animate__faster" #top>
 
-
+    <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
     <div class="card">
         <div class="card-body">
             <div class="container">
@@ -113,14 +113,17 @@
             <!-- TABLE -->
             <div class="table-responsive table-upgrade">
             <table class="table table-striped mt-25">
-                <thead class="bg-blue">
+                <thead>
                     <tr>
                         <th scope="col">Producto</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Cadegoria</th>
                         <th scope="col">precio</th>
                         <th scope="col">Stock</th>
-                        <th scope="col"><button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></th>
+                        <th scope="col"><button class="btn btn-success" data-bs-toggle="collapse"
+                            href="#collapseExample"
+                            role="button" aria-expanded="false"
+                            aria-controls="collapseExample"><i class="fa-solid fa-plus"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>

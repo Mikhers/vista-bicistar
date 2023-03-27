@@ -20,7 +20,8 @@ const routes: Routes = [
   {path: 'producto-sede/:id', component: SedeProductoComponent},
   {path: 'compras', component: ComprasComponent},
   {path: 'sorry', component: SorryComponent},
-  {path: '**', pathMatch: 'full', redirectTo: 'productos'},
+  {path: '', redirectTo:'sede', pathMatch: 'full'},
+  {path: '**', pathMatch: 'full', redirectTo: 'sede'},
 ];
 
 @NgModule({

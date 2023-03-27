@@ -5,22 +5,30 @@
         <div class="row">
             <div class="col-sm-6" *ngFor="let sede of sedes">
                 <div class="card">
-                        <a >
+                        <a class="no-hover">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col mt-0">
                                     <h5 class="card-title">{{sede.id_sede}}</h5>
                                 </div>
-
+                                
                                 <div class="col-auto">
-                                    <!-- <div class="stat text-primary"> -->
                                     {{sede.direccion_sede}}
-                                    <!-- </div> -->
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3">{{sede.nombre_sede}}</h1>
+                            <div class="text-end float-end contenido">
+                                <a >Ventas</a>
+                                /
+                                <a >Pedidos</a>
+                                /
+                                <a (click)="cambiarSede(sede.id_sede)" >Stock</a>
+                            </div>
+                            <h1 class="mt-1 mb-3 dire fw-bold">{{sede.nombre_sede}}</h1>
+
                             <div class="mb-0">
-                                <span class="text-muted">{{sede.ciudad_sede}}</span>
+                                <span class="text-muted">Ciudad: {{sede.ciudad_sede}}</span>
+                                <a class="float-end"><i class="fa-solid fa-trash text-danger"></i></a>
+                                <a class="float-end"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
                             </div>
                         </div>
                     </a>
@@ -31,7 +39,17 @@
 
 
 
-
+        <button class="btn btn-success btn-float float-end"><i class="fa-solid fa-plus"></i></button>
+        <button (click)="openModal()" class="btn btn-warning" >Modal</button>
 
     </div>
 </div>
+
+<div #modal class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h1> Titulo del modal</h1>
+      <hr class="divider bg-danger" style="height:2px;">
+      <p>Contenido de la ventana modal.</p>
+    </div>
+  </div>

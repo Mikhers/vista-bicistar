@@ -141,13 +141,16 @@
             <!-- TABLE -->
             <div class="table-responsive table-upgrade">
             <table class="table table-striped mt-25">
-                <thead class="bg-blue">
-                    <tr>
+                <thead >
+                    <tr class="bg-blue">
                         <th scope="col">Producto</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Cadegoria</th>
                         <th scope="col">Precio</th>
-                        <th scope="col"><button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></th>
+                        <th scope="col"><button class="btn btn-success"data-bs-toggle="collapse"
+                            href="#collapseExample"
+                            role="button" aria-expanded="false"
+                            aria-controls="collapseExample" ><i class="fa-solid fa-plus"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -163,10 +166,8 @@
                                 href="#collapseExample"
                                 role="button" aria-expanded="true"
                                 aria-controls="collapseExample"
-                                (click)="obtenerId(producto.id_producto)"><i
-                                    class="fa-solid
-                                    fa-pen-to-square
-                                    text-primary me-2"></i></a>
+                                (click)="obtenerId(producto.id_producto)">
+                                <i class="fa-solid fa-pen-to-square text-primary me-2"></i></a>
                             <a (click)="dropP(producto.id_producto)"><i
                                     class="fa-solid fa-trash text-danger"></i></a>
                         </td>
