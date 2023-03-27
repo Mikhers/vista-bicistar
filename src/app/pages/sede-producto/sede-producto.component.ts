@@ -155,9 +155,11 @@ dropSedeProducto(num:any){
 
 //OBTENER SEDE
 getSede(){
+  this._sede.getIdSede(this.id).subscribe((data: SedeInterface)=>{
+    this.titulo = data.nombre_sede;
+  })
   this._sede.getSede().subscribe((data: SedeInterface[]) =>{
     this.sedes=data;
-    this.titulo = data[this.id-1].nombre_sede;
   },error=>{
     console.log(error)
   })

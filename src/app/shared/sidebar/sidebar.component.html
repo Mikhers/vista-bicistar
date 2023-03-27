@@ -62,7 +62,7 @@
                                         class="align-middle">Pedidos</span>
                                 </a>
                             <li routerLinkActive="active" class="sidebar-item">
-                                <a (click)="cambiarSede(sede.id_sede)" class="sidebar-inside-two">
+                                <a (click)="cambiarSede(sede.id_sede ?? 1)" class="sidebar-inside-two">
                                     <i class="fa-solid fa-bicycle"></i>
                                     <span
                                         class="align-middle">Stock</span>

@@ -1,6 +1,8 @@
 <div class="animate__animated animate__fadeIn animate__faster" #top>
 
     <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
+
+    
     <div class="card">
         <div class="card-body">
             <div class="container">
@@ -34,8 +36,7 @@
                 <div id="collapseExample" class="collapse card-text">
 
                     <!-- FORMULARIO -->
-                    <form [formGroup]="formSedeProducto"
-                        (ngSubmit)="postSedeProducto()">
+                    <form [formGroup]="formSedeProducto">
                         <div class="row">
                             <p>Los campos marcados con (<span
                                     class="text-danger"><strong>*</strong></span>)
@@ -65,14 +66,14 @@
                                 formControlName="stock"
                                 type="number" min="1" class="form-control">
                             <span class="text-danger"
-                                *ngIf="formSedeProducto.get('stock')?.hasError('required')">El Stock <strong>es
+                                *ngIf="formSedeProducto.get('stock')?.hasError('required')  && formSedeProducto.get('stock')?.touched">El Stock <strong>es
                                     obligatorio</strong></span><!-- <-- SPAM -->
                                     
                                 
                             </div>
                         <br>
 
-                        <button *ngIf="!showPut" type="submit" class="btn
+                        <button (click)="postSedeProducto()" *ngIf="!showPut" type="submit" class="btn
                             btn-success"
                             [disabled]="formSedeProducto.invalid">Crear</button>
                         <button *ngIf="showPut" type="submit" class="btn

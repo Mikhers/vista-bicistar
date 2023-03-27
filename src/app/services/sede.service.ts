@@ -9,7 +9,7 @@ import { SedeInterface } from '../interfaces/bicistar-api.Interface';
 export class SedeService {
 
   urlGet = 'http://localhost:8000/ver/sedes';
-  urlGetId = 'http://localhost:8000/ver/sede/';
+  urlGetId = 'http://localhost:8000/ver/sedes/';
   urlPost = 'http://localhost:8000/new/sede';
   urlUpdate = 'http://localhost:8000/modify/sede/';
   urlDelete = 'http://localhost:8000/delete/sede/';

@@ -69,6 +69,8 @@ thead {
 
 .modal {
     display: none;
+    animation-name: fade;
+    animation-duration: 0.3s;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -82,6 +84,7 @@ thead {
   .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
+    margin-top: 5%;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -93,6 +96,7 @@ thead {
   .close {
     color: #aaa;
     float: right;
+    transition: all 500ms ease;
     font-size: 28px;
     font-weight: bold;
   }
@@ -104,4 +108,11 @@ thead {
     cursor: pointer;
   }
   
-  
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

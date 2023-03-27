@@ -5,51 +5,100 @@
         <div class="row">
             <div class="col-sm-6" *ngFor="let sede of sedes">
                 <div class="card">
-                        <a class="no-hover">
+                    <a class="no-hover">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col mt-0">
-                                    <h5 class="card-title">{{sede.id_sede}}</h5>
+                                    <h5 class="card-title"><i class="fa-solid fa-store"></i></h5>
                                 </div>
-                                
+
                                 <div class="col-auto">
                                     {{sede.direccion_sede}}
                                 </div>
                             </div>
                             <div class="text-end float-end contenido">
-                                <a >Ventas</a>
+                                <a>Ventas</a>
                                 /
-                                <a >Pedidos</a>
+                                <a>Pedidos</a>
                                 /
-                                <a (click)="cambiarSede(sede.id_sede)" >Stock</a>
+                                <a (click)="cambiarSede(sede.id_sede ?? 1)">Stock</a>
                             </div>
                             <h1 class="mt-1 mb-3 dire fw-bold">{{sede.nombre_sede}}</h1>
-
                             <div class="mb-0">
-                                <span class="text-muted">Ciudad: {{sede.ciudad_sede}}</span>
-                                <a class="float-end"><i class="fa-solid fa-trash text-danger"></i></a>
-                                <a class="float-end"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
+                                <span class="text-muted">Ciudad:
+                                    {{sede.ciudad_sede}}</span>
+                                <a (click)="dropSede(sede.id_sede)" class="float-end"><i class="fa-solid fa-trash
+                                        text-danger"></i></a>
+                                <a  (click)="getIdSede(sede.id_sede)" class="float-end"><i class="fa-solid
+                                        fa-pen-to-square text-primary"></i></a>
                             </div>
                         </div>
                     </a>
-                    </div>
+                </div>
             </div>
         </div>
 
 
 
 
-        <button class="btn btn-success btn-float float-end"><i class="fa-solid fa-plus"></i></button>
-        <button (click)="openModal()" class="btn btn-warning" >Modal</button>
-
+        <button (click)="openModal()" class="btn btn-success btn-float float-end"><i class="fa-solid
+                fa-plus"></i></button>
     </div>
 </div>
 
+
 <div #modal class="modal">
     <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
-      <h1> Titulo del modal</h1>
-      <hr class="divider bg-danger" style="height:2px;">
-      <p>Contenido de la ventana modal.</p>
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1 *ngIf="showPut">Actualizar Sede</h1>
+        <h1 *ngIf="!showPut">Crear Sede</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+        <form [formGroup]="formSede">
+            <div class="row">
+                <p>Los campos marcados con (<span
+                        class="text-danger"><strong>*</strong></span>)
+                    son obligatorios</p>
+
+                <div class="col-12 p-2">
+
+                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                    de la Sede: </p>
+                <input type="text" formControlName="nombre_sede" class="form-control">
+                <span class="text-danger" *ngIf="formSede.get('nombre_sede')?.hasError('required')
+                    && formSede.get('nombre_sede')?.touched">
+                    El nombre del producto es <strong>es
+                        obligatorio</strong></span><!-- <-- SPAM -->
+
+
+                <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Dirección de la Sede:</p>
+                <input
+                    formControlName="direccion_sede"
+                    type="text" class="form-control">
+                <span class="text-danger"
+                    *ngIf="formSede.get('direccion_sede')?.hasError('required') && formSede.get('direccion_sede')?.touched">
+                    La direccion <strong>es obligatoria</strong></span><!-- <-- SPAM -->
+
+
+
+
+                <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Ciudad de la Sede:</p>
+                <input
+                    formControlName="ciudad_sede"
+                    type="text" class="form-control">
+                <span class="text-danger"   
+                    *ngIf="formSede.get('ciudad_sede')?.hasError('required') && formSede.get('ciudad_sede')?.touched">
+                    La Ciudad <strong>es obligatoria</strong></span><!-- <-- SPAM -->
+
+                    </div>
+            </div>
+            <br>
+
+            <button (click)="posSede()" *ngIf="!showPut" type="submit" class="btn
+                btn-success"
+                [disabled]="formSede.invalid">Crear</button>
+            <button *ngIf="showPut" type="submit" class="btn
+                btn-warning" (click)="putSede()"
+                [disabled]="formSede.invalid">Actualizar</button>
+        </form>
     </div>
-  </div>
+</div>
