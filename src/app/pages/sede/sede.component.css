@@ -1,8 +1,5 @@
 
-.card{
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
-    transition: all 400ms ease;
-}
+
 .card a{
     text-decoration: none;
     display: inline-block;

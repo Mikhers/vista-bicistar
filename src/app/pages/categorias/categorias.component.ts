@@ -89,6 +89,7 @@ export class CategoriasComponent implements OnInit {
         })
     }
   deleteCP(id: any){
+    if(window.confirm("¿Estás seguro de que deseas eliminar este producto?")){
     this._categoriaP.deleteCategoria(id).subscribe(data =>{
       this.toastr.error('La categoria fue eliminada exitosamente!', 'CATEGORIA ELIMINADA');
       this.getCP();
@@ -96,6 +97,7 @@ export class CategoriasComponent implements OnInit {
       console.warn(error)
     })
   }
+}
 
 //RELLRNAR LOS CAMPOS DEL FORMULARIO PUT
 obtenerId(id: any){

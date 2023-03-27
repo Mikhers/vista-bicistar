@@ -34,79 +34,51 @@
                 <div id="collapseExample" class="collapse card-text">
 
                     <!-- FORMULARIO -->
-                    <form [formGroup]="formProducto"
-                        (ngSubmit)="agregarProducto()">
+                    <form [formGroup]="formSedeProducto"
+                        (ngSubmit)="postSedeProducto()">
                         <div class="row">
                             <p>Los campos marcados con (<span
                                     class="text-danger"><strong>*</strong></span>)
                                 son obligatorios</p>
-                            <div class="col-6">
 
-                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
-                                    del producto: </p>
-                                <input
-                                    formControlName="nombre_producto"
-                                    type="text" class="form-control">
+                            <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                                del producto: </p>
 
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('nombre_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('nombre_producto')?.touched">El
-                                    nombre del producto es <strong>es
-                                        obligatorio</strong></span><!-- <-- SPAM -->
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('nombre_producto')?.errors?.['maxlength']">El
-                                    Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
-                                <p class="mt-2 mb-0">Descripción del producto:</p>
-                                <textarea
-                                    type="text" class="form-control" rows="1"
-                                    formControlName="descripcion_producto"></textarea>
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('descripcion_producto')?.errors?.['maxlength']">El
-                                    Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
+                            <!-- <h3 class="mt-2 mb-0">{{sedes[id].nombre_sede}}</h3> -->
+
+                            <select [disabled]="showPut" class="form-control"
+                                formControlName="id_producto">
+                                <option *ngFor="let producto of productos"
+                                    value="{{producto.id_producto}}">{{producto.nombre_producto}}</option>
+                            </select>
+
+                            <span class="text-danger"
+                                *ngIf="formSedeProducto.get('id_producto')?.hasError('required')
+                                &&
+                                formSedeProducto.get('id_producto')?.touched">El
+                                nombre del producto es <strong>es
+                                    obligatorio</strong></span><!-- <-- SPAM -->
+
+                                    
+                            <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Stock: </p>
+                            <input
+                                formControlName="stock"
+                                type="number" min="1" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formSedeProducto.get('stock')?.hasError('required')">El Stock <strong>es
+                                    obligatorio</strong></span><!-- <-- SPAM -->
+                                    
+                                
                             </div>
-                            <div class="col-6">
-
-                                <p class="mt-2 mb-0"><span
-                                        class="text-danger"><strong>*</strong></span>Precio:</p>
-                                <input
-                                    formControlName="precio_producto"
-                                    type="number" class="form-control">
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('precio_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('precio_producto')?.touched">El
-                                    precio del producto es <strong>es
-                                        obligatorio</strong></span><!-- <-- SPAM -->
-
-
-                                <p class="mt-2 mb-0"><span
-                                        class="text-danger"><strong>*</strong></span>Categoria:</p>
-                                <select class="form-control"
-                                    formControlName="id_categoria_producto">
-                                    <option *ngFor="let categoria of
-                                        categorias"
-                                        value="{{categoria.id_categoria_producto}}">{{categoria.nombre_categoria_producto}}</option>
-                                </select>
-                                <br>
-
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('id_categoria_producto')?.touched">La
-                                    categoria del producto es <strong>es
-                                        obligatoria</strong></span><!-- <-- SPAM -->
-                            </div>
-                        </div>
                         <br>
 
                         <button *ngIf="!showPut" type="submit" class="btn
                             btn-success"
-                            [disabled]="formProducto.invalid">Crear</button>
+                            [disabled]="formSedeProducto.invalid">Crear</button>
                         <button *ngIf="showPut" type="submit" class="btn
                             btn-warning"
-                            [disabled]="formProducto.invalid"
-                            (click)="putP(id_pro)">Actualizar</button>
+                            [disabled]="formSedeProducto.invalid"
+                            (click)="putSedePorducto()">Actualizar</button>
                     </form>
                 </div>
             </div>
@@ -115,7 +87,7 @@
 
 
 
-    <div class="card  pb-3" *ngIf="productos.length> 0">
+    <div class="card pb-3" *ngIf="productos.length> 0">
         <div class="card-body">
             <div class="container">
                 <div class="row">
@@ -146,18 +118,20 @@
                         <th scope="col">Producto</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Cadegoria</th>
-                        <th scope="col">Precio</th>
+                        <th scope="col">precio</th>
+                        <th scope="col">Stock</th>
                         <th scope="col"><button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- rengo-tabla -->
-                    <tr *ngFor="let producto of productosFiltrados.slice(minToShow, maxToShow);">
+                    <tr *ngFor="let producto of productosFiltrados.slice(minToShow, maxToShow)">
 
                         <td class="p-0">{{producto.nombre_producto}}</td>
                         <td>{{producto.descripcion_producto}}</td>
                         <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
                         <td>{{producto.precio_producto | currency: 'USD'}}</td>
+                        <td><span class="badge bg-success">{{producto.stock}}</span></td>
                         <td>
                             <a data-bs-toggle="collapse"
                                 href="#collapseExample"
@@ -167,7 +141,7 @@
                                     class="fa-solid
                                     fa-pen-to-square
                                     text-primary me-2"></i></a>
-                            <a (click)="dropP(producto.id_producto)"><i
+                            <a (click)="dropSedeProducto(producto.id_producto)"><i
                                     class="fa-solid fa-trash text-danger"></i></a>
                         </td>
                     </tr>

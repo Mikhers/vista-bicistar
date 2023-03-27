@@ -54,6 +54,11 @@ export interface productoInteface {
     id_categoria_producto: number;
     
 }
+export interface SedeProductoInterface{
+    id_sede: number
+    id_producto: number
+    stock: number
+}
 
 export interface PedidoProductoInterface{
     id_pedido_producto: number;

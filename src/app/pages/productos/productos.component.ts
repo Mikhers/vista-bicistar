@@ -31,44 +31,40 @@ export class ProductosComponent implements OnInit {
   fin = 7;
   totalItems: number = 0;
   itemsLista: number = 0;
-  
+
   productos: productoInteface[] = [];
   categorias: categoriaInterface[] = [];
 
 
-
+//FUNCION DEL | search
   currentPage: number = 1;
-
   get productosFiltrados(): productoInteface[] {
     return this.productos.filter(p => {
       return p.nombre_producto?.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
   }
 
-
-
   constructor(
     private toastr: ToastrService,
     private _producto: ProductoService,
-    private _categoria: CategoriaService) {}
+    private _categoria: CategoriaService) {
+    }
+
 
 formProducto = new FormGroup({
       nombre_producto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       descripcion_producto: new FormControl('', [Validators.maxLength(300)]),
       precio_producto: new FormControl('', [Validators.required]),
-      cantidad_producto: new FormControl(''),
-      stock: new FormControl(''),
       id_categoria_producto: new FormControl('', [Validators.required]),
     })
 
-
   ngOnInit(): void {
-  this.showPut = false;
-    this.getP()
+    this.showPut = false;
     this.getC()
+      this.getP()
   }
 
-
+//FUNCION PARA TODOS LOS PRODUCTOS
   getP() {
     this._producto.getProducto().subscribe((data: productoInteface[]) => {
       this.productos = data;
@@ -78,44 +74,11 @@ formProducto = new FormGroup({
       console.log(error)
     })
   }
-  getC() {
-    this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
-      this.categorias = data;
-    }, error => {
-      console.log(error)
-    })
-  }
-
-  showTable(index: number) {
-    this.maxToShow = index * 20;
-    this.minToShow = this.maxToShow - 20;
-  }
-  derFelcha() {
-    this.fin += 1;
-    this.ini += 1;
-  }
-  izqFelcha() {
-    this.ini -= 1;
-    this.fin -= 1;
-  }
-
-
-
-  range(max: number): number[] {
-    return Array.from({ length: max }, (_, i) => i);
-  }
-
-  ranges(start: number, end: number): number[] {
-    return Array.from({ length: end - start }, (_, i) => start + i);
-  }
-
   agregarProducto(){
     const PRODUCTO: productoInteface[] = [{
       nombre_producto: this.formProducto.get('nombre_producto')?.value ?? "",
       descripcion_producto: this.formProducto.get('descripcion_producto')?.value ?? "",
       precio_producto: this.formProducto.get('precio_producto')?.value as number | undefined,
-      cantidad_producto: this.formProducto.get('cantidad_producto')?.value  as number | undefined,
-      stock: this.formProducto.get('stock')?.value  as number | undefined,
       id_categoria_producto: parseInt(this.formProducto.get('id_categoria_producto')?.value as string)
     }]
 
@@ -128,50 +91,11 @@ formProducto = new FormGroup({
     })
 
   }
-  dropP(id: any){
-    this._producto.deleteProducto(id).subscribe(data => {
-      this.toastr.error('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
-      this.getP()
-    }, error => {
-      console.log(error)
-    })
-    this.formProducto.reset();
-  }
-  scrollToTop() {
-    this.topElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
-  }
-  obtenerId(id: any){
-    this.showPut = true;
-    this.scrollToTop()
-    
-    this._producto.getIdProducto(id).subscribe(data => {
-      this.id_pro = data.id_producto;
-      this.formProducto.setValue({
-        nombre_producto: data.nombre_producto,
-        descripcion_producto: data.descripcion_producto,
-        precio_producto: data.precio_producto,
-        cantidad_producto: data.cantidad_producto,
-        stock: data.stock,
-        id_categoria_producto: data.id_categoria_producto
-      });
-
-    }, error => {
-      console.log(error)
-    })
-    this.formProducto.reset();
-
-  }
-  closed(){
-    this.showPut = false;
-    this.formProducto.reset()
-  }
   putP(id: any){
     const PRODUCTO: productoInteface = {
       nombre_producto: this.formProducto.get('nombre_producto')?.value ?? "",
       descripcion_producto: this.formProducto.get('descripcion_producto')?.value ?? "",
       precio_producto: this.formProducto.get('precio_producto')?.value as number | undefined,
-      cantidad_producto: this.formProducto.get('cantidad_producto')?.value  as number | undefined,
-      stock: this.formProducto.get('stock')?.value  as number | undefined,
       id_categoria_producto: parseInt(this.formProducto.get('id_categoria_producto')?.value as string)
     }
       this._producto.putProducto(id, PRODUCTO).subscribe(data => {
@@ -183,6 +107,76 @@ formProducto = new FormGroup({
         console.log(error)
       })
   }
+  dropP(id: any){
+    if(window.confirm("¿Estás seguro de que deseas eliminar este producto?")){
+      this._producto.deleteProducto(id).subscribe(data => {
+        this.toastr.error('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
+        this.getP()
+      }, error => {
+        console.log(error)
+      })
+      this.formProducto.reset();
+    }
+  }
+  obtenerId(id: any){
+    this.showPut = true;
+    this.scrollToTop()
+    
+    this._producto.getIdProducto(id).subscribe(data => {
+      this.id_pro = data.id_producto;
+      this.formProducto.setValue({
+        nombre_producto: data.nombre_producto,
+        descripcion_producto: data.descripcion_producto,
+        precio_producto: data.precio_producto,
+        id_categoria_producto: data.id_categoria_producto
+      });
+
+    }, error => {
+      console.log(error)
+    })
+    this.formProducto.reset();
+
+  }
+
+  //TRAER CATEGORIAS
+  getC() {
+    this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
+      this.categorias = data;
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  // FUNCIONES DE LA TABLA
+  showTable(index: number) {
+    this.maxToShow = index * 20;
+    this.minToShow = this.maxToShow - 20;
+  }
+  derFelcha() {
+    this.fin += 1;
+    this.ini += 1;
+  }
+  izqFelcha() {
+    this.ini -= 1;
+    this.fin -= 1;
+  }
+  range(max: number): number[] {
+    return Array.from({ length: max }, (_, i) => i);
+  }
+  ranges(start: number, end: number): number[] {
+    return Array.from({ length: end - start }, (_, i) => start + i);
+  }
+
+
+//FUNCIONES DE EDITAR
+  scrollToTop() {
+    this.topElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }
+  closed(){
+    this.showPut = false;
+    this.formProducto.reset()
+  }
+
 
   
 

@@ -18,50 +18,69 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" data-bs-toggle="collapse"
-                    href="#sede"
-                    role="button" aria-expanded="false"
-                    aria-controls="collapseExample">
+                <a class="sidebar-link"
+                    data-bs-toggle="collapse" href="#sede" role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample" (click)="expandidaSede()">
                     <!-- <i class="fa-solid fa-shop"></i> -->
-                    <i class="fa-solid fa-chevron-up fa-rotate-90"></i>
-                    <!-- <i class="fa-solid fa-chevron-up fa-rotate-180"></i> -->
+                    <i *ngIf="!expandida" class="fa-solid fa-chevron-up
+                        fa-rotate-90"></i>
+                    <i *ngIf="expandida" class="fa-solid fa-chevron-up
+                        fa-rotate-180"></i>
                     <span
                         class="align-middle">
                         Sedes</span>
                 </a>
             </li>
 
-            <ul id="sede" class="sidebar-nav collapse">
-                <li routerLinkActive="active adentro" class="sidebar-item"
-                    *ngFor="let sede of sedes">
-                    <a class="sidebar-per">
-                        <i class="fa-solid fa-store"></i>
-                        <span
-                            class="align-middle">{{sede.nombre_sede}}</span>
-                    </a>
-                </li>
-            </ul>
+                <ul id="sede" class="sidebar-nav collapse">
+                    <li routerLinkActive="active" class="sidebar-item"
+                        *ngFor="let sede of sedes">
+
+                        <a class="sidebar-inside-one"
+                            data-bs-toggle="collapse" href="#sede-{{sede.id_sede}}"
+                            role="button" aria-expanded="false"
+                            aria-controls="collapseExample">
+                            <i class="fa-solid fa-store"></i>
+                            <span
+                                class="align-middle">{{sede.nombre_sede}}</span>
+                        </a>
+                        <ul id="sede-{{sede.id_sede}}" class="sidebar-nav collapse">
+                            <li routerLinkActive="active" class="sidebar-item">
+                                <a class="sidebar-inside-two" routerLink="compras/{{sede.id_sede}}">
+                                    <i class="fa-solid fa-cash-register"></i>
+                                    <span
+                                        class="align-middle">Ventas</span>
+                                </a>
+                            <li routerLinkActive="active" class="sidebar-item">
+                                <a class="sidebar-inside-two" routerLink="compras/{{sede.id_sede}}">
+                                    <i class="fa-solid fa-list"></i>
+                                    <span
+                                        class="align-middle">Pedidos</span>
+                                </a>
+                            <li routerLinkActive="active" class="sidebar-item">
+                                <a (click)="cambiarSede(sede.id_sede)" class="sidebar-inside-two">
+                                    <i class="fa-solid fa-bicycle"></i>
+                                    <span
+                                        class="align-middle">Stock</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
 
             <li routerLinkActive="active" class="sidebar-item">
-                <a class="sidebar-link" routerLink="compras">
-                    <i class="align-middle" data-feather="shopping-cart"></i>
-                    <span
-                        class="align-middle">{{_servicio.info.cat1?.item2}}</span>
+                <a class="sidebar-link" routerLink="categorias">
+                    <i class="fa-solid fa-circle-nodes"></i> <span
+                        class="align-middle">{{_servicio.info.cat1?.item4}}</span>
                 </a>
             </li>
-
 
             <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="productos">
-                    <i class="align-middle" data-feather="package"></i> <span
+                    <i class="fa-solid fa-bicycle"></i> <span
                         class="align-middle">{{_servicio.info.cat1?.item3}}</span>
-                </a>
-            </li>
-            <li routerLinkActive="active" class="sidebar-item">
-                <a class="sidebar-link" routerLink="categorias">
-                    <i class="align-middle" data-feather="list"></i> <span
-                        class="align-middle">{{_servicio.info.cat1?.item4}}</span>
                 </a>
             </li>
 
@@ -84,33 +103,21 @@
                 </a>
             </li>
 
-            <li routerLinkActive="active" class="sidebar-item">
+            <!-- <li routerLinkActive="active" class="sidebar-item">
                 <a class="sidebar-link" routerLink="sorry">
                     <i class="align-middle" data-feather="percent"></i> <span
                         class="align-middle">{{_servicio.info.cat2?.item2}}</span>
                 </a>
-            </li>
+            </li> -->
 
             <li routerLinkActive="active" class="sidebar-item">
-                <a class="sidebar-link" routerLink="sorry">
-                    <i class="align-middle" data-feather="grid"></i> <span
-                        class="align-middle">{{_servicio.info.cat2?.item3}}</span>
+                <a class="sidebar-link" routerLink="compras">
+                    <i class="fa-solid fa-cash-register"></i>
+                    <span
+                        class="align-middle">Ventas</span>
                 </a>
             </li>
 
-            <!-- <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-typography.html">
-                    <i class="align-middle" data-feather="align-left"></i> <span
-                        class="align-middle">Typography</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="icons-feather.html">
-                    <i class="align-middle" data-feather="coffee"></i> <span
-                        class="align-middle">Icons</span>
-                </a>
-            </li> -->
             <li class="sidebar-header">
                 {{_servicio.info.cat3?.titulo}}
             </li>

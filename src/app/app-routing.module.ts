@@ -9,6 +9,7 @@ import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
 import { SedeComponent } from './pages/sede/sede.component';
+import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
 
 const routes: Routes = [
   {path: 'sede', component: SedeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'categorias', component: CategoriasComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'productos', component: ProductosComponent},
+  {path: 'producto-sede/:id', component: SedeProductoComponent},
   {path: 'compras', component: ComprasComponent},
   {path: 'sorry', component: SorryComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'productos'},
