@@ -7,16 +7,16 @@ export interface SedeInterface{
 }
 
 export interface ProveedorInterface{
-    id_proveedor:number
+    id_proveedor?:number
     nombre_proveedor:string
-    direccion_proveedor:string
-    telefono_proveedor:string
-    email_proveedor:string
+    direccion_proveedor?:string
+    telefono_proveedor?:string
+    email_proveedor?:string
 
 }
 
 export interface PedidosInterface{
-    id_pedido:number
+    id_pedido?:number
     fecha_realizado:string
     fecha_llegada:Date
     estado_pedido:string
@@ -26,7 +26,7 @@ export interface PedidosInterface{
 }
 
 export interface EmpleadosInterface{
-    id_empleado:number
+    id_empleado?:number
     nombre_empleado:string
     apellido_empleado:string
     email_empleado:string
@@ -55,13 +55,13 @@ export interface productoInteface {
     
 }
 export interface SedeProductoInterface{
-    id_sede: number
+    id_sede?: number
     id_producto: number
     stock: number
 }
 
 export interface PedidoProductoInterface{
-    id_pedido_producto: number;
+    id_pedido_producto?: number;
     id_pedido: number;
     id_producto: number;
     cantidad_producto: number;
@@ -69,14 +69,14 @@ export interface PedidoProductoInterface{
 }
 
 export interface CategoriaServicioInterface{
-    id_categoria_servicio: number;
+    id_categoria_servicio?: number;
     nombre_servicio: string;
     descripcion_servicio: string;
 }
 
 export interface ClientesInterface{
-    id_cliente: number;
-    nombre_cliente: string;
+    id_cliente?: number;
+    nombre_cliente?: string;
     apellido_cliente: string;
     telefono_cliente: string;
     email_cliente: string;
@@ -85,7 +85,7 @@ export interface ClientesInterface{
 }
 
 export interface ServiciosInterface{
-    id_servicio: number;
+    id_servicio?: number;
     descripcion_servicio: string;
     fecha_servicio: Date;
     precio_servicio: number;
@@ -95,7 +95,7 @@ export interface ServiciosInterface{
 }
 
 export interface VentaInterface{
-    id_venta:number;
+    id_venta?:number;
     fecha_venta:Date;
     descripcion_venta:string;
     precio_venta:number;

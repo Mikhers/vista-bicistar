@@ -1,6 +1,15 @@
 <div class="animate__animated animate__fadeIn animate__faster" #top>
 
-    <button *ngIf="productos.length == 0" class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
+    <div class="row">
+        <div class="col-8">
+            <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
+        </div>
+        <div class="col-4"  *ngIf="productos.length == 0">
+            <h3 class="float-end">Agregar Producto
+            <button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
+        </h3>
+        </div>
+    </div>
 
     <div class="card  pb-3" *ngIf="productos.length> 0">
         <div class="card-body">

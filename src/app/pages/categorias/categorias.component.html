@@ -1,76 +1,17 @@
 <div class="animate__animated animate__fadeIn animate__faster" #top>
     <div class="container">
 
-
-
         <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title ">
-                        <h3 *ngIf="showPut" class="float-start mb-0">Editar
-                            Categoria </h3>
-                        <button class="btn btn-danger text-white ms-2
-                            float-end me-3"
-                            (click)="closed()" *ngIf="showPut"
-                            data-bs-toggle="collapse"
-                            href="#collapseExample"
-                            role="button" aria-expanded="false"
-                            aria-controls="collapseExample"><i
-                                class="fa-sharp
-                                fa-solid fa-xmark"></i></button>
-                        <h3 *ngIf="!showPut" class="float-start mb-0">Nueva Categoria</h3>
-                        <button class="btn btn-success ms-2"
-                            *ngIf="!showPut"
-                            data-bs-toggle="collapse"
-                            href="#collapseExample"
-                            role="button" aria-expanded="false"
-                            aria-controls="collapseExample"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                    <div id="collapseExample" class="collapse card-text">
-
-                        <!-- FORMULARIO -->
-                        <form [formGroup]="formCategoria">
-                            <p>Los campos marcados con (<span
-                                    class="text-danger"><strong>*</strong></span>)
-                                son obligatorios</p>
-
-                            <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
-                                de la categoria: </p>
-                            <input
-                                formControlName="nombre_categoria_producto"
-                                type="text" class="form-control">
-
-                            <span class="text-danger"
-                                *ngIf="formCategoria.get('nombre_categoria_producto')?.hasError('required')
-                                &&
-                                formCategoria.get('nombre_categoria_producto')?.touched">El
-                                Nombre de la categoria es <strong>es
-                                    obligatorio</strong></span><!-- <-- SPAM -->
-                            <span class="text-danger"
-                                *ngIf="formCategoria.get('nombre_categoria_producto')?.errors?.['maxlength']">El
-                                Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
-                            <p class="mt-2 mb-0">Descripción de la categoria:</p>
-                            <textarea
-                                type="text" class="form-control" cols="7"
-                                rows="4"
-                                formControlName="descripcion_categoria_producto"></textarea>
-                            <span class="text-danger"
-                                *ngIf="formCategoria.get('descripcion_categoria_producto')?.errors?.['maxlength']">El
-                                Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
-                            <br>
-
-                            <button *ngIf="!showPut" type="submit" class="btn
-                                btn-success"
-                                [disabled]="formCategoria.invalid" (click)="postCP()">Crear</button>
-                            <button *ngIf="showPut" type="submit" class="btn
-                                btn-warning"
-                                [disabled]="formCategoria.invalid"
-                                (click)="putCP(idCategoria)">Actualizar</button>
-                        </form>
-                    </div>
-                </div>
+            <div class="col-8">
+                <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
+            </div>
+            <div class="col-4"  *ngIf="categoriasP.length == 0">
+                <h3 class="float-end">Agregar Producto
+                <button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
+            </h3>
             </div>
         </div>
+
 
 
 
@@ -109,10 +50,8 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col"><button class="btn btn-success" data-bs-toggle="collapse"
-                                        href="#collapseExample"
-                                        role="button" aria-expanded="false"
-                                        aria-controls="collapseExample"><i class="fa-solid fa-plus"></i></button></th>
+                                    <th scope="col"><button class="btn btn-success"(click)="openModal()">
+                                        <i class="fa-solid fa-plus"></i></button></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -124,10 +63,7 @@
                                     <td class="p-0">{{categoriaP.nombre_categoria_producto}}</td>
                                     <td>{{categoriaP.descripcion_categoria_producto}}</td>
                                     <td>
-                                        <a data-bs-toggle="collapse"
-                                            href="#collapseExample"
-                                            role="button" aria-expanded="true"
-                                            aria-controls="collapseExample"
+                                        <a 
                                             (click)="obtenerId(categoriaP.id_categoria_producto)"><i
                                                 class="fa-solid
                                                 fa-pen-to-square
@@ -171,5 +107,54 @@
 
     <div class="card" *ngIf="categoriasP.length == 0">
         <h1 class="text-center pt-5 pb-5">No hay categorias por el momento</h1>
+    </div>
+</div>
+
+
+
+<div #modal class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1 *ngIf="showPut">Actualizar Sede</h1>
+        <h1 *ngIf="!showPut">Crear Sede</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+        <form [formGroup]="formCategoria">
+            <p>Los campos marcados con (<span
+                    class="text-danger"><strong>*</strong></span>)
+                son obligatorios</p>
+
+            <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                de la categoria: </p>
+            <input
+                formControlName="nombre_categoria_producto"
+                type="text" class="form-control">
+
+            <span class="text-danger"
+                *ngIf="formCategoria.get('nombre_categoria_producto')?.hasError('required')
+                &&
+                formCategoria.get('nombre_categoria_producto')?.touched">El
+                Nombre de la categoria es <strong>es
+                    obligatorio</strong></span><!-- <-- SPAM -->
+            <span class="text-danger"
+                *ngIf="formCategoria.get('nombre_categoria_producto')?.errors?.['maxlength']">El
+                Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
+            <p class="mt-2 mb-0">Descripción de la categoria:</p>
+            <textarea
+                type="text" class="form-control" cols="7"
+                rows="4"
+                formControlName="descripcion_categoria_producto"></textarea>
+            <span class="text-danger"
+                *ngIf="formCategoria.get('descripcion_categoria_producto')?.errors?.['maxlength']">El
+                Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
+            <br>
+
+            <button *ngIf="!showPut" type="submit" class="btn
+                btn-success"
+                [disabled]="formCategoria.invalid" (click)="postCP()">Crear</button>
+            <button *ngIf="showPut" type="submit" class="btn
+                btn-warning"
+                [disabled]="formCategoria.invalid"
+                (click)="putCP(idCategoria)">Actualizar</button>
+        </form>
     </div>
 </div>

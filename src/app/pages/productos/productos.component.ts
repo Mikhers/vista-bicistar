@@ -22,6 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductosComponent implements OnInit {
   @ViewChild('top', {static: false}) topElement!: ElementRef;
   searchTerm: string = '';
+  titulo: string = 'Productos bicistar';
   pageSize: number = 20;
   maxToShow = 20;
   minToShow = 0;

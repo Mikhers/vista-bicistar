@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 //INTERFACE
 import { categoriaInterface } from '../../interfaces/bicistar-api.Interface';
@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriasComponent implements OnInit {
   searchTerm: string = '';
+  titulo = 'Categoria de productos'
   categoriasP: categoriaInterface[] = [];
   idCategoria=0;
 
@@ -58,6 +59,7 @@ export class CategoriasComponent implements OnInit {
       this.totalItemsP = data.length
       this.itemsLista = Math.ceil(this.totalItemsP / 10 + 1)
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL');
       console.log(error)
     })
   }
@@ -68,9 +70,11 @@ export class CategoriasComponent implements OnInit {
     }
     this._categoriaP.postCategoria(CATEGORIA).subscribe(data => {
       this.toastr.success('La categoria ' + CATEGORIA.nombre_categoria_producto + ' fue agregada exitosamente!', 'CATEGORIA CREADA');
+      this.closeModal();
       this.formCategoria.reset()
       this.getCP()
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
   }
@@ -81,19 +85,22 @@ export class CategoriasComponent implements OnInit {
       }
         this._categoriaP.putCategoria(id, CATEGORIA).subscribe(data => {
           this.toastr.info('La categoria ' + CATEGORIA.nombre_categoria_producto + ' fue actualizada exitosamente!', 'CATEGORIA ACTUALIZADA');
+          this.closeModal();
           this.showPut = false;
           this.getCP()
           this.formCategoria.reset();
         }, error => {
+          this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
           console.log(error)
         })
     }
   deleteCP(id: any){
     if(window.confirm("¿Estás seguro de que deseas eliminar este producto?")){
     this._categoriaP.deleteCategoria(id).subscribe(data =>{
-      this.toastr.error('La categoria fue eliminada exitosamente!', 'CATEGORIA ELIMINADA');
+      this.toastr.warning('La categoria fue eliminada exitosamente!', 'CATEGORIA ELIMINADA');
       this.getCP();
     },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.warn(error)
     })
   }
@@ -102,7 +109,8 @@ export class CategoriasComponent implements OnInit {
 //RELLRNAR LOS CAMPOS DEL FORMULARIO PUT
 obtenerId(id: any){
   this.showPut = true;
-  this.scrollToTop()
+  this.scrollToTop();
+  this.openModal();
   
   this._categoriaP.getIdCategoria(id).subscribe(data => {
     this.idCategoria = data.id_categoria_producto;
@@ -112,6 +120,7 @@ obtenerId(id: any){
     });
 
   }, error => {
+    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
     console.log(error)
   })
   this.formCategoria.reset();
@@ -125,11 +134,7 @@ obtenerId(id: any){
   }
 
 
-  /* FUNCIONES DE LOS FORMULARIOS */
-  closed() {
-    this.showPut = false;
-    this.formCategoria.reset()
-  }
+
   /* LIMITE Y FUNCIONES DE LA TABLA */
   derFelcha() {
     this.fin += 1;
@@ -149,5 +154,27 @@ obtenerId(id: any){
     this.maxToShow = index * 10;
     this.minToShow = this.maxToShow - 10;
   }
+
+
+
+
+
+//FUNCIONES MODAL
+@ViewChild('modal') modal!: ElementRef;
+openModal() {
+  this.getCP();
+  this.modal.nativeElement.style.display = 'block';
+}
+closeModal() {
+    this.formCategoria.reset()
+    this.modal.nativeElement.style.display = 'none';
+    this.showPut = false;
+}
+@HostListener('document:click', ['$event'])
+onClick(event: MouseEvent) {
+  if (event.target === this.modal.nativeElement) {
+    this.closeModal();
+  }
+}
 
 }
