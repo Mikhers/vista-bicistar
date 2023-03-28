@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 //INTERFACE
 import { productoInteface, categoriaInterface, SedeProductoInterface, SedeInterface } from '../../interfaces/bicistar-api.Interface';
@@ -22,11 +22,12 @@ import { SedeService } from 'src/app/services/sede.service';
   styleUrls: ['./sede-producto.component.css']
 })
 export class SedeProductoComponent {
-  @ViewChild('top', {static: false}) topElement!: ElementRef;
+  // @ViewChild('top', {static: false}) topElement!: ElementRef;
   titulo = '';
 
 
   searchTerm: string = '';
+  producto: string = '';
   pageSize: number = 20;
   maxToShow = 20;
   minToShow = 0;
@@ -66,14 +67,13 @@ export class SedeProductoComponent {
 
 
 formSedeProducto = new FormGroup({
-      id_producto: new FormControl('',[Validators.required]),
+      id_producto: new FormControl('', [Validators.required]),
       stock: new FormControl(1,[Validators.required]),
     })
 
   ngOnInit(): void {
     this.showPut = false;
     this.getPSede();
-    this.getP();
     this.getC();
     this.getSede()
   }
@@ -84,16 +84,18 @@ getPSede(){
     this.totalItems = data.length
     this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     this.sedeProductos = data;
+    this.conStock=[];
     for (let index = 0; index < data.length; index++) {
       this._producto.getIdProducto(data[index].id_producto).subscribe((data2: productoInteface) =>{
         data2['stock']=data[index].stock;
         this.conStock.push(data2);
       },error=>{
+        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
         console.log(error)
       })
     }
-
   }, error => {
+    // this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
     console.log(error)
   })
 }
@@ -105,26 +107,31 @@ postSedeProducto(){
   }
   this._sedeProducto.postSedeProducto(SEDEPRODUCTO).subscribe(data =>{
     this.toastr.success('El producto fue agregado exitosamente!', 'PRODUCTO AGREGADO');
+    this.closeModal()
     this.getPSede();
     this.formSedeProducto.reset();
   }, error=>{
+    this.toastr.error("Tal vez ya tienes este producto o lo eliminaste de esta sede anteriormente", 'ALGO SALIO MAL')
     console.log(error)
   })
 }
 obtenerId(num:any){
   this.showPut = true;
-  this.scrollToTop()
+  this.openModal()
   this.id_pro=num;
   this._sedeProducto.getSedeProducto_id_idd(this.id, num).subscribe((data: SedeProductoInterface)=>{
     this._producto.getIdProducto(num).subscribe((data2: productoInteface)=>{
+      this.producto = data2.nombre_producto ?? '';
       this.formSedeProducto.setValue({
-        id_producto: data2.nombre_producto ?? null,
+        id_producto: data2.nombre_producto ?? "",
         stock: data.stock
       })
     },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
   },error=>{
+    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
     console.log(error)
   })
 }
@@ -136,18 +143,21 @@ putSedePorducto(){
   }
   this._sedeProducto.putSedeProducto(this.id, this.id_pro, SEDEPRODUCTO).subscribe(data=>{
     this.toastr.info('El Stock fue actualizado exitosamente!\nStock: ' + SEDEPRODUCTO.stock, 'STOCK ACTUALIZADO');
+    this.closeModal()
     this.showPut = false;
     this.getPSede();
   },error=>{
+    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
     console.log(error)
   })
 }
 dropSedeProducto(num:any){
   if(window.confirm("¿Estas seguro de eliminar este producto de esta sede?")){
   this._sedeProducto.deleteSedeProducto(this.id, num).subscribe(data=>{
-    this.toastr.error('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
+    this.toastr.warning('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
     this.getPSede();
   },error=>{
+    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
     console.log(error)
   })
 }
@@ -161,6 +171,7 @@ getSede(){
   this._sede.getSede().subscribe((data: SedeInterface[]) =>{
     this.sedes=data;
   },error=>{
+    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
     console.log(error)
   })
 }
@@ -170,6 +181,7 @@ getSede(){
     this._producto.getProducto().subscribe((data: productoInteface[]) => {
       this.productos = data;
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
   }
@@ -179,6 +191,7 @@ getSede(){
     this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
       this.categorias = data;
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
   }
@@ -204,18 +217,27 @@ getSede(){
   }
 
 
-//FUNCIONES DE EDITAR
-  scrollToTop() {
-    this.topElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
-  }
-  closed(){
-    this.showPut = false;
-    this.formSedeProducto.reset()
-  }
-
-
   
 
+
+
+//FUNCIONES MODAL
+@ViewChild('modal') modal!: ElementRef;
+openModal() {
+  this.getP();
+  this.modal.nativeElement.style.display = 'block';
+}
+closeModal() {
+    this.formSedeProducto.reset()
+    this.modal.nativeElement.style.display = 'none';
+    this.showPut = false;
+}
+@HostListener('document:click', ['$event'])
+onClick(event: MouseEvent) {
+  if (event.target === this.modal.nativeElement) {
+    this.closeModal();
+  }
+}
 
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 //INTERFACE
 import { productoInteface, categoriaInterface } from '../../interfaces/bicistar-api.Interface';
@@ -71,6 +71,7 @@ formProducto = new FormGroup({
       this.totalItems = this.productos.length
       this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
   }
@@ -84,9 +85,11 @@ formProducto = new FormGroup({
 
     this._producto.postProducto(PRODUCTO).subscribe(data => {
       this.toastr.success('El producto ' + PRODUCTO[0].nombre_producto + ' fue agregado exitosamente!', 'PRODUCTO AGREGADO');
+    this.closeModal()
       this.getP()
       this.formProducto.reset();
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
 
@@ -100,19 +103,22 @@ formProducto = new FormGroup({
     }
       this._producto.putProducto(id, PRODUCTO).subscribe(data => {
         this.toastr.info('El producto ' + PRODUCTO.nombre_producto + ' fue actualizado exitosamente!', 'PRODUCTO ACTUALIZADO');
+    this.closeModal()
         this.showPut = false;
         this.getP()
         this.formProducto.reset();
       }, error => {
+        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
         console.log(error)
       })
   }
   dropP(id: any){
     if(window.confirm("¿Estás seguro de que deseas eliminar este producto?")){
       this._producto.deleteProducto(id).subscribe(data => {
-        this.toastr.error('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
+        this.toastr.warning('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
         this.getP()
       }, error => {
+        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
         console.log(error)
       })
       this.formProducto.reset();
@@ -120,6 +126,7 @@ formProducto = new FormGroup({
   }
   obtenerId(id: any){
     this.showPut = true;
+    this.openModal()
     this.scrollToTop()
     
     this._producto.getIdProducto(id).subscribe(data => {
@@ -132,6 +139,7 @@ formProducto = new FormGroup({
       });
 
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
     this.formProducto.reset();
@@ -143,6 +151,7 @@ formProducto = new FormGroup({
     this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
       this.categorias = data;
     }, error => {
+      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
       console.log(error)
     })
   }
@@ -177,6 +186,26 @@ formProducto = new FormGroup({
     this.formProducto.reset()
   }
 
+
+
+
+  //FUNCIONES MODAL
+@ViewChild('modal') modal!: ElementRef;
+openModal() {
+  this.getP();
+  this.modal.nativeElement.style.display = 'block';
+}
+closeModal() {
+    this.formProducto.reset()
+    this.modal.nativeElement.style.display = 'none';
+    this.showPut = false;
+}
+@HostListener('document:click', ['$event'])
+onClick(event: MouseEvent) {
+  if (event.target === this.modal.nativeElement) {
+    this.closeModal();
+  }
+}
 
   
 

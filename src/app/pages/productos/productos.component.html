@@ -1,119 +1,6 @@
 <div class="animate__animated animate__fadeIn animate__faster" #top>
 
-
-    <div class="card">
-        <div class="card-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="card-title ">
-                            <h3 *ngIf="showPut" class="float-start mb-0">Editar
-                                producto </h3>
-                            <button class="btn btn-danger text-white ms-2
-                                float-end me-3"
-                                (click)="closed()" *ngIf="showPut"
-                                data-bs-toggle="collapse"
-                                href="#collapseExample"
-                                role="button" aria-expanded="false"
-                                aria-controls="collapseExample"><i
-                                    class="fa-sharp
-                                    fa-solid fa-xmark"></i></button>
-                            <h3 *ngIf="!showPut" class="float-start mb-0">Nuevo
-                                Producto</h3>
-                            <button class="btn btn-success ms-2"
-                                *ngIf="!showPut"
-                                data-bs-toggle="collapse"
-                                href="#collapseExample"
-                                role="button" aria-expanded="false"
-                                aria-controls="collapseExample"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div id="collapseExample" class="collapse card-text">
-
-                    <!-- FORMULARIO -->
-                    <form [formGroup]="formProducto"
-                        (ngSubmit)="agregarProducto()">
-                        <div class="row">
-                            <p>Los campos marcados con (<span
-                                    class="text-danger"><strong>*</strong></span>)
-                                son obligatorios</p>
-                            <div class="col-6">
-
-                                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
-                                    del producto: </p>
-                                <input
-                                    formControlName="nombre_producto"
-                                    type="text" class="form-control">
-
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('nombre_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('nombre_producto')?.touched">El
-                                    nombre del producto es <strong>es
-                                        obligatorio</strong></span><!-- <-- SPAM -->
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('nombre_producto')?.errors?.['maxlength']">El
-                                    Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
-                                <p class="mt-2 mb-0">Descripción del producto:</p>
-                                <textarea
-                                    type="text" class="form-control" rows="1"
-                                    formControlName="descripcion_producto"></textarea>
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('descripcion_producto')?.errors?.['maxlength']">El
-                                    Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
-                            </div>
-                            <div class="col-6">
-
-                                <p class="mt-2 mb-0"><span
-                                        class="text-danger"><strong>*</strong></span>Precio:</p>
-                                <input
-                                    formControlName="precio_producto"
-                                    type="number" class="form-control">
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('precio_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('precio_producto')?.touched">El
-                                    precio del producto es <strong>es
-                                        obligatorio</strong></span><!-- <-- SPAM -->
-
-
-                                <p class="mt-2 mb-0"><span
-                                        class="text-danger"><strong>*</strong></span>Categoria:</p>
-                                <select class="form-control"
-                                    formControlName="id_categoria_producto">
-                                    <option *ngFor="let categoria of
-                                        categorias"
-                                        value="{{categoria.id_categoria_producto}}">{{categoria.nombre_categoria_producto}}</option>
-                                </select>
-                                <br>
-
-                                <span class="text-danger"
-                                    *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
-                                    &&
-                                    formProducto.get('id_categoria_producto')?.touched">La
-                                    categoria del producto es <strong>es
-                                        obligatoria</strong></span><!-- <-- SPAM -->
-                            </div>
-                        </div>
-                        <br>
-
-                        <button *ngIf="!showPut" type="submit" class="btn
-                            btn-success"
-                            [disabled]="formProducto.invalid">Crear</button>
-                        <button *ngIf="showPut" type="submit" class="btn
-                            btn-warning"
-                            [disabled]="formProducto.invalid"
-                            (click)="putP(id_pro)">Actualizar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    <button *ngIf="productos.length == 0" class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
 
     <div class="card  pb-3" *ngIf="productos.length> 0">
         <div class="card-body">
@@ -147,10 +34,7 @@
                         <th scope="col">Descripción</th>
                         <th scope="col">Cadegoria</th>
                         <th scope="col">Precio</th>
-                        <th scope="col"><button class="btn btn-success"data-bs-toggle="collapse"
-                            href="#collapseExample"
-                            role="button" aria-expanded="false"
-                            aria-controls="collapseExample" ><i class="fa-solid fa-plus"></i></button></th>
+                        <th scope="col"><button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,11 +46,7 @@
                         <td>{{categorias[producto.id_categoria_producto-1].nombre_categoria_producto}}</td>
                         <td>{{producto.precio_producto | currency: 'USD'}}</td>
                         <td>
-                            <a data-bs-toggle="collapse"
-                                href="#collapseExample"
-                                role="button" aria-expanded="true"
-                                aria-controls="collapseExample"
-                                (click)="obtenerId(producto.id_producto)">
+                            <a (click)="obtenerId(producto.id_producto)">
                                 <i class="fa-solid fa-pen-to-square text-primary me-2"></i></a>
                             <a (click)="dropP(producto.id_producto)"><i
                                     class="fa-solid fa-trash text-danger"></i></a>
@@ -202,4 +82,88 @@
 
 <div class="card" *ngIf="productos.length == 0">
     <h1 class="text-center pt-5 pb-5">No hay productos por el momento</h1>
+</div>
+
+
+
+<div #modal class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1 *ngIf="showPut">Actualizar Sede</h1>
+        <h1 *ngIf="!showPut">Crear Sede</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+        <form [formGroup]="formProducto">
+        <div class="row">
+            <p>Los campos marcados con (<span
+                    class="text-danger"><strong>*</strong></span>)
+                son obligatorios</p>
+            <div class="col-6">
+
+                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                    del producto: </p>
+                <input
+                    formControlName="nombre_producto"
+                    type="text" class="form-control">
+
+                <span class="text-danger"
+                    *ngIf="formProducto.get('nombre_producto')?.hasError('required')
+                    &&
+                    formProducto.get('nombre_producto')?.touched">El
+                    nombre del producto es <strong>es
+                        obligatorio</strong></span><!-- <-- SPAM -->
+                <span class="text-danger"
+                    *ngIf="formProducto.get('nombre_producto')?.errors?.['maxlength']">El
+                    Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
+                <p class="mt-2 mb-0">Descripción del producto:</p>
+                <textarea
+                    type="text" class="form-control" rows="1"
+                    formControlName="descripcion_producto"></textarea>
+                <span class="text-danger"
+                    *ngIf="formProducto.get('descripcion_producto')?.errors?.['maxlength']">El
+                    Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
+            </div>
+            <div class="col-6">
+
+                <p class="mt-2 mb-0"><span
+                        class="text-danger"><strong>*</strong></span>Precio:</p>
+                <input
+                    formControlName="precio_producto"
+                    type="number" class="form-control">
+                <span class="text-danger"
+                    *ngIf="formProducto.get('precio_producto')?.hasError('required')
+                    &&
+                    formProducto.get('precio_producto')?.touched">El
+                    precio del producto es <strong>es
+                        obligatorio</strong></span><!-- <-- SPAM -->
+
+
+                <p class="mt-2 mb-0"><span
+                        class="text-danger"><strong>*</strong></span>Categoria:</p>
+                <select class="form-control"
+                    formControlName="id_categoria_producto">
+                    <option *ngFor="let categoria of
+                        categorias"
+                        value="{{categoria.id_categoria_producto}}">{{categoria.nombre_categoria_producto}}</option>
+                </select>
+                <br>
+
+                <span class="text-danger"
+                    *ngIf="formProducto.get('id_categoria_producto')?.hasError('required')
+                    &&
+                    formProducto.get('id_categoria_producto')?.touched">La
+                    categoria del producto es <strong>es
+                        obligatoria</strong></span><!-- <-- SPAM -->
+            </div>
+        </div>
+        <br>
+
+        <button *ngIf="!showPut" type="submit" class="btn
+            btn-success" (click)="agregarProducto()"
+            [disabled]="formProducto.invalid">Crear</button>
+        <button *ngIf="showPut" type="submit" class="btn
+            btn-warning"
+            [disabled]="formProducto.invalid"
+            (click)="putP(id_pro)">Actualizar</button>
+    </form>
+    </div>
 </div>
