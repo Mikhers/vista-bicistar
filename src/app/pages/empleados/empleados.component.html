@@ -1,3 +1,103 @@
-<div class="animate__animated animate__fadeIn animate__faster">
-<p>Hola</p>
+<div class=".animate__animated animate__fadeIn animate__faster">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-sm-4" *ngFor="let empleado of empleados">
+                <div class="card">
+                    <a class="no-hover">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title"><i class="fa-solid fa-person"></i></h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    {{empleado.rol_empleado}}
+                                </div>
+                            </div>
+                            <div class="text-end float-end contenido">
+                                <a>{{empleado.id_sede}}</a>
+                            </div>
+                            <h1 class="mt-1 mb-3 dire fw-bold">{{empleado.nombre_empleado}}</h1>
+                            <h1 class="mt-1 mb-3 dire fw-bold">{{empleado.apellido_empleado}}</h1>
+                            <div class="mb-0">
+                                <span class="text-muted">E-mail:
+                                    {{empleado.email_empleado}}</span>
+                                <div class="float-end">
+                                    <a (click)="dropSede(empleado.id_empleado)" ><i class="fa-solid fa-trash
+                                            text-danger"></i></a>
+                                    <a  (click)="getId(empleado.id_empleado)"><i class="fa-solid
+                                            fa-pen-to-square text-primary"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <button (click)="openModal()" class="btn btn-success btn-float float-end"><i class="fa-solid
+                fa-plus"></i></button>
+    </div>
+</div>
+
+
+<div #modal class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1 *ngIf="showPut">Actualizar Sede</h1>
+        <h1 *ngIf="!showPut">Crear Sede</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+        <form [formGroup]="formEmpleado">
+            <div class="row">
+                <p>Los campos marcados con (<span
+                        class="text-danger"><strong>*</strong></span>)
+                    son obligatorios</p>
+
+                <div class="col-12 p-2">
+
+                <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                    de la Sede: </p>
+                <input type="text" formControlName="nombre_sede" class="form-control">
+                <span class="text-danger" *ngIf="formEmpleado.get('nombre_sede')?.hasError('required')
+                    && formEmpleado.get('nombre_sede')?.touched">
+                    El nombre del producto es <strong>es
+                        obligatorio</strong></span><!-- <-- SPAM -->
+
+
+                <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Dirección de la Sede:</p>
+                <input
+                    formControlName="direccion_sede"
+                    type="text" class="form-control">
+                <span class="text-danger"
+                    *ngIf="formEmpleado.get('direccion_sede')?.hasError('required') && formEmpleado.get('direccion_sede')?.touched">
+                    La direccion <strong>es obligatoria</strong></span><!-- <-- SPAM -->
+
+
+
+
+                <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Ciudad de la Sede:</p>
+                <input
+                    formControlName="ciudad_sede"
+                    type="text" class="form-control">
+                <span class="text-danger"   
+                    *ngIf="formEmpleado.get('ciudad_sede')?.hasError('required') && formEmpleado.get('ciudad_sede')?.touched">
+                    La Ciudad <strong>es obligatoria</strong></span><!-- <-- SPAM -->
+
+                    </div>
+            </div>
+            <br>
+
+            <button (click)="postEmpleado()" *ngIf="!showPut" type="submit" class="btn
+                btn-success"
+                [disabled]="formEmpleado.invalid">Crear</button>
+            <button *ngIf="showPut" type="submit" class="btn
+                btn-warning" (click)="putEmpleado()"
+                [disabled]="formEmpleado.invalid">Actualizar</button>
+        </form>
+    </div>
 </div>

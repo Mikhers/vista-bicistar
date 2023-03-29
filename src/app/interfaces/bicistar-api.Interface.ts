@@ -28,13 +28,13 @@ export interface PedidosInterface{
 export interface EmpleadosInterface{
     id_empleado?:number
     nombre_empleado:string
-    apellido_empleado:string
+    apellido_empleado?:string
     email_empleado:string
     password_empleado:string
-    permiso_empleado:string
-    rol_empleado:string
-    salario_empleado:number
-    sede:number
+    permiso_empleado?:string
+    rol_empleado?:string
+    salario_empleado?:number
+    id_sede:number
 }
 
 export interface categoriaInterface{
