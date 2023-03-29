@@ -182,11 +182,6 @@ formProducto = new FormGroup({
   scrollToTop() {
     this.topElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
-  closed(){
-    this.showPut = false;
-    this.formProducto.reset()
-  }
-
 
 
 

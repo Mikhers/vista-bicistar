@@ -117,11 +117,9 @@
                 <input
                     formControlName="nombre_producto"
                     type="text" class="form-control">
-
                 <span class="text-danger"
                     *ngIf="formProducto.get('nombre_producto')?.hasError('required')
-                    &&
-                    formProducto.get('nombre_producto')?.touched">El
+                    && formProducto.get('nombre_producto')?.touched">El
                     nombre del producto es <strong>es
                         obligatorio</strong></span><!-- <-- SPAM -->
                 <span class="text-danger"

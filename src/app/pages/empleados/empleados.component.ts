@@ -16,7 +16,15 @@ export class EmpleadosComponent {
   
 
   showPut=false;
+  titulo="Empleados Bicistar"
+  maxToShow = 10;
+  minToShow = 0;
+  itemsLista = 0
   nomSede=""
+  totalItems = 0
+  searchTerm: string = '';
+  ini = 1;
+  fin = 7;
   idEmpleado=0
   sedes: SedeInterface[]=[];
   empleados: EmpleadosInterface[]=[];
@@ -32,6 +40,14 @@ export class EmpleadosComponent {
     private _empleado: EmpleadosService
     ){}
 
+    //FUNCION DEL | search
+  currentPage: number = 1;
+  get empleadosFiltrados(): EmpleadosInterface[] {
+    return this.empleados.filter(p => {
+      return p.nombre_empleado?.toLowerCase().includes(this.searchTerm.toLowerCase());
+    });
+  }
+
     formEmpleado = new FormGroup({
       nombre_empleado: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       apellido_empleado: new FormControl('', [ Validators.maxLength(50)]),
@@ -40,13 +56,15 @@ export class EmpleadosComponent {
       permiso_empleado: new FormControl('', [Validators.maxLength(50)]),
       rol_empleado: new FormControl('', [Validators.maxLength(50)]),
       salario_empleado: new FormControl("", [Validators.maxLength(50)]),
-      sede: new FormControl("", [Validators.required])
+      id_sede: new FormControl("", [Validators.required])
     })
 
   /*METODOS HTTP*/
   getEmpleado(){
     this._empleado.getEmpleado().subscribe((data: EmpleadosInterface[])=>{
       this.empleados=data;
+      this.totalItems = data.length;
+      this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     },error=>{
       this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
       console.log(error)
@@ -61,7 +79,7 @@ export class EmpleadosComponent {
       permiso_empleado: this.formEmpleado.get('permiso_empleado')?.value ?? "",
       rol_empleado: this.formEmpleado.get('rol_empleado')?.value ?? "",
       salario_empleado: parseFloat(this.formEmpleado.get('salario_empleado')?.value as string),
-      id_sede: parseInt(this.formEmpleado.get('sede')?.value as string)
+      id_sede: parseInt(this.formEmpleado.get('id_sede')?.value as string)
     }
     this._empleado.postEmpleado(EMPLEADO).subscribe(data=>{
       this.getEmpleado();
@@ -85,7 +103,7 @@ export class EmpleadosComponent {
         permiso_empleado: data.permiso_empleado!,
         rol_empleado: data.rol_empleado!,
         salario_empleado: data.salario_empleado?.toString() ?? null,
-        sede: data.id_sede?.toString() ?? null
+        id_sede: data.id_sede?.toString() ?? null
       })
     },error=>{
       this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
@@ -101,7 +119,7 @@ export class EmpleadosComponent {
       permiso_empleado: this.formEmpleado.get('permiso_empleado')?.value ?? "",
       rol_empleado: this.formEmpleado.get('rol_empleado')?.value ?? "",
       salario_empleado: parseFloat(this.formEmpleado.get('salario_empleado')?.value as string),
-      id_sede: parseInt(this.formEmpleado.get('sede')?.value as string)
+      id_sede: parseInt(this.formEmpleado.get('id_sede')?.value as string)
     }
     this._empleado.putEmpleado(this.idEmpleado, EMPLEADO).subscribe(data =>{
       this.toastr.info('El empleado ' + EMPLEADO.nombre_empleado + ' fue actualizado exitosamente!', 'EMPLEADO ACTUALIZADO');
@@ -112,7 +130,7 @@ export class EmpleadosComponent {
       console.log(error)
     })
   }
-  dropSede(num:any){
+  dropEmpleado(num:any){
     if(window.confirm("¿Esta seguro que desea eliminar el empleado?")){
     this._empleado.deleteEmpleado(num).subscribe(data=>{
     this.toastr.error('Empleado Eliminado', 'EMPLEADO ELIMINADO');
@@ -134,12 +152,25 @@ getSede(){
 
 
 
-
-//NAVEGACION
-  cambiarSede(id: number) {
-    this.router.navigate(['/producto-sede', id]);
+  // FUNCIONES DE LA TABLA
+  showTable(index: number) {
+    this.maxToShow = index * 10;
+    this.minToShow = this.maxToShow - 10;
   }
-
+  derFelcha() {
+    this.fin += 1;
+    this.ini += 1;
+  }
+  izqFelcha() {
+    this.ini -= 1;
+    this.fin -= 1;
+  }
+  range(max: number): number[] {
+    return Array.from({ length: max }, (_, i) => i);
+  }
+  ranges(start: number, end: number): number[] {
+    return Array.from({ length: end - start }, (_, i) => start + i);
+  }
 
 
 //FUNCIONES MODAL
