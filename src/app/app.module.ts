@@ -32,6 +32,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { SedeComponent } from './pages/sede/sede.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
+import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SedeProductoComponent } from './pages/sede-producto/sede-producto.compo
     CategoriasComponent,
     SedeComponent,
     ClientesComponent,
-    SedeProductoComponent
+    SedeProductoComponent,
+    PeddidosComponent
   ],
   imports: [
     BrowserModule,

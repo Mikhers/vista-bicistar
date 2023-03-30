@@ -1,0 +1,17 @@
+.password-container {
+    position: relative;
+  }
+  
+  .password-container input[type="password"] {
+    padding-right: 40px; /* espacio para el botón */
+  }
+  
+  .password-container button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .password-container button:hover {
+    border-width: 0;
+  }

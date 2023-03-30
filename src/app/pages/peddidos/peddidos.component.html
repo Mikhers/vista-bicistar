@@ -1,0 +1,229 @@
+<div class=".animate__animated animate__fadeIn animate__faster">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-8">
+                <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
+            </div>
+            <div class="col-4"  *ngIf="pedidos.length == 0">
+                <h3 class="float-end">Agregar Producto
+                <button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
+            </h3>
+            </div>
+        </div>
+
+
+        <div class="row mb-5">
+            <div class="card  pb-3" *ngIf="pedidos.length> 0">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="card-title">
+                                    <h3 class="float-start mt-1">Empleados
+                                        ({{totalItems}})</h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+    
+                                <div class="input-group rounded">
+                                    <input type="search" placeholder="Buscar"
+                                        class="form-control" [(ngModel)]="searchTerm" />
+                                </div>
+    
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-text">
+                    <!-- TABLE -->
+                    <div class="table-responsive table-upgrade">
+                    <table class="table table-striped">
+                        <thead >
+                            <tr class="bg-blue">
+                                <th scope="col">Fecha de pedido</th>
+                                <th scope="col">Fecha de llegaada</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">Sede</th>
+                                <th scope="col">Empleado</th>
+                                <th scope="col"><button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- rengo-tabla -->
+                            <tr *ngFor="let pedido of pedidos.slice(minToShow, maxToShow);">
+    
+                                <td class="p-0">{{pedido.fecha_realizado!.slice(0, 19).replace('T', ' / ')}}</td>
+                                <td>{{pedido.fecha_llegada.slice(0, 19).replace('T', ' / ')}}</td>
+                                <td>{{pedido.estado_pedido}}</td>
+                                <td>{{pedido.total_pedido | currency: 'USD' }}</td>
+                                <td>{{pedido.id_proveedor}}</td>
+                                <td >{{pedido.id_sede}}</td>
+                                <td>{{pedido.id_proveedor}}</td>
+                                <td>
+                                    <!-- <a (click)="getId(empleado.id_empleado)">
+                                        <i class="fa-solid fa-pen-to-square text-primary me-2"></i></a>
+                                    <a (click)="dropEmpleado(empleado.id_empleado)"><i
+                                            class="fa-solid fa-trash text-danger"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                </div>
+                <ul  *ngIf="totalItems > 10"  class="list-group list-group-horizontal center text-center
+                    justify-content-center">
+                    <li class="list-group-item p-0 mb-0"><button [disabled]="ini ===
+                            1"
+                            (click)="izqFelcha()" class="btn
+                            btn-light"><i class="fa-sharp fa-solid fa-arrow-left"></i></button></li>
+                    <!-- Rango-lista -->
+                    <div *ngFor="let i of ranges(ini, fin)">
+                        <li class="list-group-item p-0 mb-0"><button
+                                (click)="showTable(i)" class="btn
+                                btn-colorAPP me-1 ms-1 " [disabled]="i*10 ===
+                                maxToShow">{{i}}</button></li>
+                    </div>
+    
+                    <li class="list-group-item p-0
+                        mb-0"><button [disabled]="fin === itemsLista"
+                            (click)="derFelcha()" class="btn
+                            btn-light"><i class="fa-solid fa-arrow-right"></i></button></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div #modal class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1 *ngIf="showPut">Actualizar Datos del Pedido</h1>
+        <h1 *ngIf="!showPut">Ingresar Pedido</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+
+
+        <form [formGroup]="formPedido">
+            <div class="row">
+                <p>Los campos marcados con (<span
+                        class="text-danger"><strong>*</strong></span>)
+                    son obligatorios</p>
+
+                <div class="col-6 p-2">
+
+                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Proveedor: </p>
+
+                    <select class="form-control"
+                    formControlName="id_proveedor">
+                        <option *ngFor="let proveedor of proveedores" value="{{proveedor.id_proveedor}}">{{proveedor.nombre_proveedor}}</option>
+                    </select>
+
+                    <span class="text-danger" *ngIf="formPedido.get('id_proveedor')?.hasError('required')
+                        && formPedido.get('id_proveedor')?.touched">
+                        El proveedor <strong>es
+                            obligatorio</strong></span><!-- <-- SPAM -->
+
+
+                    <p class="mt-4 mb-0">Sede:</p>
+                    <select class="form-control"
+                    formControlName="id_sede">
+                        <option *ngFor="let sede of sedes" value="{{sede.id_sede}}">{{sede.nombre_sede}}</option>
+                    </select>
+                    <span class="text-danger"
+                        *ngIf="formPedido.get('id_sede')?.hasError('required') && formPedido.get('id_proveedor')?.touched">
+                        La sede es  <strong>Obligatiria</strong></span><!-- <-- SPAM -->
+
+
+                    <p class="mt-4 mb-0">Fella de llegada</p>
+                    <input type="datetime-local" formControlName="fecha_llegada" class="form-control">
+                <span class="text-danger" *ngIf="formPedido.get('fecha_llegada')?.hasError('required')
+                && formPedido.get('fecha_llegada')?.touched">
+                El E-mail del empleado <strong>es
+                    obligatorio</strong></span><!-- <-- SPAM -->
+                        
+                        
+                        </div>
+                        <div class="col-6 p-2">
+                    <p class="mt-2 mb-0">Productos
+                    <button class="btn btn-success" (click)="openModal2()"><i class="fa-solid fa-plus"></i></button>
+                </p>
+                <h3 *ngFor="let proForm of productosForm;index as i" class="form-control">{{proForm[i].nombre_producto}} {{proForm[i].cantidad_producto}} {{proForm[i].precio_unitario}}</h3>
+                </div>
+            </div>
+            <br>
+
+            <button (click)="postPedido()" *ngIf="!showPut" type="submit" class="btn
+                btn-success"
+                [disabled]="formPedido.invalid">Crear</button>
+            <!-- <button *ngIf="showPut" type="submit" class="btn
+                btn-warning" (click)="putEmpleado()"
+                [disabled]="formPedido.invalid">Actualizar</button> -->
+        </form>
+    </div>
+</div>
+
+<div class="modalProducto p-2" #modalProducto>
+    <div class="modal-content">
+        <span class="close" (click)="closeModal2()">&times;</span>
+        <h1 >Ingresar Producto</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+
+        <form [formGroup]="formProductos">
+
+            <div class="row mb-4">
+                <div class="col-4">
+
+
+                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Producto: </p>
+                    <select class="form-control"
+                    formControlName="id_producto">
+                        <option *ngFor="let producto of productos" value="{{producto.id_producto}}">{{producto.nombre_producto}}</option>
+                    </select>
+                    <span class="text-danger" *ngIf="formPedido.get('id_producto')?.hasError('required')
+                        && formPedido.get('id_producto')?.touched">
+                        El producto <strong>es obligatorio</strong></span><!-- <-- SPAM -->
+
+                </div>
+                <div class="col-4">
+
+                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Cantidad:</p>
+                    <input type="number" min="1" formControlName="cantidad_producto">
+                    <span class="text-danger" *ngIf="formPedido.get('cantidad_producto')?.hasError('required')
+                    && formPedido.get('cantidad_producto')?.touched">
+                    El producto <strong>es obligatorio</strong></span><!-- <-- SPAM -->
+                </div>
+                <div class="col-4">
+                    
+                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio unitario:</p>
+                    <input type="number" min="1" formControlName="precio_unitario">
+                    <span class="text-danger" *ngIf="formPedido.get('precio_unitario')?.hasError('required')
+                    && formPedido.get('precio_unitario')?.touched">
+                    El precio unitario <strong>es obligatorio</strong></span><!-- <-- SPAM -->
+                </div>
+            </div>
+
+
+
+
+            <button type="submit" class="btn
+                btn-success"
+                [disabled]="formPedido.invalid">Agregar</button>
+            <!-- <button *ngIf="showPut" type="submit" class="btn
+                btn-warning" (click)="putEmpleado()"
+                [disabled]="formPedido.invalid">Actualizar</button> -->
+
+        </form>
+
+
+    </div>
+
+
+</div>

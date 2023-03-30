@@ -48,6 +48,7 @@
                                 <th scope="col">E-mail</th>
                                 <th scope="col">Permiso</th>
                                 <th scope="col">Cargo</th>
+                                <th scope="col">Sede</th>
                                 <th scope="col">Salario</th>
                                 <th scope="col"><button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button></th>
                             </tr>
@@ -61,6 +62,7 @@
                                 <td>{{empleado.email_empleado}}</td>
                                 <td>{{empleado.permiso_empleado}}</td>
                                 <td>{{empleado.rol_empleado}}</td>
+                                <td >{{empleado.id_sede}}</td>
                                 <td>{{empleado.salario_empleado | currency: 'USD'}}</td>
                                 <td>
                                     <a (click)="getId(empleado.id_empleado)">
@@ -72,7 +74,7 @@
                         </tbody>
                     </table>
                 </div>
-    
+
                 </div>
                 <ul  *ngIf="totalItems > 10"  class="list-group list-group-horizontal center text-center
                     justify-content-center">
@@ -104,8 +106,8 @@
 <div #modal class="modal">
     <div class="modal-content">
         <span class="close" (click)="closeModal()">&times;</span>
-        <h1 *ngIf="showPut">Actualizar Sede</h1>
-        <h1 *ngIf="!showPut">Crear Sede</h1>
+        <h1 *ngIf="showPut">Actualizar Datos de Empleado</h1>
+        <h1 *ngIf="!showPut">Ingresar Empleado</h1>
         <hr class="divider bg-danger" style="height:2px;">
         <form [formGroup]="formEmpleado">
             <div class="row">
@@ -143,21 +145,25 @@
                     El E-mail del empleado <strong>es
                         obligatorio</strong></span><!-- <-- SPAM -->
 
-                    </div>
-                    <div class="col-6 p-2">
                         
-                        <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Contraseña:</p>
-                    <input formControlName="password_empleado"
-                        type="text" class="form-control">
-                    <span class="text-danger"   
+                        <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Contraseña:</p>
+                        <div class="password-container">
+                            <input formControlName="password_empleado"
+                            type="password" class="form-control"  id="passwordInput">
+                            <button *ngIf="passwordVisible" class="btn" (click)="togglePasswordVisibility()"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                            <button *ngIf="!passwordVisible" class="btn" (click)="togglePasswordVisibility()"><i class="fa-sharp fa-solid fa-eye-slash"></i></button>
+                        </div>
+                        <span class="text-danger"   
                         *ngIf="formEmpleado.get('password_empleado')?.errors?.['maxlength']">
                         Maximo <strong>50</strong>Caracteres</span><!-- <-- SPAM -->
-                    <span class="text-danger" *ngIf="formEmpleado.get('password_empleado')?.hasError('required')
-                    && formEmpleado.get('password_empleado')?.touched">
-                    La contraseña del empleado <strong>es
-                        obligatoria</strong></span><!-- <-- SPAM -->
+                        <span class="text-danger" *ngIf="formEmpleado.get('password_empleado')?.hasError('required')
+                        && formEmpleado.get('password_empleado')?.touched">
+                        La contraseña del empleado <strong>es
+                            obligatoria</strong></span><!-- <-- SPAM -->
+                        </div>
+                        <div class="col-6 p-2">
 
-                    <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Permisos del empleado</p>
+                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Permisos del empleado</p>
                     <select class="form-control"
                     formControlName="permiso_empleado">
                         <option  value="ALL PRIVILEGES">Todos los permisos</option>
@@ -181,6 +187,10 @@
                     <span class="text-danger" *ngIf="formEmpleado.get('rol_empleado')?.hasError('required')
                     && formEmpleado.get('rol_empleado')?.touched">
                     El cargo del empleado es<strong>obligatorio</strong></span><!-- <-- SPAM -->
+
+
+                    <p class="mt-4 mb-0">Salario del Empleado</p>
+                    <input type="number" class="form-control" formControlName="salario_empleado" min="1" >
 
 
                     <p class="mt-4 mb-0"><span

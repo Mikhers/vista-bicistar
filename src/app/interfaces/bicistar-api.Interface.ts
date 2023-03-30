@@ -17,12 +17,13 @@ export interface ProveedorInterface{
 
 export interface PedidosInterface{
     id_pedido?:number
-    fecha_realizado:string
-    fecha_llegada:Date
+    fecha_realizado?:string
+    fecha_llegada:string
     estado_pedido:string
     total_pedido:number
     id_sede:number
     id_proveedor:number
+    id_empleado:number
 }
 
 export interface EmpleadosInterface{
@@ -61,8 +62,7 @@ export interface SedeProductoInterface{
 }
 
 export interface PedidoProductoInterface{
-    id_pedido_producto?: number;
-    id_pedido: number;
+    id_pedido?: number;
     id_producto: number;
     cantidad_producto: number;
     precio_unitario: number;
@@ -87,7 +87,7 @@ export interface ClientesInterface{
 export interface ServiciosInterface{
     id_servicio?: number;
     descripcion_servicio: string;
-    fecha_servicio: Date;
+    fecha_servicio: string;
     precio_servicio: number;
     id_empleado:number;
     id_categoria_servicio:number;
@@ -96,7 +96,7 @@ export interface ServiciosInterface{
 
 export interface VentaInterface{
     id_venta?:number;
-    fecha_venta:Date;
+    fecha_venta:string;
     descripcion_venta:string;
     precio_venta:number;
     id_empleado:number;

@@ -10,10 +10,12 @@ import { ComprasComponent } from './pages/compras/compras.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
 import { SedeComponent } from './pages/sede/sede.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
+import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 
 const routes: Routes = [
   {path: 'sede', component: SedeComponent},
   {path: 'proveedores', component: ProveedoresComponent},
+  {path: 'pedidos', component: PeddidosComponent},
   {path: 'categorias', component: CategoriasComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'productos', component: ProductosComponent},

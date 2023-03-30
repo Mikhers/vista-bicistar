@@ -15,19 +15,21 @@ import { EmpleadosService } from '../../services/empleados.service';
 export class EmpleadosComponent {
   
 
-  showPut=false;
+  searchTerm: string = '';
   titulo="Empleados Bicistar"
+  showPut=false;
   maxToShow = 10;
   minToShow = 0;
   itemsLista = 0
-  nomSede=""
   totalItems = 0
-  searchTerm: string = '';
   ini = 1;
   fin = 7;
   idEmpleado=0
   sedes: SedeInterface[]=[];
   empleados: EmpleadosInterface[]=[];
+
+  password: string="";
+  passwordVisible: boolean = false;
 
   ngOnInit(): void{
     this.getEmpleado();
@@ -39,6 +41,8 @@ export class EmpleadosComponent {
     private _sede: SedeService,
     private _empleado: EmpleadosService
     ){}
+
+
 
     //FUNCION DEL | search
   currentPage: number = 1;
@@ -171,6 +175,13 @@ getSede(){
   ranges(start: number, end: number): number[] {
     return Array.from({ length: end - start }, (_, i) => start + i);
   }
+
+//PASSWORD
+togglePasswordVisibility() {
+  this.passwordVisible = !this.passwordVisible;
+  const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+  passwordInput.type = this.passwordVisible ? 'text' : 'password';
+}
 
 
 //FUNCIONES MODAL
