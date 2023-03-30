@@ -105,10 +105,11 @@
 
 <div #modal class="modal">
     <div class="modal-content">
-        <span class="close" (click)="closeModal()">&times;</span>
-        <h1 *ngIf="showPut">Actualizar Datos del Pedido</h1>
-        <h1 *ngIf="!showPut">Ingresar Pedido</h1>
-        <hr class="divider bg-danger" style="height:2px;">
+            <span class="close" (click)="closeModal()">&times;</span>
+            <h1 *ngIf="showPut">Actualizar Datos del Pedido</h1>
+            <h1 *ngIf="!showPut" class="text-ver d-inline-block m-0">Ingresar Pedido</h1>
+            <h3 class="d-inline-block float-end mt-2 me-5 m-0" *ngIf="!showPut">{{horaActual}}</h3>
+            <hr class="divider bg-danger" style="height:2px;">
 
 
         <form [formGroup]="formPedido">
@@ -123,6 +124,7 @@
 
                     <select class="form-control"
                     formControlName="id_proveedor">
+                        <option disabled>Elija un proveedor</option>
                         <option *ngFor="let proveedor of proveedores" value="{{proveedor.id_proveedor}}">{{proveedor.nombre_proveedor}}</option>
                     </select>
 
@@ -132,22 +134,33 @@
                             obligatorio</strong></span><!-- <-- SPAM -->
 
 
-                    <p class="mt-4 mb-0">Sede:</p>
+                    <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Sede:</p>
                     <select class="form-control"
                     formControlName="id_sede">
+                    <option disabled>Elija una sede</option>
                         <option *ngFor="let sede of sedes" value="{{sede.id_sede}}">{{sede.nombre_sede}}</option>
                     </select>
                     <span class="text-danger"
-                        *ngIf="formPedido.get('id_sede')?.hasError('required') && formPedido.get('id_proveedor')?.touched">
-                        La sede es  <strong>Obligatiria</strong></span><!-- <-- SPAM -->
+                        *ngIf="formPedido.get('id_sede')?.hasError('required') && formPedido.get('id_sede')?.touched">
+                        La sede es  <strong>Obligatoria</strong></span><!-- <-- SPAM -->
+
+                    <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Empleado:</p>
+                    <select class="form-control"
+                    formControlName="id_empleado">
+                    <option disabled>Elija un empleado</option>
+                        <option *ngFor="let empleado of empleados" value="{{empleado.id_empleado}}">{{empleado.nombre_empleado}}</option>
+                    </select>
+                    <span class="text-danger"
+                        *ngIf="formPedido.get('id_empleado')?.hasError('required') && formPedido.get('id_empleado')?.touched">
+                        El empleado es  <strong>Obligatorio</strong></span><!-- <-- SPAM -->
 
 
-                    <p class="mt-4 mb-0">Fella de llegada</p>
+                    <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Fecha de llegada</p>
                     <input type="datetime-local" formControlName="fecha_llegada" class="form-control">
                 <span class="text-danger" *ngIf="formPedido.get('fecha_llegada')?.hasError('required')
                 && formPedido.get('fecha_llegada')?.touched">
-                El E-mail del empleado <strong>es
-                    obligatorio</strong></span><!-- <-- SPAM -->
+                La fecha de llegada del pedido <strong>es
+                    obligatoria</strong></span><!-- <-- SPAM -->
                         
                         
                         </div>
@@ -155,13 +168,35 @@
                     <p class="mt-2 mb-0">Productos
                     <button class="btn btn-success" (click)="openModal2()"><i class="fa-solid fa-plus"></i></button>
                 </p>
-                <h3 *ngFor="let proForm of productosForm;index as i" class="form-control">{{proForm[i].nombre_producto}} {{proForm[i].cantidad_producto}} {{proForm[i].precio_unitario}}</h3>
+                <p class="mt-4">Listado de productos:</p>
+                <!-- <ul> -->
+                    <!-- <li *ngFor="let proForm of productosForm;"> -->
+                <table class="table table-striped" *ngIf="productosForm.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  *ngFor="let proForm of productosForm;" >
+                            <td>{{proForm.nombre_producto}}</td>
+                            <td>{{proForm.cantidad_producto}}</td>
+                            <td>{{proForm.precio_unitario | currency:'USD'}}</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                        <!-- {{proForm.nombre_producto}} Cantidad: {{proForm.cantidad_producto}} Precio: {{proForm.precio_unitario | currency:'USD'}}</li> -->
+                <!-- </ul> -->
                 </div>
             </div>
             <br>
-
+            <hr class="divider bg-danger" style="height:2px;">
+            <h4 class="d-inline-block float-end mt-2 me-5 m-0">Total Pedido: {{totalPedido | currency:'USD'}}</h4>
             <button (click)="postPedido()" *ngIf="!showPut" type="submit" class="btn
-                btn-success"
+                btn-success d-inline-block"
                 [disabled]="formPedido.invalid">Crear</button>
             <!-- <button *ngIf="showPut" type="submit" class="btn
                 btn-warning" (click)="putEmpleado()"
@@ -171,7 +206,7 @@
 </div>
 
 <div class="modalProducto p-2" #modalProducto>
-    <div class="modal-content">
+    <div class="modal-content2">
         <span class="close" (click)="closeModal2()">&times;</span>
         <h1 >Ingresar Producto</h1>
         <hr class="divider bg-danger" style="height:2px;">
@@ -184,11 +219,11 @@
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Producto: </p>
                     <select class="form-control"
-                    formControlName="id_producto">
-                        <option *ngFor="let producto of productos" value="{{producto.id_producto}}">{{producto.nombre_producto}}</option>
+                        formControlName="id_producto"  [(ngModel)]="infoProducto">
+                        <option *ngFor="let producto of productos" [ngValue]="{ id_producto:producto.id_producto,  nombre_producto:producto.nombre_producto }">{{producto.nombre_producto}}</option>
                     </select>
-                    <span class="text-danger" *ngIf="formPedido.get('id_producto')?.hasError('required')
-                        && formPedido.get('id_producto')?.touched">
+                    <span class="text-danger" *ngIf="formProductos.get('id_producto')?.hasError('required')
+                        && formProductos.get('id_producto')?.touched">
                         El producto <strong>es obligatorio</strong></span><!-- <-- SPAM -->
 
                 </div>
@@ -196,16 +231,16 @@
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Cantidad:</p>
                     <input type="number" min="1" formControlName="cantidad_producto">
-                    <span class="text-danger" *ngIf="formPedido.get('cantidad_producto')?.hasError('required')
-                    && formPedido.get('cantidad_producto')?.touched">
-                    El producto <strong>es obligatorio</strong></span><!-- <-- SPAM -->
+                    <span class="text-danger" *ngIf="formProductos.get('cantidad_producto')?.hasError('required')
+                    && formProductos.get('cantidad_producto')?.touched">
+                    La cantidad <strong>es obligatoria</strong></span><!-- <-- SPAM -->
                 </div>
                 <div class="col-4">
-                    
+
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio unitario:</p>
                     <input type="number" min="1" formControlName="precio_unitario">
-                    <span class="text-danger" *ngIf="formPedido.get('precio_unitario')?.hasError('required')
-                    && formPedido.get('precio_unitario')?.touched">
+                    <span class="text-danger" *ngIf="formProductos.get('precio_unitario')?.hasError('required')
+                    && formProductos.get('precio_unitario')?.touched">
                     El precio unitario <strong>es obligatorio</strong></span><!-- <-- SPAM -->
                 </div>
             </div>
@@ -214,11 +249,11 @@
 
 
             <button type="submit" class="btn
-                btn-success"
-                [disabled]="formPedido.invalid">Agregar</button>
+                btn-success" (click)="asignarProducto()"
+                [disabled]="formProductos.invalid">Agregar</button>
             <!-- <button *ngIf="showPut" type="submit" class="btn
                 btn-warning" (click)="putEmpleado()"
-                [disabled]="formPedido.invalid">Actualizar</button> -->
+                [disabled]="formProductos.invalid">Actualizar</button> -->
 
         </form>
 
