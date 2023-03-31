@@ -33,6 +33,7 @@ import { SedeComponent } from './pages/sede/sede.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
 import { PeddidosComponent } from './pages/peddidos/peddidos.component';
+import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { PeddidosComponent } from './pages/peddidos/peddidos.component';
     SedeComponent,
     ClientesComponent,
     SedeProductoComponent,
-    PeddidosComponent
+    PeddidosComponent,
+    FormPedidosComponent
   ],
   imports: [
     BrowserModule,

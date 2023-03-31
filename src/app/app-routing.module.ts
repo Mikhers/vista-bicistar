@@ -11,11 +11,13 @@ import { CategoriasComponent } from './pages/categorias/categorias.component';
 import { SedeComponent } from './pages/sede/sede.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
 import { PeddidosComponent } from './pages/peddidos/peddidos.component';
+import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
 
 const routes: Routes = [
   {path: 'sede', component: SedeComponent},
   {path: 'proveedores', component: ProveedoresComponent},
   {path: 'pedidos', component: PeddidosComponent},
+  {path: 'form-pedidos', component: FormPedidosComponent},//FORM-PEDIDOS
   {path: 'categorias', component: CategoriasComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'productos', component: ProductosComponent},
