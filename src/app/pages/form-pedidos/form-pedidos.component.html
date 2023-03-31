@@ -84,13 +84,25 @@
                                         <th>Producto</th>
                                         <th>Cantidad</th>
                                         <th>Precio</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr  *ngFor="let proForm of productosForm;" >
+                                    <tr  *ngFor="let proForm of productosForm; index as i" >
                                         <td>{{proForm.nombre_producto}}</td>
                                         <td>{{proForm.cantidad_producto}}</td>
                                         <td>{{proForm.precio_unitario | currency:'USD'}}</td>
+                                        <td>
+                                            <a 
+                                                (click)="getDataProducto(i, proForm.id_producto)">
+                                                <i class="fa-solid fa-pen-to-square text-primary me-2"></i>
+                                            </a>
+                                            <a 
+                                                (click)="deletePedidoP(i)">
+                                                <i class="fa-solid fa-trash text-danger"></i>
+                                            </a>
+
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -102,26 +114,13 @@
                 <h4 class="d-inline-block float-end mt-2 me-5 m-0">Total Pedido: {{totalPedido | currency:'USD'}}</h4>
                 <button (click)="postPedido()" *ngIf="!showPut" type="submit" class="btn
                 btn-success d-inline-block"
-                [disabled]="formPedido.invalid || productosForm.length == 0">Crear</button>
+                [disabled]="formPedido.invalid || productosForm.length == 0"  routerLink="/pedidos">Crear</button>
                 <!-- <button *ngIf="showPut" type="submit" class="btn
                     btn-warning" (click)="putEmpleado()"
-                    [disabled]="formPedido.invalid">Actualizar</button> -->
+                    [disabled]="formPedido.invalid"  routerLink="/pedidos">Actualizar</button> -->
                 </form>
             </div>
         </div>
-
-                            
-
-
-                
-        
-        
-
-
-
-
-
-
 
     </div>
 </div>
@@ -132,7 +131,8 @@
 <div class="modalProducto p-2" #modalProducto>
     <div class="modal-content2">
         <span class="close" (click)="closeModal2()">&times;</span>
-        <h1 >Ingresar Producto</h1>
+        <h1 *ngIf="!showPut">Ingresar Producto</h1>
+        <h1 *ngIf="showPut">Actualizar Producto</h1>
         <hr class="divider bg-danger" style="height:2px;">
 
         <form [formGroup]="formProductos">
@@ -142,13 +142,17 @@
 
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Producto: </p>
-                    <select class="form-control"
+                    <select *ngIf="!showPut; else nombrePut" class="form-control"
                         formControlName="id_producto"  [(ngModel)]="infoProducto">
                         <option *ngFor="let producto of productos" [ngValue]="{ id_producto:producto.id_producto,  nombre_producto:producto.nombre_producto }">{{producto.nombre_producto}}</option>
                     </select>
                     <span class="text-danger" *ngIf="formProductos.get('id_producto')?.hasError('required')
                         && formProductos.get('id_producto')?.touched">
                         El producto <strong>es obligatorio</strong></span><!-- <-- SPAM -->
+                    
+                    <ng-template #nombrePut>
+                        <h5 formControlName="id_producto" class="form-control">{{productosForm[idPedidoProducto].nombre_producto}}</h5>
+                    </ng-template>
 
                 </div>
                 <div class="col-4">
@@ -172,12 +176,12 @@
 
 
 
-            <button type="submit" class="btn
+            <button *ngIf="!showPut" type="submit" class="btn
                 btn-success" (click)="asignarProducto()"
                 [disabled]="formProductos.invalid">Agregar</button>
-            <!-- <button *ngIf="showPut" type="submit" class="btn
-                btn-warning" (click)="putEmpleado()"
-                [disabled]="formProductos.invalid">Actualizar</button> -->
+            <button *ngIf="showPut" type="submit" class="btn
+                btn-warning" (click)="putPedidoProducto()"
+                [disabled]="formProductos.invalid">Actualizar</button>
 
         </form>
     </div>

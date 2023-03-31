@@ -16,24 +16,20 @@ export class PedidoProductoService {
   urlDelete = 'http://localhost:8000/delete/pedido-producto/';
   constructor(private http: HttpClient) { }
 
-  getSedeProducto(): Observable<any>{
+  getPedidoProducto(): Observable<any>{
     return this.http.get(this.urlGet);
   }
 
-
-  getSedeProducto_id_idd(id:number,idd:number):Observable<any>{
-    return this.http.get(this.urlGetId + id + '/' + idd)
-  }
   getIdPedidoProducto(id: number): Observable<any>{
     return this.http.get(this.urlGetId + id);
   }
-  postSedeProducto(data: PedidoProductoInterface): Observable<any>{
+  postPedidoProducto(data: PedidoProductoInterface): Observable<any>{
     return this.http.post<PedidoProductoInterface>(this.urlPost, data);
   }
-  putSedeProducto(id:number, idd:number, data: PedidoProductoInterface): Observable<any>{
+  putPedidoProducto(id:number, idd:number, data: PedidoProductoInterface): Observable<any>{
     return this.http.put<PedidoProductoInterface>(this.urlUpdate + id + '/' + idd, data);
   }
-  deleteSedeProducto(id: number, idd:number): Observable<any>{
+  deletePedidoProducto(id: number, idd:number): Observable<any>{
     return this.http.delete<PedidoProductoInterface>(this.urlDelete + id + '/' + idd);
   }
 }

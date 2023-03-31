@@ -20,6 +20,7 @@ export class FormPedidosComponent {
   searchTerm: string = '';
   titulo="Pedidos Bicistar"
   infoProducto: any = {}
+
   showPut=false;
   maxToShow = 10;
   minToShow = 0;
@@ -27,7 +28,11 @@ export class FormPedidosComponent {
   totalItems = 0
   ini = 1;
   fin = 7;
+
   totalPedido=0
+  idPedidoProducto=0
+  idProducto_del_Pedido=0
+  idPedido=0
 
   horaActual!: string;
 
@@ -37,7 +42,7 @@ export class FormPedidosComponent {
   productos: productoInteface[]=[];
   proveedores: ProveedorInterface[]=[];
   pedidos: PedidosInterface[]=[];
-
+  
   productosForm: any[]=[];            //Pedidos-productos
 
   ngOnInit(): void{
@@ -78,50 +83,20 @@ export class FormPedidosComponent {
       precio_unitario: new FormControl('', [Validators.required])
     })
 
-  addProducto(): any{
-    const productoo: any =
-      {
-        id_producto: this.infoProducto.id_producto,
-        nombre_producto: this.infoProducto.nombre_producto,
-        cantidad_producto: this.formProductos.get('cantidad_producto')?.value,
-        precio_unitario: this.formProductos.get('precio_unitario')?.value
-      }
-      return productoo;
-  }
-  asignarProducto(){
-    const OBJETO = this.addProducto();
-    if(this.agregarObjeto({id_producto:OBJETO.id_producto, nombre_producto:OBJETO.nombre_producto})){
-      this.totalPedido = this.totalPedido + OBJETO.cantidad_producto * OBJETO.precio_unitario;
-      this.productosForm.push(OBJETO);
-      this.formProductos.reset();
-    }
-    else{
-      this.toastr.error('El producto ' + OBJETO.nombre_producto + ' ya existe en la lista.', "PRODUCTO YA FUE AGREGADO");
-    }
-  }
-  agregarObjeto(objeto: { id_producto: number, nombre_producto: string }): boolean {
-    const idExistente = this.productosForm.some(item => item.id_producto === objeto.id_producto);
-    if (!idExistente) {
-      return true
-    }
-    return false
-  }
-
   /*                                               PEDIDOS      GET    POST    PUT   DELETE                               */
-getPedido(){
-  this._pedido.getPedido().subscribe((data:PedidosInterface[])=>{
-    this.pedidos = data;
-    this.totalItems = data.length;
-    this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
+// getPedido(){
+//   this._pedido.getPedido().subscribe((data:PedidosInterface[])=>{
+//     this.pedidos = data;
+//     this.totalItems = data.length;
+//     this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
 
-  },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-    console.log(error)
-  })
-}
+//   },error=>{
+//     this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+//     console.log(error)
+//   })
+// }
 postPedido(){
   const now: string = new Date().toISOString();
-  console.warn(now)
   const PEDIDO: PedidosInterface = {
     fecha_realizado: now,
     fecha_llegada: this.formPedido.get('fecha_llegada')?.value?.toString() ?? "",
@@ -131,12 +106,10 @@ postPedido(){
     id_proveedor: parseInt(this.formPedido.get('id_proveedor')?.value as string),
     id_empleado: parseInt(this.formPedido.get('id_empleado')?.value as string)
   }
-  console.log(PEDIDO);
-  console.log(this.formPedido.get('fecha_realizado')?.value);
   this._pedido.postPedido(PEDIDO).subscribe(data=>{
-    
+    this.idPedido = data.id_pedido
     this.toastr.success("Se ha creado un nuevo pedido", "NUEVO PEDIDO REGISTRADO");
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.postPedidoProducto()
   },error=>{
     this.toastr.error("Hubo un error inesérado en el sistema", "ALGO A SALIDO MAL");
     console.log(error)
@@ -179,6 +152,79 @@ putPedido(num:number){
 }
 /*                                                               PEDIDO-PRODUCTO                                    */
 
+addProducto(): any{
+  const productoo: any =
+    {
+      id_producto: this.infoProducto.id_producto,
+      nombre_producto: this.infoProducto.nombre_producto,
+      cantidad_producto: this.formProductos.get('cantidad_producto')?.value,
+      precio_unitario: this.formProductos.get('precio_unitario')?.value
+    }
+    return productoo;
+}
+asignarProducto(){
+  const OBJETO = this.addProducto();
+  if(this.agregarObjeto({id_producto:OBJETO.id_producto, nombre_producto:OBJETO.nombre_producto})){
+    this.totalPedido = this.totalPedido + OBJETO.cantidad_producto * OBJETO.precio_unitario;
+    this.productosForm.push(OBJETO);
+    this.formProductos.reset();
+    this.closeModal2();
+  }
+  else{
+    this.toastr.error('El producto ' + OBJETO.nombre_producto + ' ya existe en la lista.', "PRODUCTO YA FUE AGREGADO");
+  }
+}
+agregarObjeto(objeto: { id_producto: number, nombre_producto: string }): boolean {
+  const idExistente = this.productosForm.some(item => item.id_producto === objeto.id_producto);
+  if (!idExistente) {
+    return true
+  }
+  return false
+}
+postPedidoProducto(){
+  for (let i = 0; i < this.productosForm.length; i++) {
+    const PEDIDO_PRODUCTO = {
+      id_pedido: this.idPedido,
+      id_producto: this.productosForm[i].id_producto,
+      cantidad_producto: this.productosForm[i].cantidad_producto,
+      precio_unitario: this.productosForm[i].precio_unitario
+    }
+    this._pedidoProducto.postPedidoProducto(PEDIDO_PRODUCTO).subscribe(data=>{ },error=>{
+     this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
+     console.log(error)
+    })
+  }
+
+}
+getDataProducto(num:number, id_producto:number){
+  this.showPut = true;
+  this.idPedidoProducto = num;
+  this.idProducto_del_Pedido = id_producto;
+  this.formProductos.setValue({
+    id_producto: this.productosForm[num].nombre_producto,
+    cantidad_producto: this.productosForm[num].cantidad_producto,
+    precio_unitario: this.productosForm[num].precio_unitario
+  })
+  this.openModal2();
+}
+putPedidoProducto(){
+  //   // id_pedido: this.idPedido,
+  this.productosForm[this.idPedidoProducto].cantidad_producto = this.formProductos.get('cantidad_producto')?.value
+  this.productosForm[this.idPedidoProducto].precio_unitario = this.formProductos.get('precio_unitario')?.value
+  this.totalPedido=0
+  for (let i = 0; i < this.productosForm.length; i++) {
+    this.totalPedido =  this.totalPedido + this.productosForm[i].precio_unitario * this.productosForm[i].cantidad_producto
+  }
+  this.closeModal2()
+}
+deletePedidoP(num:number){
+  if(window.confirm("¿Estas seguro que deseas eliminar este producto de tu pedido?")){
+    this.totalPedido = this.totalPedido - this.productosForm[num].cantidad_producto * this.productosForm[num].precio_unitario
+    this.productosForm.splice(num, 1);
+    this.toastr.warning("Producto eliminado de tu pedido", "PRODUCTO ELIMINADO DEL PEDIDO");
+    
+}
+}
   /*                                                               PROVEEDORES                                              */
   getProveedor(){
     this._proveedor.getProveedor().subscribe((data: ProveedorInterface[])=>{
