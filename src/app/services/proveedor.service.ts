@@ -7,7 +7,7 @@ import { ProveedorInterface } from '../interfaces/bicistar-api.Interface';
   providedIn: 'root'
 })
 export class ProveedorService {
-  // urlGetId = 'http://localhost:8000/ver/Proveedors/';
+  urlGetId = 'http://localhost:8000/ver/proveedores/';
   urlGet = 'http://localhost:8000/ver/proveedores';
   urlPost = 'http://localhost:8000/new/proveedor';
   urlUpdate = 'http://localhost:8000/modify/proveedor/';
@@ -17,9 +17,9 @@ export class ProveedorService {
   getProveedor(): Observable<any>{
     return this.http.get(this.urlGet);
   }
-  // getIdProveedor(id: number): Observable<any>{
-  //   return this.http.get(this.urlGetId + id);
-  // }
+  getIdProveedor(id: number): Observable<any>{
+    return this.http.get(this.urlGetId + id);
+  }
   postProveedor(data: ProveedorInterface): Observable<any>{
     return this.http.post<ProveedorInterface>(this.urlPost, data);
   }

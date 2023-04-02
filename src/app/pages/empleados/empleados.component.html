@@ -40,7 +40,7 @@
                 <div class="card-text">
                     <!-- TABLE -->
                     <div class="table-responsive table-upgrade">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-hover">
                         <thead >
                             <tr class="bg-blue">
                                 <th scope="col">Nombre</th>
@@ -164,7 +164,7 @@
                         <div class="col-6 p-2">
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Permisos del empleado</p>
-                    <select class="form-control"
+                    <select class="form-select"
                     formControlName="permiso_empleado">
                         <option  value="ALL PRIVILEGES">Todos los permisos</option>
                         <option  value="CREATE">Crear Elementos</option>
@@ -177,7 +177,7 @@
 
 
                     <p class="mt-4 mb-0"><span class="text-danger"><strong>*</strong></span>Cargo del empleado</p>
-                    <select class="form-control"
+                    <select class="form-select"
                     formControlName="rol_empleado">
                         <option  value="escritura">Gerente</option>
                         <option  value="lectura">Administrador</option>
@@ -195,7 +195,7 @@
 
                     <p class="mt-4 mb-0"><span
                         class="text-danger"><strong>*</strong></span>Sede a la que pertenece:</p>
-                    <select class="form-control"
+                    <select class="form-select"
                         formControlName="id_sede">
                         <option *ngFor="let sede of sedes"
                             value="{{sede.id_sede}}">{{sede.nombre_sede}}</option>

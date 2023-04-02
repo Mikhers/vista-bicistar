@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: 'proveedores', component: ProveedoresComponent},
   {path: 'pedidos', component: PeddidosComponent},
   {path: 'form-pedidos', component: FormPedidosComponent},//FORM-PEDIDOS
+  {path: 'form-pedidos/:id', component: FormPedidosComponent},//FORM-PEDIDOS PUT
   {path: 'categorias', component: CategoriasComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'productos', component: ProductosComponent},

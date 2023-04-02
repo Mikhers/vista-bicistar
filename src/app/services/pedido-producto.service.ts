@@ -14,6 +14,7 @@ export class PedidoProductoService {
   urlPost = 'http://localhost:8000/new/pedido-producto';
   urlUpdate = 'http://localhost:8000/modify/pedido-producto/';
   urlDelete = 'http://localhost:8000/delete/pedido-producto/';
+  urlAllDelete = 'http://localhost:8000/delete/pedido-producto/';
   constructor(private http: HttpClient) { }
 
   getPedidoProducto(): Observable<any>{
@@ -31,5 +32,8 @@ export class PedidoProductoService {
   }
   deletePedidoProducto(id: number, idd:number): Observable<any>{
     return this.http.delete<PedidoProductoInterface>(this.urlDelete + id + '/' + idd);
+  }
+  deleteAllPedidos(id: number):Observable<any>{
+    return this.http.delete(this.urlAllDelete + id)
   }
 }

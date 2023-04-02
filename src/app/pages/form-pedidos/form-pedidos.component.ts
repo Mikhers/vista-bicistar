@@ -8,6 +8,7 @@ import { ProductoService } from '../../services/productos.service';
 import { ProveedorService } from '../../services/proveedor.service';
 import { PedidosService } from '../../services/pedidos.service';
 import { PedidoProductoService } from '../../services/pedido-producto.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,9 +20,11 @@ export class FormPedidosComponent {
 
   searchTerm: string = '';
   titulo="Pedidos Bicistar"
+  horaActual!: string;
   infoProducto: any = {}
 
   showPut=false;
+  showEdit=false;
   maxToShow = 10;
   minToShow = 0;
   itemsLista = 0
@@ -34,7 +37,7 @@ export class FormPedidosComponent {
   idProducto_del_Pedido=0
   idPedido=0
 
-  horaActual!: string;
+  idPedidoPut: any
 
 
   sedes: SedeInterface[]=[];
@@ -45,7 +48,24 @@ export class FormPedidosComponent {
   
   productosForm: any[]=[];            //Pedidos-productos
 
+  constructor(
+    private toastr: ToastrService,
+    private _pedido: PedidosService,
+    private _pedidoProducto: PedidoProductoService,
+    private _producto: ProductoService,
+    private _proveedor: ProveedorService,
+    private _sede: SedeService,
+    private _empleado: EmpleadosService,
+    private aRouter: ActivatedRoute
+
+    ){this.idPedidoPut = this.aRouter.snapshot.paramMap.get('id')}
   ngOnInit(): void{
+    if(this.idPedidoPut != null){
+      this.showEdit = false
+      this.llenarCamposPedido();
+    }else{
+      this.showEdit = true
+    }
     const fechaHora = new Date();
     this.horaActual = fechaHora.toLocaleDateString() + ' ' + fechaHora.toLocaleTimeString();
     this.getEmpleado();
@@ -54,16 +74,43 @@ export class FormPedidosComponent {
     this.getP();
   }
 
-
-  constructor(
-    private toastr: ToastrService,
-    private _pedido: PedidosService,
-    private _pedidoProducto: PedidoProductoService,
-    private _producto: ProductoService,
-    private _proveedor: ProveedorService,
-    private _sede: SedeService,
-    private _empleado: EmpleadosService
-    ){}
+  llenarCamposPedido(){
+    this._pedido.getIdPedido(this.idPedidoPut).subscribe((data:PedidosInterface)=>{
+      this.totalPedido = data.total_pedido;
+      this.formPedido.setValue({
+        fecha_realizado: data.fecha_realizado!,
+        fecha_llegada: data.fecha_llegada,
+        estado_pedido: data.estado_pedido,
+        total_pedido: this.totalPedido.toString(),
+        id_sede: data.id_sede.toString(),
+        id_proveedor: data.id_proveedor.toString(),
+        id_empleado: data.id_empleado.toString()
+      })
+    },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+      console.log(error)
+    })
+    this._pedidoProducto.getIdPedidoProducto(this.idPedidoPut).subscribe((data2:PedidoProductoInterface[])=>{
+      for (let i = 0; i < data2.length; i++) {
+        this._producto.getIdProducto(data2[i].id_producto).subscribe((dataP:any)=>{
+          const PRODUCTOO:any=
+          {
+            id_producto: data2[i].id_producto,
+            nombre_producto: dataP.nombre_producto,
+            cantidad_producto: data2[i].cantidad_producto,
+            precio_unitario: data2[i].precio_unitario,
+          }
+          this.productosForm.push(PRODUCTOO)
+        },error=>{
+          this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+          console.log(error)
+        })
+      }
+    },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+      console.log(error)
+    })
+  }
 
 
     formPedido = new FormGroup({
@@ -83,18 +130,8 @@ export class FormPedidosComponent {
       precio_unitario: new FormControl('', [Validators.required])
     })
 
-  /*                                               PEDIDOS      GET    POST    PUT   DELETE                               */
-// getPedido(){
-//   this._pedido.getPedido().subscribe((data:PedidosInterface[])=>{
-//     this.pedidos = data;
-//     this.totalItems = data.length;
-//     this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
+  /*                                               PEDIDOS      POST    PUT   DELETE                               */
 
-//   },error=>{
-//     this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-//     console.log(error)
-//   })
-// }
 postPedido(){
   const now: string = new Date().toISOString();
   const PEDIDO: PedidosInterface = {
@@ -115,7 +152,6 @@ postPedido(){
     console.log(error)
   })
 }
-
 getIdPedido(num:number){
   this._pedido.getIdPedido(num).subscribe((data:PedidosInterface)=>{
       this.formPedido.setValue({
@@ -133,25 +169,49 @@ getIdPedido(num:number){
   })
 }
 
-putPedido(num:number){
+putPedido(){
+  const now: string = new Date().toISOString();
   const PEDIDO: PedidosInterface = {
-    fecha_realizado: this.formPedido.get('fecha_realizado')?. value ?? "",
-    fecha_llegada: this.formPedido.get('fecha_llegada')?. value ?? "",
-    estado_pedido: this.formPedido.get('estado_pedido')?. value ?? "",
-    total_pedido: parseFloat(this.formPedido.get('total_pedido')?. value as string),
+    fecha_llegada: this.formPedido.get('fecha_llegada')?. value ?? now,
+    estado_pedido: this.formPedido.get('estado_pedido')?. value ?? "recibido",
+    total_pedido: this.totalPedido,
     id_sede: parseInt(this.formPedido.get('id_sede')?. value as string),
     id_proveedor: parseInt(this.formPedido.get('id_proveedor')?. value as string),
     id_empleado: parseInt(this.formPedido.get('id_empleado')?. value as string)
   }
-  this._pedido.putPedido(num, PEDIDO).subscribe(data=>{
-    /////////////////////////////////////////////////////////////////////////////////////////////
+  this._pedido.putPedido(this.idPedidoPut, PEDIDO).subscribe(data=>{
+    this.toastr.info("Se a actualizado el pedido", "PEDIDO ACTUALIZADO")
+    this.deleteAllPedidios();
   },error=>{
     this.toastr.error("Hubo un error inesperado en el sistema","ALGO SALIO MAL")
     console.log(error)
   })
 }
 /*                                                               PEDIDO-PRODUCTO                                    */
-
+deleteAllPedidios(){
+  this._pedidoProducto.deleteAllPedidos(this.idPedidoPut).subscribe(data=>{
+    this.insertAllPedidos();
+  },error=>{
+    this.toastr.error("Desde eliminar a todos","ALGO SALIO MAL")
+    console.log(error)
+  })
+}
+insertAllPedidos(){
+  for (let i = 0; i < this.productosForm.length; i++) {
+    const PRODUCTO = {
+      id_pedido: this.idPedidoPut,
+      id_producto: this.productosForm[i].id_producto,
+      cantidad_producto: this.productosForm[i].cantidad_producto,
+      precio_unitario: this.productosForm[i].precio_unitario
+    }
+    this._pedidoProducto.postPedidoProducto(PRODUCTO).subscribe(data=>{
+      //
+    },error=>{
+      this.toastr.error("Desde insertar denuevo","ALGO SALIO MAL")
+      console.log(error)
+    })
+  }
+}
 addProducto(): any{
   const productoo: any =
     {
@@ -167,6 +227,7 @@ asignarProducto(){
   if(this.agregarObjeto({id_producto:OBJETO.id_producto, nombre_producto:OBJETO.nombre_producto})){
     this.totalPedido = this.totalPedido + OBJETO.cantidad_producto * OBJETO.precio_unitario;
     this.productosForm.push(OBJETO);
+    // this.productoscreadosForm.push(OBJETO);
     this.formProductos.reset();
     this.closeModal2();
   }
@@ -208,7 +269,6 @@ getDataProducto(num:number, id_producto:number){
   this.openModal2();
 }
 putPedidoProducto(){
-  //   // id_pedido: this.idPedido,
   this.productosForm[this.idPedidoProducto].cantidad_producto = this.formProductos.get('cantidad_producto')?.value
   this.productosForm[this.idPedidoProducto].precio_unitario = this.formProductos.get('precio_unitario')?.value
   this.totalPedido=0
@@ -217,14 +277,14 @@ putPedidoProducto(){
   }
   this.closeModal2()
 }
-deletePedidoP(num:number){
+deletePedidoP(num:number){//Esta funcion borra un articulo cuando se esta creando el pedido
   if(window.confirm("¿Estas seguro que deseas eliminar este producto de tu pedido?")){
     this.totalPedido = this.totalPedido - this.productosForm[num].cantidad_producto * this.productosForm[num].precio_unitario
     this.productosForm.splice(num, 1);
     this.toastr.warning("Producto eliminado de tu pedido", "PRODUCTO ELIMINADO DEL PEDIDO");
-    
 }
 }
+
   /*                                                               PROVEEDORES                                              */
   getProveedor(){
     this._proveedor.getProveedor().subscribe((data: ProveedorInterface[])=>{
@@ -270,7 +330,5 @@ getSede(){
     this.formProductos.reset()
       this.showPut = false;
   }
-
-
 
 }

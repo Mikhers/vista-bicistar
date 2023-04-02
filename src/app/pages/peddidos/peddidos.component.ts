@@ -1,13 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { EmpleadosInterface, ProveedorInterface, SedeInterface, productoInteface, PedidosInterface, PedidoProductoInterface } from '../../interfaces/bicistar-api.Interface';
+import { Component } from '@angular/core';
+import { EmpleadosInterface, ProveedorInterface, SedeInterface, PedidosInterface } from '../../interfaces/bicistar-api.Interface';
 import { SedeService } from '../../services/sede.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { EmpleadosService } from '../../services/empleados.service';
-import { ProductoService } from '../../services/productos.service';
 import { ProveedorService } from '../../services/proveedor.service';
 import { PedidosService } from '../../services/pedidos.service';
-import { PedidoProductoService } from '../../services/pedido-producto.service';
 
 
 @Component({
@@ -38,6 +35,9 @@ export class PeddidosComponent {
 
   ngOnInit(): void{
     this.getPedido();
+    this.getProveedor();
+    this.getSede();
+    this.getEmpleado();
   }
 
 
@@ -46,7 +46,6 @@ export class PeddidosComponent {
   constructor(
     private toastr: ToastrService,
     private _pedido: PedidosService,
-    private _pedidoProducto: PedidoProductoService,
     private _proveedor: ProveedorService,
     private _sede: SedeService,
     private _empleado: EmpleadosService
@@ -62,6 +61,11 @@ export class PeddidosComponent {
     });
   }
 
+  otra(num:number): string{
+    if(num%2 == 0)
+      return "Es Par"
+    return "Es Impar"
+  }
 
   /*                                               PEDIDOS      GET    POST    PUT   DELETE                               */
 getPedido(){
@@ -75,12 +79,32 @@ getPedido(){
     console.log(error)
   })
 }
+dropPedido(num:number){
+  if(window.confirm("¿Estas seguro que deseas eliminar el pedido?")){
+    this._pedido.deletePedido(num).subscribe(data=>{
+     this.toastr.warning("Se ha ELIMINADO el pedido","PEDIDO ELIMINADO")
+     this.getPedido();
+    },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+      console.log(error)
+    }) 
+  }
+}
   /*                                                               PROVEEDORES                                              */
   getProveedor(){
     this._proveedor.getProveedor().subscribe((data: ProveedorInterface[])=>{
       this.proveedores = data;
     },error=>{
       this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
+      console.log(error)
+    })
+  }
+/*                                                                SEDE                                                */  
+  getSede(){
+    this._sede.getSede().subscribe(data =>{
+      this.sedes = data;
+    },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
       console.log(error)
     })
   }
@@ -93,12 +117,21 @@ getPedido(){
       console.log(error)
     })
   }
-/*                                                                SEDE                                                */
-getSede(){
-  this._sede.getSede().subscribe(data =>{
-    this.sedes = data;
-  })
-}
+
+  //PARA LOS NOMBRES EN VEZ DE LOS ID
+  setProveedor(id:number): string {
+    const NOMBRE_PROVEEDOR = this.proveedores.find(proveedor => proveedor.id_proveedor === id);
+    return NOMBRE_PROVEEDOR?.nombre_proveedor ?? "Algo salio mal"
+  }
+  setSede(id:number): string {
+    const NOMBRE_SEDE = this.sedes.find(proveedor => proveedor.id_sede === id);
+    return NOMBRE_SEDE?.nombre_sede ?? "Algo salio mal"
+  }
+  setEmpleado(id:number): string {
+    const NOMBRE_EMPLEADO = this.empleados.find(proveedor => proveedor.id_empleado === id);
+    return NOMBRE_EMPLEADO?.nombre_empleado ?? "Algo salio mal"
+  }
+
 
   /*                                                          FUNCIONES DE LA TABLA                                     */
   showTable(index: number) {
