@@ -21,25 +21,20 @@
                                 <div class="card-title">
                                     <h3 class="float-start mt-1">Pedidos
                                         ({{pedidos.length}})</h3>
-                                    <a *ngIf="!conFiltroFecha" (click)="openModal()" class="stat  float-end fs-3 me-4">
-                                        <i class="fa-sharp fa-regular fa-calendar"></i>
-                                    </a>
-                                    <div *ngIf="conFiltroFecha" class="  float-end me-4">
-                                        <p class="inline-one">Quitar filtro: </p>
-                                        <a (click)="getPedido()" class="stat inline-one fs-3">
-                                            
-                                            <i class="fa-solid fa-ban"></i>
+                                        <a *ngIf="!conFiltroFecha" (click)="openModal()" class="stat  float-end fs-3 me-4">
+                                            <i class="fa-sharp fa-regular fa-calendar"></i>
                                         </a>
-                                    </div>
+                                        <div *ngIf="conFiltroFecha" class="  float-end me-4">
+                                            <p class="inline-one">Quitar filtro: </p>
+                                            <a (click)="getPedido()" class="stat inline-one fs-3">
+                                                
+                                                <i class="fa-solid fa-ban"></i>
+                                            </a>
+                                        </div>
                                 </div>
+                            </div>
 
-
-                                
-                        </div>
-                    </div>
-
-    
-                                    
+                </div>
                 <div class="card-text">
                     <!-- TABLE -->
                     <div class="table-responsive table-upgrade">
@@ -65,7 +60,7 @@
                                 <td><span class="badge" [ngClass]="{'bg-warning': pedido.estado_pedido === 'en proceso', 'bg-success': pedido.estado_pedido === 'recibido'}">{{pedido.estado_pedido}}</span></td>
                                 <td>{{pedido.total_pedido | currency: 'USD' }}</td>
                                 <td>{{ setProveedor(pedido.id_proveedor) }}</td>
-                                <td >{{setSede(pedido.id_sede)}}</td>
+                                <td >{{nombre_sede}}</td>
                                 <td>{{setEmpleado(pedido.id_empleado)}}</td>
                                 <td>
                                     <a [routerLink]="['/form-pedidos', pedido.id_pedido]">

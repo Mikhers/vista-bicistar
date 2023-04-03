@@ -9,6 +9,7 @@ import { ProveedorService } from '../../services/proveedor.service';
 import { PedidosService } from '../../services/pedidos.service';
 import { PedidoProductoService } from '../../services/pedido-producto.service';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class FormPedidosComponent {
   productosForm: any[]=[];            //Pedidos-productos
 
   constructor(
+    private location: Location,
     private toastr: ToastrService,
     private _pedido: PedidosService,
     private _pedidoProducto: PedidoProductoService,
@@ -73,7 +75,9 @@ export class FormPedidosComponent {
     this.getSede();
     this.getP();
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   llenarCamposPedido(){
     this._pedido.getIdPedido(this.idPedidoPut).subscribe((data:PedidosInterface)=>{
       this.totalPedido = data.total_pedido;

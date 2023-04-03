@@ -14,7 +14,7 @@ import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
 
 const routes: Routes = [
-  {path: 'sede', component: SedeComponent},
+  {path: 'inicio', component: SedeComponent},
   {path: 'proveedores', component: ProveedoresComponent},
   {path: 'pedidos', component: PeddidosComponent},
   {path: 'form-pedidos', component: FormPedidosComponent},//FORM-PEDIDOS
@@ -22,11 +22,11 @@ const routes: Routes = [
   {path: 'categorias', component: CategoriasComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'productos', component: ProductosComponent},
-  {path: 'producto-sede/:id', component: SedeProductoComponent},
+  {path: 'sedes/producto/:id', component: SedeProductoComponent},
   {path: 'compras', component: ComprasComponent},
   {path: 'sorry', component: SorryComponent},
-  {path: '', redirectTo:'sede', pathMatch: 'full'},
-  {path: '**', pathMatch: 'full', redirectTo: 'sede'},
+  {path: '', redirectTo:'inicio', pathMatch: 'full'},
+  {path: '**', pathMatch: 'full', redirectTo: 'inicio'},
 ];
 
 @NgModule({

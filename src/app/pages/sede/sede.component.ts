@@ -90,11 +90,6 @@ export class SedeComponent implements OnInit {
 
 
 
-//NAVEGACION
-  cambiarSede(id: number) {
-    this.router.navigate(['/producto-sede', id]);
-  }
-
 
 
 //FUNCIONES MODAL

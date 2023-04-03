@@ -1,85 +1,90 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { EmpleadosInterface, ProveedorInterface, SedeInterface, PedidosInterface } from '../../interfaces/bicistar-api.Interface';
-import { SedeService } from '../../services/sede.service';
+import { EmpleadosInterface, ProveedorInterface, SedeInterface, PedidosInterface } from '../../../interfaces/bicistar-api.Interface';
+import { SedeService } from '../../../services/sede.service';
 import { ToastrService } from 'ngx-toastr';
-import { EmpleadosService } from '../../services/empleados.service';
-import { ProveedorService } from '../../services/proveedor.service';
-import { PedidosService } from '../../services/pedidos.service';
+import { EmpleadosService } from '../../../services/empleados.service';
+import { ProveedorService } from '../../../services/proveedor.service';
+import { PedidosService } from '../../../services/pedidos.service';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-peddidos',
-  templateUrl: './peddidos.component.html',
-  styleUrls: ['./peddidos.component.css']
+  selector: 'app-sede-pedido',
+  templateUrl: './sede-pedido.component.html',
+  styleUrls: ['./sede-pedido.component.css']
 })
-export class PeddidosComponent {
+export class SedePedidoComponent {
 
+  nombre_sede!: string
+  titulo="Pedidos ";
   searchTerm: string = '';
-  titulo="Pedidos Bicistar"
   infoProducto: any = {}
+  showPut=false;
   maxToShow = 10;
   minToShow = 0;
   itemsLista = 0
   totalItems = 0
   ini = 1;
   fin = 7;
+
   conFiltroFecha = false
 
   fechaDesde!: Date;
   fechaHasta!: Date;
 
+  idSede:any;
 
-
-  
-
-  sedes: SedeInterface[]=[];
   empleados: EmpleadosInterface[]=[];
   proveedores: ProveedorInterface[]=[];
   pedidos: PedidosInterface[]=[];
 
 
   ngOnInit(): void{
+    this.setSede();
     this.getPedido();
     this.getProveedor();
-    this.getSede();
+    // this.getSede();
     this.getEmpleado();
   }
+
 
   formFechaRango = new FormGroup({
     fechaDesde: new FormControl('', [Validators.required]),
     fechaHasta: new FormControl('', [Validators.required])
   })
 
-  buscar(){
-    this.pedidos = this.pedidos.filter(fecha => {
-      const tiempoFecha = new Date(fecha.fecha_realizado ?? '').getTime();
-      const tiempoDesde = new Date(this.formFechaRango.get('fechaDesde')?.value ?? '').getTime();
-      const tiempoHasta = new Date(this.formFechaRango.get('fechaHasta')?.value ?? '').getTime();
-      return tiempoFecha >= tiempoDesde && tiempoFecha <= tiempoHasta;
-    });
-    this.closeModal();
-    this.conFiltroFecha = true
-  }
-
   constructor(
+    private aRouter: ActivatedRoute,
     private toastr: ToastrService,
     private _pedido: PedidosService,
     private _proveedor: ProveedorService,
     private _sede: SedeService,
     private _empleado: EmpleadosService
-    ){}
+    ){
+      this.idSede = this.aRouter.snapshot.paramMap.get('id')
+    }
 
+
+    buscar(){
+      this.pedidos = this.pedidos.filter(fecha => {
+        const tiempoFecha = new Date(fecha.fecha_realizado ?? '').getTime();
+        const tiempoDesde = new Date(this.formFechaRango.get('fechaDesde')?.value ?? '').getTime();
+        const tiempoHasta = new Date(this.formFechaRango.get('fechaHasta')?.value ?? '').getTime();
+        return tiempoFecha >= tiempoDesde && tiempoFecha <= tiempoHasta;
+      });
+      this.closeModal();
+      this.conFiltroFecha = true
+    }
 
 
   /*                                               PEDIDOS      GET    POST    PUT   DELETE                               */
 getPedido(){
   this.conFiltroFecha = false
-  this._pedido.getPedido().subscribe((data:PedidosInterface[])=>{
+  this._pedido.getSedePedido(this.idSede).subscribe((data:PedidosInterface[])=>{
     this.pedidos = data;
     this.totalItems = data.length;
     this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
-
 
   },error=>{
     this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
@@ -106,15 +111,6 @@ dropPedido(num:number){
       console.log(error)
     })
   }
-/*                                                                SEDE                                                */  
-  getSede(){
-    this._sede.getSede().subscribe(data =>{
-      this.sedes = data;
-    },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
-    })
-  }
   /*                                                               EMPLEADO                                              */
   getEmpleado(){
     this._empleado.getEmpleado().subscribe((data: EmpleadosInterface[])=>{
@@ -130,9 +126,15 @@ dropPedido(num:number){
     const NOMBRE_PROVEEDOR = this.proveedores.find(proveedor => proveedor.id_proveedor === id);
     return NOMBRE_PROVEEDOR?.nombre_proveedor ?? "Algo salio mal"
   }
-  setSede(id:number): string {
-    const NOMBRE_SEDE = this.sedes.find(proveedor => proveedor.id_sede === id);
-    return NOMBRE_SEDE?.nombre_sede ?? "Algo salio mal"
+  setSede(){
+    this._sede.getIdSede(this.idSede).subscribe((data:SedeInterface)=>{
+      this.nombre_sede = data.nombre_sede;
+      this.titulo += data.nombre_sede;
+    },error=>{
+      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
+      console.log(error)
+    })
+
   }
   setEmpleado(id:number): string {
     const NOMBRE_EMPLEADO = this.empleados.find(proveedor => proveedor.id_empleado === id);
@@ -160,7 +162,10 @@ dropPedido(num:number){
     return Array.from({ length: end - start }, (_, i) => start + i);
   }
 
-  //FUNCIONES MODAL
+
+
+
+    //FUNCIONES MODAL
 @ViewChild('modal') modal!: ElementRef;
 openModal() {
   // this.getCP();

@@ -122,7 +122,7 @@
                 <br>
                 <hr class="divider bg-danger" style="height:2px;">
                 <h4 class="d-inline-block float-end mt-2 me-5 m-0">Total Pedido: {{totalPedido | currency:'USD'}}</h4>
-                <button class="btn btn-secondary me-4" routerLink="/pedidos">Cancelar</button>
+                <button class="btn btn-secondary me-4" (click)="goBack()">Cancelar</button>
                 <button (click)="postPedido()" *ngIf="showEdit" type="submit" class="btn
                 btn-success d-inline-block"
                 [disabled]="formPedido.invalid || productosForm.length == 0"  routerLink="/pedidos">Crear</button>

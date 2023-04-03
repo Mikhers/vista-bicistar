@@ -3,6 +3,7 @@ import { InfoPaginaService } from '../../services/info-pagina.service';
 import { SedeService } from 'src/app/services/sede.service';
 import { SedeInterface } from 'src/app/interfaces/bicistar-api.Interface';
 import { Router,ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,22 +19,24 @@ export class SidebarComponent implements OnInit  {
   sedes: SedeInterface[]=[];
   ngOnInit(){
     this.getSede();
-    this.route.params.subscribe(params => {
-      // Cargar los datos del producto con el nuevo id
-      const id = +params['id']; // El signo más convierte el parámetro a número
-      // Llamar a una función para cargar los datos del producto
-    });
-  }
 
+  }
+  goBack(): void {
+    this.location.back();
+  }
+  refresh(): void {
+    const currentUrl = this.router.url;
+    const uniqueParam = new Date().getTime();
+    this.router.navigate([currentUrl], { queryParams: { unique: uniqueParam } });
+  }
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
     private router: Router,
     public _servicio: InfoPaginaService,
     private _sede: SedeService
     ){}
-    cambiarSede(id: number) {
-      this.router.navigate(['/producto-sede', id]);
-    }
+
   /*METODOS HTTP*/
   getSede(){
     this._sede.getSede().subscribe(data =>{

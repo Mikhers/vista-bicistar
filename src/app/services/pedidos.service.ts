@@ -7,6 +7,7 @@ import { PedidosInterface } from '../interfaces/bicistar-api.Interface';
   providedIn: 'root'
 })
 export class PedidosService {
+  urlGetSede = 'http://localhost:8000/ver/pedidos-sede/';
   urlGetId = 'http://localhost:8000/ver/pedidos/';
   urlGet = 'http://localhost:8000/ver/pedidos';
   urlPost = 'http://localhost:8000/new/pedido';
@@ -14,6 +15,10 @@ export class PedidosService {
   urlDelete = 'http://localhost:8000/delete/pedido/';
   constructor(private http: HttpClient) { }
 
+  
+  getSedePedido(id: number): Observable<any>{
+    return this.http.get(this.urlGetSede + id)
+  }
   getPedido(): Observable<any>{
     return this.http.get(this.urlGet);
   }

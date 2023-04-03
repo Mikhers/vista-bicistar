@@ -19,9 +19,9 @@
                             <div class="text-end float-end contenido">
                                 <a>Ventas</a>
                                 /
-                                <a>Pedidos</a>
+                                <a [routerLink]="['/sedes/pedidos', sede.id_sede]">Pedidos</a>
                                 /
-                                <a (click)="cambiarSede(sede.id_sede ?? 1)">Stock</a>
+                                <a [routerLink]="['/sedes/producto', sede.id_sede]">Stock</a>
                             </div>
                             <h1 class="mt-1 mb-3 dire fw-bold">{{sede.nombre_sede}}</h1>
                             <div class="mb-0">

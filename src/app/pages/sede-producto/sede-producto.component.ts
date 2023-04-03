@@ -23,7 +23,7 @@ import { SedeService } from 'src/app/services/sede.service';
 })
 export class SedeProductoComponent {
   // @ViewChild('top', {static: false}) topElement!: ElementRef;
-  titulo = '';
+  titulo = 'Productos ';
 
 
   searchTerm: string = '';
@@ -166,7 +166,7 @@ dropSedeProducto(num:any){
 //OBTENER SEDE
 getSede(){
   this._sede.getIdSede(this.id).subscribe((data: SedeInterface)=>{
-    this.titulo = data.nombre_sede;
+    this.titulo += data.nombre_sede;
   })
   this._sede.getSede().subscribe((data: SedeInterface[]) =>{
     this.sedes=data;
