@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 //INTERFACE
-import { categoriaInterface } from '../../interfaces/bicistar-api.Interface';
+import { categoriaInterface } from '../../../interfaces/bicistar-api.Interface';
 
 //SERVICE
-import { CategoriaService } from '../../services/categoria.service';
+import { CategoriaService } from '../../../services/categoria.service';
 
 //FROMS
 import { FormGroup, Validators, FormControl } from '@angular/forms';

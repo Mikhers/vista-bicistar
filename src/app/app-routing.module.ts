@@ -7,8 +7,7 @@ import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
-import { CategoriasComponent } from './pages/categorias/categorias.component';
-import { SedeComponent } from './pages/sede/sede.component';
+import { SedeComponent } from './pages/inicio/sede.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
 import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
@@ -19,7 +18,6 @@ const routes: Routes = [
   {path: 'pedidos', component: PeddidosComponent},
   {path: 'form-pedidos', component: FormPedidosComponent},//FORM-PEDIDOS
   {path: 'form-pedidos/:id', component: FormPedidosComponent},//FORM-PEDIDOS PUT
-  {path: 'categorias', component: CategoriasComponent},
   {path: 'empleados', component: EmpleadosComponent},
   {path: 'productos', component: ProductosComponent},
   {path: 'sedes/producto/:id', component: SedeProductoComponent},

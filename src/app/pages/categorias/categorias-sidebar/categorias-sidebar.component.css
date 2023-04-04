@@ -1,0 +1,29 @@
+  
+  .sidebar-item {
+    display: block;
+    padding: 10px;
+    color: #555;
+    text-decoration: none;
+  }
+  
+  .sidebar-item.active {
+    background-color: #70AD47;
+    color: #fff;
+    border-radius: 5px;
+  }
+  .sidebar-secundary{
+    /* background-color: #f2f2f2; */
+    height: 100%;
+    width: 200px;
+    padding: 10px;
+  }
+  .derecha{
+    margin-left: 50px; /* 200px de ancho del sidebar + 20px de espacio de padding */
+    margin-right: 10px;
+    width: 100%;
+    /* padding: 20px; */
+    /* background-color: #fff; */
+  }
+  .container {
+    display: flex;
+  }

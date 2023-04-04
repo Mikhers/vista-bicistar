@@ -5,7 +5,7 @@
             <div class="col-8">
                 <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
             </div>
-            <div class="col-4"  *ngIf="categoriasP.length == 0">
+            <div class="col-4"  *ngIf="categoriaS.length == 0">
                 <h3 class="float-end">Agregar Producto
                 <button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
             </h3>
@@ -17,7 +17,7 @@
 
 
         <div class="row mb-5">
-                <div class="card pb-3" *ngIf="categoriasP.length> 0">
+                <div class="card pb-3" *ngIf="categoriaS.length> 0">
                     <div class="card-body ">
                         <div class="container">
                             <div class="row">
@@ -47,7 +47,6 @@
                         <table class="table table-striped table-hover">
                             <thead class="bg-blue">
                                 <tr>
-                                    <th scope="col">ID</th>
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Descripción</th>
                                     <th scope="col"><button class="btn btn-success"(click)="openModal()">
@@ -56,19 +55,18 @@
                             </thead>
                             <tbody>
                                 <!-- rengo-tabla -->
-                                <tr *ngFor="let categoriaP of
+                                <tr *ngFor="let categoriaS of
                                     categoriaPFiltrados.slice(minToShow,
                                     maxToShow)">
-                                    <td class="p-0">{{categoriaP.id_categoria_producto}}</td>
-                                    <td class="p-0">{{categoriaP.nombre_categoria_producto}}</td>
-                                    <td>{{categoriaP.descripcion_categoria_producto}}</td>
+                                    <td class="p-0">{{categoriaS.nombre_servicio}}</td>
+                                    <td>{{categoriaS.descripcion_servicio}}</td>
                                     <td>
                                         <a 
-                                            (click)="obtenerId(categoriaP.id_categoria_producto)"><i
+                                            (click)="obtenerId(categoriaS.id_categoria_servicio)"><i
                                                 class="fa-solid
                                                 fa-pen-to-square
                                                 text-primary me-2"></i></a>
-                                        <a><i (click)="deleteCP(categoriaP.id_categoria_producto)"
+                                        <a><i (click)="deleteCP(categoriaS.id_categoria_servicio)"
                                                 class="fa-solid fa-trash
                                                 text-danger"></i></a>
                                     </td>
@@ -105,7 +103,7 @@
     </div>
 
 
-    <div class="card" *ngIf="categoriasP.length == 0">
+    <div class="card" *ngIf="categoriaS.length == 0">
         <h1 class="text-center pt-5 pb-5">No hay categorias por el momento</h1>
     </div>
 </div>
@@ -118,7 +116,7 @@
         <h1 *ngIf="showPut">Actualizar Sede</h1>
         <h1 *ngIf="!showPut">Crear Sede</h1>
         <hr class="divider bg-danger" style="height:2px;">
-        <form [formGroup]="formCategoria">
+        <form [formGroup]="formCategoriaS">
             <p>Los campos marcados con (<span
                     class="text-danger"><strong>*</strong></span>)
                 son obligatorios</p>
@@ -126,34 +124,34 @@
             <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
                 de la categoria: </p>
             <input
-                formControlName="nombre_categoria_producto"
+                formControlName="nombre_servicio"
                 type="text" class="form-control">
 
             <span class="text-danger"
-                *ngIf="formCategoria.get('nombre_categoria_producto')?.hasError('required')
+                *ngIf="formCategoriaS.get('nombre_servicio')?.hasError('required')
                 &&
-                formCategoria.get('nombre_categoria_producto')?.touched">El
+                formCategoriaS.get('nombre_servicio')?.touched">El
                 Nombre de la categoria es <strong>es
                     obligatorio</strong></span><!-- <-- SPAM -->
             <span class="text-danger"
-                *ngIf="formCategoria.get('nombre_categoria_producto')?.errors?.['maxlength']">El
+                *ngIf="formCategoriaS.get('nombre_servicio')?.errors?.['maxlength']">El
                 Maximo es <strong>50</strong> catacteres</span><!-- <-- SPAM -->
             <p class="mt-2 mb-0">Descripción de la categoria:</p>
             <textarea
                 type="text" class="form-control" cols="7"
                 rows="4"
-                formControlName="descripcion_categoria_producto"></textarea>
+                formControlName="descripcion_servicio"></textarea>
             <span class="text-danger"
-                *ngIf="formCategoria.get('descripcion_categoria_producto')?.errors?.['maxlength']">El
+                *ngIf="formCategoriaS.get('descripcion_servicio')?.errors?.['maxlength']">El
                 Maximo es <strong>300</strong> catacteres</span><!-- <-- SPAM -->
             <br>
 
             <button *ngIf="!showPut" type="submit" class="btn
                 btn-success"
-                [disabled]="formCategoria.invalid" (click)="postCP()">Crear</button>
+                [disabled]="formCategoriaS.invalid" (click)="postCP()">Crear</button>
             <button *ngIf="showPut" type="submit" class="btn
                 btn-warning"
-                [disabled]="formCategoria.invalid"
+                [disabled]="formCategoriaS.invalid"
                 (click)="putCP(idCategoria)">Actualizar</button>
         </form>
     </div>

@@ -25,16 +25,16 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { SorryComponent } from './pages/sorry/sorry.component';
 import { ComprasComponent } from './pages/compras/compras.component';
-import { CategoriasComponent } from './pages/categorias/categorias.component';
 
 //PIPES
 import { FilterPipe } from './pipes/filter.pipe';
-import { SedeComponent } from './pages/sede/sede.component';
+import { SedeComponent } from './pages/inicio/sede.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
 import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
 import { SedesModule } from './pages/sedes/sedes.module';
+import { CategoriasModule } from './pages/categorias/categorias.module';
 
 @NgModule({
   declarations: [
@@ -47,8 +47,7 @@ import { SedesModule } from './pages/sedes/sedes.module';
     EmpleadosComponent,
     SorryComponent,
     ComprasComponent,
-    FilterPipe,
-    CategoriasComponent,
+    FilterPipe,//pipe
     SedeComponent,
     ClientesComponent,
     SedeProductoComponent,
@@ -57,6 +56,7 @@ import { SedesModule } from './pages/sedes/sedes.module';
   ],
   imports: [
     SedesModule,
+    CategoriasModule,
 
     BrowserModule,
     AppRoutingModule,
