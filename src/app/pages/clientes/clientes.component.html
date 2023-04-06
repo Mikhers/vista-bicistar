@@ -1,1 +1,176 @@
-<p>clientes works!</p>
+<div class=".animate__animated animate__fadeIn animate__faster">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-8">
+                <h1 class="text-ver fw-bold mb-4">{{titulo | uppercase}}</h1>
+            </div>
+            <div class="col-4"  *ngIf="clientes.length == 0">
+                <h3 class="float-end">Agregar Producto
+                <button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button>
+            </h3>
+            </div>
+        </div>
+
+
+        <div class="row mb-5">
+            <div class="card  pb-3" *ngIf="clientes.length> 0">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="card-title">
+                                    <h3 class="float-start mt-1">clientes
+                                        ({{totalItems}})</h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+    
+                                <div class="input-group rounded">
+                                    <input type="search" placeholder="Buscar"
+                                        class="form-control" [(ngModel)]="searchTerm" />
+                                </div>
+    
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-text">
+                    <!-- TABLE -->
+                    <div class="table-responsive table-upgrade">
+                    <table class="table table-striped table-hover">
+                        <thead >
+                            <tr class="bg-blue">
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Identificacion</th>
+                                <th scope="col">Direccion</th>
+                                <th scope="col"><button class="btn btn-success"(click)="openModal()" ><i class="fa-solid fa-plus"></i></button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- rengo-tabla -->
+                            <tr *ngFor="let cliente of clientesFiltrados.slice(minToShow, maxToShow);">
+    
+                                <td class="p-0">{{cliente.nombre_cliente}}</td>
+                                <td>{{cliente.apellido_cliente}}</td>
+                                <td>{{cliente.telefono_cliente}}</td>
+                                <td>{{cliente.email_cliente}}</td>
+                                <td>{{cliente.cc_cliente}}</td>
+                                <td >{{cliente.direccion_cliente}}</td>
+                                <td>
+                                    <a (click)="getId(cliente.id_cliente)">
+                                        <i class="fa-solid fa-pen-to-square text-primary me-2"></i></a>
+                                    <a (click)="dropCliente(cliente.id_cliente)"><i
+                                            class="fa-solid fa-trash text-danger"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                </div>
+                <ul  *ngIf="totalItems > 10"  class="list-group list-group-horizontal center text-center
+                    justify-content-center">
+                    <li class="list-group-item p-0 mb-0"><button [disabled]="ini ===
+                            1"
+                            (click)="izqFelcha()" class="btn
+                            btn-light"><i class="fa-sharp fa-solid fa-arrow-left"></i></button></li>
+                    <!-- Rango-lista -->
+                    <div *ngFor="let i of ranges(ini, fin)">
+                        <li class="list-group-item p-0 mb-0"><button
+                                (click)="showTable(i)" class="btn
+                                btn-colorAPP me-1 ms-1 " [disabled]="i*10 ===
+                                maxToShow">{{i}}</button></li>
+                    </div>
+    
+                    <li class="list-group-item p-0
+                        mb-0"><button [disabled]="fin === itemsLista"
+                            (click)="derFelcha()" class="btn
+                            btn-light"><i class="fa-solid fa-arrow-right"></i></button></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div #modal class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1 *ngIf="showPut">Actualizar Datos de cliente</h1>
+        <h1 *ngIf="!showPut">Ingresar cliente</h1>
+        <hr class="divider bg-danger" style="height:2px;">
+        <form [formGroup]="formCliente">
+            <div class="row">
+                <p>Los campos marcados con (<span
+                        class="text-danger"><strong>*</strong></span>)
+                    son obligatorios</p>
+
+                <div class="col-6 p-2">
+
+                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Nombre
+                        del cliente: </p>
+                    <input type="text" formControlName="nombre_cliente" class="form-control">
+                    <span class="text-danger" *ngIf="formCliente.get('nombre_cliente')?.hasError('required')
+                        && formCliente.get('nombre_cliente')?.touched">
+                        El nombre del cliente <strong>es
+                            obligatorio</strong></span><!-- <-- SPAM -->
+
+
+                    <p class="mt-4 mb-0">Apellido del cliente:</p>
+                    <input formControlName="apellido_cliente"
+                        type="text" class="form-control">
+                    <span class="text-danger"
+                        *ngIf="formCliente.get('apellido_cliente')?.errors?.['maxlength']">
+                        Maximo <strong>50</strong> caracteres</span><!-- <-- SPAM -->
+
+
+                    <p class="mt-4 mb-0">E-mail del cliente:</p>
+                    <input formControlName="email_cliente"
+                        type="text" class="form-control">
+                    <span class="text-danger"   
+                        *ngIf="formCliente.get('email_cliente')?.errors?.['maxlength']">
+                        Maximo <strong>100</strong>Caracteres</span><!-- <-- SPAM -->
+                    <span class="text-danger" *ngIf="formCliente.get('email_cliente')?.hasError('required')
+                    && formCliente.get('email_cliente')?.touched">
+                    El E-mail del cliente <strong>es
+                        obligatorio</strong></span><!-- <-- SPAM -->
+
+                        
+                        </div>
+                        <div class="col-6 p-2">
+
+                    <p class="mt-2 mb-0">Telefono del cliente</p>
+                    <input type="number" formControlName="telefono_cliente" class="form-control">
+
+
+                    <p class="mt-2 mb-0">Identificacion del cliente</p>
+                    <input type="number" formControlName="cc_cliente" class="form-control">
+
+
+
+                    <p class="mt-4 mb-0">Direccion del cliente:</p>
+                    <input formControlName="direccion_cliente"
+                        type="text" class="form-control">
+
+
+                </div>
+            </div>
+            <br>
+
+            <button (click)="postCliente()" *ngIf="!showPut" type="submit" class="btn
+                btn-success"
+                [disabled]="formCliente.invalid">Crear</button>
+            <button *ngIf="showPut" type="submit" class="btn
+                btn-warning" (click)="putCliente()"
+                [disabled]="formCliente.invalid">Actualizar</button>
+        </form>
+    </div>
+</div>

@@ -49,9 +49,8 @@ export interface productoInteface {
     nombre_producto?: string;
     descripcion_producto?: string;
     precio_producto?: number;
-    cantidad_producto?: number;
-    stock?: number;
     codigo_producto?: string;
+    stock?:number;
     id_categoria_producto: number;
     
 }
@@ -76,7 +75,7 @@ export interface CategoriaServicioInterface{
 
 export interface ClientesInterface{
     id_cliente?: number;
-    nombre_cliente?: string;
+    nombre_cliente: string;
     apellido_cliente: string;
     telefono_cliente: string;
     email_cliente: string;
@@ -86,12 +85,10 @@ export interface ClientesInterface{
 
 export interface ServiciosInterface{
     id_servicio?: number;
+    nombre_servicio: string;
     descripcion_servicio: string;
-    fecha_servicio: string;
     precio_servicio: number;
-    id_empleado:number;
-    id_categoria_servicio:number;
-    id_cliente:number;
+    id_categoria_servicio: number;
 }
 
 export interface VentaInterface{

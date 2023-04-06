@@ -11,6 +11,8 @@ import { SedeComponent } from './pages/inicio/sede.component';
 import { SedeProductoComponent } from './pages/sede-producto/sede-producto.component';
 import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
+import { ServiciosComponent } from './pages/servicios/servicios.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 const routes: Routes = [
   {path: 'inicio', component: SedeComponent},
@@ -18,7 +20,10 @@ const routes: Routes = [
   {path: 'pedidos', component: PeddidosComponent},
   {path: 'form-pedidos', component: FormPedidosComponent},//FORM-PEDIDOS
   {path: 'form-pedidos/:id', component: FormPedidosComponent},//FORM-PEDIDOS PUT
+
   {path: 'empleados', component: EmpleadosComponent},
+  {path: 'clientes', component: ClientesComponent},
+  {path: 'servicios', component: ServiciosComponent},
   {path: 'productos', component: ProductosComponent},
   {path: 'sedes/producto/:id', component: SedeProductoComponent},
   {path: 'compras', component: ComprasComponent},
