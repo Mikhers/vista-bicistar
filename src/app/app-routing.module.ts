@@ -13,6 +13,7 @@ import { PeddidosComponent } from './pages/peddidos/peddidos.component';
 import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.component';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
+import { FormFacturaComponent } from './pages/form-factura/form-factura.component';
 
 const routes: Routes = [
   {path: 'inicio', component: SedeComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'productos', component: ProductosComponent},
   {path: 'sedes/producto/:id', component: SedeProductoComponent},
   {path: 'compras', component: ComprasComponent},
+  {path: 'form/factura', component: FormFacturaComponent},
   {path: 'sorry', component: SorryComponent},
   {path: '', redirectTo:'inicio', pathMatch: 'full'},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'},

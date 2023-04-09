@@ -36,6 +36,7 @@ import { FormPedidosComponent } from './pages/form-pedidos/form-pedidos.componen
 import { SedesModule } from './pages/sedes/sedes.module';
 import { CategoriasModule } from './pages/categorias/categorias.module';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
+import { FormFacturaComponent } from './pages/form-factura/form-factura.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ServiciosComponent } from './pages/servicios/servicios.component';
     SedeProductoComponent,
     PeddidosComponent,
     FormPedidosComponent,
-    ServiciosComponent
+    ServiciosComponent,
+    FormFacturaComponent
   ],
   imports: [
     SedesModule,

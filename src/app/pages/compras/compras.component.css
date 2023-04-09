@@ -1,0 +1,8 @@
+.stat:hover{
+    color: #fff;
+    background-color: #b7d4ff;
+    /* border-radius: 0%; */
+}
+.inline-one{
+    display: inline;
+}

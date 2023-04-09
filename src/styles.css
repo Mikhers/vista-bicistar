@@ -61,6 +61,15 @@ thead {
     --bs-btn-disabled-bg: #92b37c;
     --bs-btn-disabled-border-color: #92b37c
 }
+.btn-outline-success{
+  border-color: #70AD47;
+  color: #70AD47;
+}
+.btn-outline-success:hover{
+  border-color: #70AD47;
+  color: #fff;
+  background-color: #70AD47;
+}
 
 
 

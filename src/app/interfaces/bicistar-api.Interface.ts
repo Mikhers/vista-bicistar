@@ -91,12 +91,12 @@ export interface ServiciosInterface{
     id_categoria_servicio: number;
 }
 
-export interface VentaInterface{
-    id_venta?:number;
-    fecha_venta:string;
-    descripcion_venta:string;
-    precio_venta:number;
+export interface facturasInterface{
+    id_factura?:number;
+    fecha_factura?:string;
+    total:number;
+    codigo_factura?:string;
     id_empleado:number;
-    id_producto:number;
     id_cliente:number;
+    id_sede:number;
 }

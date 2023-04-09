@@ -231,7 +231,6 @@ asignarProducto(){
   if(this.agregarObjeto({id_producto:OBJETO.id_producto, nombre_producto:OBJETO.nombre_producto})){
     this.totalPedido = this.totalPedido + OBJETO.cantidad_producto * OBJETO.precio_unitario;
     this.productosForm.push(OBJETO);
-    // this.productoscreadosForm.push(OBJETO);
     this.formProductos.reset();
     this.closeModal2();
   }

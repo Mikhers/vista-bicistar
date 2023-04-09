@@ -47,11 +47,11 @@ export class ClientesComponent {
   }
 
   formCliente = new FormGroup({
-    nombre_cliente: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    cc_cliente: new FormControl('', [ Validators.required, Validators.maxLength(50)]),
+    nombre_cliente: new FormControl('', [Validators.maxLength(50)]),
     apellido_cliente: new FormControl('', [Validators.maxLength(50)]),
-    telefono_cliente: new FormControl(0, [Validators.required, Validators.maxLength(255)]),
-    email_cliente: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-    cc_cliente: new FormControl('', [Validators.maxLength(50)]),
+    telefono_cliente: new FormControl(0, [Validators.maxLength(255)]),
+    email_cliente: new FormControl('', [Validators.email ,Validators.maxLength(255)]),
     direccion_cliente: new FormControl('', [Validators.maxLength(50)]),
   })
 
