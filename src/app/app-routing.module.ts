@@ -27,8 +27,11 @@ const routes: Routes = [
   {path: 'servicios', component: ServiciosComponent},
   {path: 'productos', component: ProductosComponent},
   {path: 'sedes/producto/:id', component: SedeProductoComponent},
+
   {path: 'compras', component: ComprasComponent},
   {path: 'form/factura', component: FormFacturaComponent},
+  {path: 'form/factura/:id', component: FormFacturaComponent},
+  
   {path: 'sorry', component: SorryComponent},
   {path: '', redirectTo:'inicio', pathMatch: 'full'},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'},

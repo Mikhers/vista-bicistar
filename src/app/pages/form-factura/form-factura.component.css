@@ -31,3 +31,7 @@
   .btn-outline-success{
     z-index: 0;
   }
+  .bg-verde-claro{
+    background-color: #222e3c;
+    color: #fff;
+  }

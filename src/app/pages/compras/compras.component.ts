@@ -89,7 +89,7 @@ getPedido(){
 dropPedido(num:number){
   if(window.confirm("¿Estas seguro que deseas eliminar la factura?")){
     this._factura.deletefactura(num).subscribe(data=>{
-     this.toastr.warning("Se ha ELIMINADO el pedido","PEDIDO ELIMINADO")
+     this.toastr.warning("Se ha ELIMINADO el pedido","FACTURA ELIMINADO")
      this.getPedido();
     },error=>{
       this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
@@ -126,9 +126,9 @@ dropPedido(num:number){
   }
 
   //PARA LOS NOMBRES EN VEZ DE LOS ID
-  setCliente(id:number): string {
-    const NOMBRE_CLIENTE = this.clientes.find(cliente => cliente.id_cliente === id);
-    return NOMBRE_CLIENTE?.nombre_cliente ?? "Algo salio mal"
+  setCliente(id:string): string {
+    const CLIENTE = this.clientes.find(cliente => cliente.cc_cliente === id);
+    return CLIENTE?.cc_cliente ?? "Sin dato"
   }
   setSede(id:number): string {
     const NOMBRE_SEDE = this.sedes.find(proveedor => proveedor.id_sede === id);

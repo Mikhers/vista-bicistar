@@ -75,12 +75,12 @@ export interface CategoriaServicioInterface{
 
 export interface ClientesInterface{
     id_cliente?: number;
-    nombre_cliente: string;
-    apellido_cliente: string;
-    telefono_cliente: string;
-    email_cliente: string;
-    cc_cliente: string;
-    direccion_cliente: string;
+    nombre_cliente?: string;
+    apellido_cliente?: string;
+    telefono_cliente?: string;
+    email_cliente?: string;
+    cc_cliente?: string;
+    direccion_cliente?: string;
 }
 
 export interface ServiciosInterface{
@@ -97,6 +97,18 @@ export interface facturasInterface{
     total:number;
     codigo_factura?:string;
     id_empleado:number;
-    id_cliente:number;
-    id_sede:number;
+    cc_cliente?:string;
+    id_sede:number;    
+}
+export interface ProductoFacturaInterface{
+    id_factura: number,
+    id_producto: number,
+    cantidad: number,
+    precio_venta: number
+}
+export interface ServicioFacturaInterface{
+    id_factura: number,
+    id_servicio: number,
+    cantidad: number,
+    precio_venta: number
 }

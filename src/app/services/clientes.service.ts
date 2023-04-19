@@ -18,16 +18,16 @@ export class ClientesService {
   getcliente(): Observable<any>{
     return this.http.get(this.urlGet);
   }
-  getIdcliente(id: number): Observable<any>{
+  getIdcliente(id: string): Observable<any>{
     return this.http.get(this.urlGetId + id);
   }
   postcliente(data: ClientesInterface): Observable<any>{
     return this.http.post<ClientesInterface>(this.urlPost, data);
   }
-  putcliente(id:number, data: ClientesInterface): Observable<any>{
+  putcliente(id:string, data: ClientesInterface): Observable<any>{
     return this.http.put<ClientesInterface>(this.urlUpdate + id, data);
   }
-  deletecliente(id: number): Observable<any>{
+  deletecliente(id: string): Observable<any>{
     return this.http.delete<ClientesInterface>(this.urlDelete + id);
   }
 }

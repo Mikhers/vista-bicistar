@@ -12,18 +12,15 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
-                    <h1 *ngIf="!showEdit; else hora" class="text-warning d-inline-block m-0">Actualizar Factura</h1>
-                    <ng-template #hora>
-                        <h1 class="text-ver d-inline-block m-0">Generar Factura</h1>
-                        <!-- <h3 class="d-inline-block float-end mt-2 me-5 m-0" *ngIf="!showPut">{{horaActual}}</h3> -->
-                    </ng-template>
+                    <h1 *ngIf="!seeFactura" class="text-ver d-inline-block m-0">Generar Factura</h1>
+                    <h1 *ngIf="seeFactura" class="text-warning d-inline-block m-0">Factura #{{codigoFactura}}</h1>
                     <hr class="divider bg-danger" style="height:2px;">
                 </div>
 
                 <form [formGroup]="formFactura">
                     <div class="row">
                         
-                        <div class="col-6">
+                        <div *ngIf="!seeFactura" class="col-6">
                             <p >Los campos marcados con (<span
                                 class="text-danger"><strong>*</strong></span>)
                                 son obligatorios
@@ -33,7 +30,7 @@
                         <div class="row">
                             <div class="col-4">
                                 <p class="mt-1 mb-0"><span class="text-danger"><strong>*</strong></span>Sede:</p>
-                                <input type="text" formControlName="id_cliente" class="form-control">
+                                <input type="text" formControlName="id_sede" class="form-control">
 
 
                             </div>
@@ -45,13 +42,15 @@
 
                             
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 pb-2 ">
                             <form [formGroup]="formCliente">
 
                             <label for="CC" class="form-label mt-2 mb-0">Identificación Cliente: </label>
-                            <div class="input-group">
-                                    <input type="number" formControlName="cc_cliente" class="form-control" list="datalistOptions" id="CC" >
-                                <datalist id="datalistOptions">
+                            <h3 *ngIf="seeFactura && cc_cliente == undefined" class="badge bg-warning fs-3">Sin Cliente</h3>
+                            <h3 *ngIf="seeFactura && cc_cliente != undefined" class="badge bg-success fs-3">{{cc_cliente}}</h3>
+                            <div *ngIf="!seeFactura" class="input-group">
+                                <input type="number" role="combobox" formControlName="cc_cliente" autocomplete="off" class="form-control" list="cedulasDatalist" id="CC" >
+                                <datalist  id="cedulasDatalist" role="listbox">
                                     <option *ngFor="let cliente of clientesFiltrados.slice(minToShow, maxToShow);" 
                                     value="{{cliente.cc_cliente}}">
                                 </datalist>
@@ -84,8 +83,11 @@
         
                             
                         <div class="col-5 p-2">
-                            <p >Añadir Productos
+                            <p *ngIf="!seeFactura">Añadir Productos
                                 <button class="btn btn-success" (click)="openModal2()"><i class="fa-solid fa-plus"></i></button>
+                            </p>
+                            <p *ngIf="seeFactura && productosForm.length != 0" class="text-center">
+                                Productos
                             </p>
 
                         <div class="table-responsive table-upgrade">
@@ -95,7 +97,7 @@
                                         <th>Producto</th>
                                         <th>Cantidad</th>
                                         <th>Precio Unidad</th>
-                                        <th></th>
+                                        <th *ngIf="!seeFactura"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,7 +105,7 @@
                                         <td>{{proForm.nombre_producto}}</td>
                                         <td>{{proForm.cantidad_producto}}</td>
                                         <td>{{proForm.precio_unitario | currency:'USD'}}</td>
-                                        <td>
+                                        <td *ngIf="!seeFactura">
                                             <a 
                                                 (click)="llenarCamposProductoForm(i)">
                                                 <i class="fa-solid fa-pen-to-square text-primary me-2"></i>
@@ -120,8 +122,11 @@
                     </div>
 
                     <div class="col-5 p-2">
-                        <p >Añadir Servicios
+                        <p *ngIf="!seeFactura">Añadir Servicios
                             <button class="btn btn-success" (click)="openModal()"><i class="fa-solid fa-plus"></i></button>
+                        </p>
+                        <p *ngIf="seeFactura && serviciosForm.length != 0" class="text-center">
+                            Servicios
                         </p>
 
                     <div class="table-responsive table-upgrade">
@@ -131,7 +136,7 @@
                                     <th>Servicio</th>
                                     <th>Cantidad</th>
                                     <th>Precio Unidad</th>
-                                    <th></th>
+                                    <th *ngIf="!seeFactura"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,7 +144,7 @@
                                     <td>{{servForm.nombre_servicio}}</td>
                                     <td>{{servForm.cantidad_servicio}}</td>
                                     <td>{{servForm.precio_unitario | currency:'USD'}}</td>
-                                    <td>
+                                    <td *ngIf="!seeFactura">
                                         <a 
                                             (click)="llenarCamposServicioForm(i)">
                                             <i class="fa-solid fa-pen-to-square text-primary me-2"></i>
@@ -159,16 +164,11 @@
                 </div>
                 <br>
                 <hr class="divider bg-danger" style="height:2px;">
-                <h4 class="d-inline-block float-end mt-2 me-5 m-0">Total factura: {{totalFactura | currency:'USD'}}</h4>
-                <button class="btn btn-secondary me-4" (click)="goBack()">Cancelar</button>
-                <button (click)="postFactura()" *ngIf="showEdit" type="submit" class="btn
-                btn-success d-inline-block"
-                [disabled]="formFactura.invalid || productosForm.length == 0"  routerLink="/pedidos">Crear</button>
-                <!-- <button *ngIf="!showEdit" type="submit" class="btn
-                    btn-warning" (click)="putPedido()"
-                    [disabled]="formFactura.invalid || productosForm.length == 0"  routerLink="/pedidos">Actualizar</button> -->
-                    
-                
+                <h4 class="d-inline-block float-end mt-2 me-5 m-0">Total factura: <span class=" badge bg-success fs-4">{{totalFactura | currency:'USD': 'symbol':'1.0-0'}}</span></h4>
+                <button class="btn btn-secondary me-4" (click)="goBack()">Volver</button>
+                <button *ngIf="!seeFactura" type="submit" class="btn
+                btn-success d-inline-block" (click)="postFactura()"
+                [disabled]="formFactura.invalid || productosForm.length == 0 && serviciosForm.length == 0" >Crear</button>
                 </form>
             </div>
         </div>
@@ -193,9 +193,10 @@
 
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Servicio: </p>
-                    <select *ngIf="!showPutServicio; else servicioPut" class="form-select"
-                        formControlName="id_servicio"  [(ngModel)]="infoServicio">
-                        <option *ngFor="let servicio of servicios" [ngValue]="{ id_servicio:servicio.id_servicio,  nombre_servicio:servicio.nombre_servicio }">{{servicio.nombre_servicio}}</option>
+                    <select *ngIf="!showPutServicio; else servicioPut" class="form-select" (click)="updatePrecioServicio()"
+                        formControlName="id_servicio"  [(ngModel)]="infoServicio" (click)="updatePrecioServicio()">
+                        <option *ngFor="let servicio of servicios"
+                        [ngValue]="{ id_servicio:servicio.id_servicio,  nombre_servicio:servicio.nombre_servicio, precio_servicio:servicio.precio_servicio }">{{servicio.nombre_servicio}}</option>
                     </select>
                     <span class="text-danger" *ngIf="formServicios.get('id_servicio')?.hasError('required')
                         && formServicios.get('id_servicio')?.touched">
@@ -208,16 +209,16 @@
                 </div>
                 <div class="col-4">
 
-                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Cantidad:</p>
-                    <input type="number" min="1" formControlName="cantidad_servicio">
+                    <label class="mt-2 mb-0" for="nombreServicio"><span class="text-danger"><strong>*</strong></span>Cantidad:</label>
+                    <input type="number" id="nombreServicio" class="form-control" min="1" formControlName="cantidad_servicio">
                     <span class="text-danger" *ngIf="formServicios.get('cantidad_servicio')?.hasError('required')
                     && formServicios.get('cantidad_servicio')?.touched">
                     La cantidad <strong>es obligatoria</strong></span><!-- <-- SPAM -->
                 </div>
                 <div class="col-4">
 
-                    <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio unitario:</p>
-                    <input type="number" min="1" formControlName="precio_unitario">
+                    <label for="precioServicio" class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio unitario:</label>
+                    <input id="precioServicio" class="form-control" type="number" min="1" formControlName="precio_unitario">
                     <span class="text-danger" *ngIf="formServicios.get('precio_unitario')?.hasError('required')
                     && formServicios.get('precio_unitario')?.touched">
                     El precio unitario <strong>es obligatorio</strong></span><!-- <-- SPAM -->
@@ -251,9 +252,11 @@
 
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Producto: </p>
-                    <select *ngIf="!showPutProducto; else ProductoPut" class="form-select"
+                    <select *ngIf="!showPutProducto; else ProductoPut" class="form-select" (click)="updatePrecioProducto()"
                         formControlName="id_producto"  [(ngModel)]="infoProducto">
-                        <option *ngFor="let producto of productos" [ngValue]="{ id_producto:producto.id_producto,  nombre_producto:producto.nombre_producto }">{{producto.nombre_producto}}</option>
+                        <option *ngFor="let producto of productos" (click)="updatePrecioProducto()"
+                        [ngValue]="{ id_producto:producto.id_producto,  nombre_producto:producto.nombre_producto, precio_producto:producto.precio_producto}">
+                        {{producto.nombre_producto}}</option>
                     </select>
                     <span class="text-danger" *ngIf="formProductos.get('id_producto')?.hasError('required')
                         && formProductos.get('id_producto')?.touched">
@@ -268,7 +271,7 @@
                 <div class="col-4">
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Cantidad:</p>
-                    <input type="number" min="1" formControlName="cantidad_producto">
+                    <input type="number" min="1" class="form-control" formControlName="cantidad_producto">
                     <span class="text-danger" *ngIf="formProductos.get('cantidad_producto')?.hasError('required')
                     && formProductos.get('cantidad_producto')?.touched">
                     La cantidad <strong>es obligatoria</strong></span><!-- <-- SPAM -->
@@ -276,8 +279,8 @@
                 <div class="col-4">
 
                     <p class="mt-2 mb-0"><span class="text-danger"><strong>*</strong></span>Precio unitario:</p>
-                    <input type="number" min="1" formControlName="precio_unitario">
-                    <span class="text-danger" *ngIf="formProductos.get('precio_unitario')?.hasError('required')
+                    <input type="number" class="form-control" min="1" formControlName="precio_unitario">
+                    <span class="text-danger" *ngIf="formProductos.get('precio_unitario')?.hasError('required') 
                     && formProductos.get('precio_unitario')?.touched">
                     El precio unitario <strong>es obligatorio</strong></span><!-- <-- SPAM -->
                 </div>

@@ -24,7 +24,7 @@ export class ClientesComponent {
   totalItems = 0
   ini = 1;
   fin = 7;
-  idCliente=0
+  idCliente=""
   clientes: ClientesInterface[] = [];
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class ClientesComponent {
     })
   }
   postCliente() {
-    const EMPLEADO: ClientesInterface = {
+    const CLIENTE: ClientesInterface = {
       nombre_cliente: this.formCliente.get('nombre_cliente')?.value ?? "",
       apellido_cliente: this.formCliente.get('apellido_cliente')?.value ?? "",
       email_cliente: this.formCliente.get('email_cliente')?.value ?? "",
@@ -75,7 +75,8 @@ export class ClientesComponent {
       cc_cliente: this.formCliente.get('cc_cliente')?.value ?? "",
       direccion_cliente: this.formCliente.get('direccion_cliente')?.value ?? ""
     }
-    this._cliente.postcliente(EMPLEADO).subscribe(data => {
+    this._cliente.postcliente(CLIENTE).subscribe(data => {
+      this.toastr.success("Se ha creado un nuevo cliente", "NUEVO CLIENTE REGISTRADO");
       this.getEmpleado();
       this.closeModal();
       this.formCliente.reset();
@@ -88,13 +89,13 @@ export class ClientesComponent {
     this.showPut = true;
     this.openModal();
     this._cliente.getIdcliente(num).subscribe((data: ClientesInterface) => {
-      this.idCliente = data.id_cliente ?? 1;
+      this.idCliente = data.cc_cliente ?? "1";
       this.formCliente.setValue({
-        nombre_cliente: data.nombre_cliente,
-        apellido_cliente: data.apellido_cliente!,
-        email_cliente: data.email_cliente,
-        telefono_cliente: parseInt(data.telefono_cliente),
         cc_cliente: data.cc_cliente!,
+        nombre_cliente: data.nombre_cliente!,
+        apellido_cliente: data.apellido_cliente!,
+        email_cliente: data.email_cliente!,
+        telefono_cliente: parseInt(data.telefono_cliente!),
         direccion_cliente: data.direccion_cliente!,
       })
     }, error => {
@@ -121,9 +122,9 @@ export class ClientesComponent {
     })
   }
   dropCliente(num: any) {
-    if (window.confirm("¿Esta seguro que desea eliminar el empleado?")) {
+    if (window.confirm("¿Esta seguro que desea eliminar el cliente?")) {
       this._cliente.deletecliente(num).subscribe(data => {
-        this.toastr.error('Empleado Eliminado', 'EMPLEADO ELIMINADO');
+        this.toastr.warning('Cliente Eliminado', 'CLIENTE ELIMINADO');
         this.getEmpleado();
       }, error => {
         this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
