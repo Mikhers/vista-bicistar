@@ -7,9 +7,6 @@ import { SedePedidoComponent } from "./sede-pedido/sede-pedido.component";
 
 const routes: Routes = [
     {path: 'sedes/pedidos/:id', component: SedePedidoComponent}
-    // , children: [{path: 'pedidos/:id', component: SedePedidoComponent}
-    // ]}
-
 ]
 
 

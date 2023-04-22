@@ -37,6 +37,7 @@ import { SedesModule } from './pages/sedes/sedes.module';
 import { CategoriasModule } from './pages/categorias/categorias.module';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
 import { FormFacturaComponent } from './pages/form-factura/form-factura.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { FormFacturaComponent } from './pages/form-factura/form-factura.componen
   imports: [
     SedesModule,
     CategoriasModule,
+    AdminModule,
 
     BrowserModule,
     AppRoutingModule,

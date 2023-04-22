@@ -2,7 +2,6 @@
     text-decoration: none;
     display: inline-block;
     padding: 10px;
-    color: #222e3c;
     transition: all 400ms ease;
 }
 
@@ -19,8 +18,8 @@
     color: #222e3c;
 }
 
-.contenido a {
-    color: #70AD47;
+.contenido a:hover {
+    color: #000;
 }
 
 .btn-float {

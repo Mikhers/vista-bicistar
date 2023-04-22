@@ -12,6 +12,8 @@ export class EmpleadosService {
   urlPost = 'http://localhost:8000/new/empleado';
   urlUpdate = 'http://localhost:8000/modify/empleado/';
   urlDelete = 'http://localhost:8000/delete/empleado/';
+
+  urlValidar = 'http://localhost:8000/new/validar/empleado';
   constructor(private http: HttpClient) { }
 
   getEmpleado(): Observable<any>{
@@ -28,5 +30,9 @@ export class EmpleadosService {
   }
   deleteEmpleado(id: number): Observable<any>{
     return this.http.delete<EmpleadosInterface>(this.urlDelete + id);
+  }
+
+  postvalidarEmpleado(data: {email_empleado:string, password_empleado:string}): Observable<any>{
+    return this.http.post<EmpleadosInterface>(this.urlValidar, data);
   }
 }

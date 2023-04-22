@@ -58,7 +58,7 @@
                         <tbody>
                             <!-- rengo-tabla -->
                             <tr *ngFor="let factura of facturas">
-    
+     
                                 <td>{{factura.codigo_factura }}</td>
                                 <td>{{factura.fecha_factura!.slice(0, 19).replace('T', ' / ')}}</td>
                                 <td>{{factura.total | currency: 'USD' }}</td>

@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { InfoPaginaService } from '../../services/info-pagina.service';
 import { SedeService } from 'src/app/services/sede.service';
 import { SedeInterface } from 'src/app/interfaces/bicistar-api.Interface';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit  {
+export class SidebarComponent  {
   expandida=false;
   expandidaSs=false;
   id!: number;
+  instanciaDeLaClase!: AppComponent;
 
 
   sedes: SedeInterface[]=[];
@@ -31,7 +33,6 @@ export class SidebarComponent implements OnInit  {
   }
   constructor(
     private location: Location,
-    private route: ActivatedRoute,
     private router: Router,
     public _servicio: InfoPaginaService,
     private _sede: SedeService

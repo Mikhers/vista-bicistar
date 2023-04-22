@@ -17,6 +17,7 @@ import { FormFacturaComponent } from './pages/form-factura/form-factura.componen
 
 const routes: Routes = [
   {path: 'inicio', component: SedeComponent},
+  // {path: 'login', component: LoginComponent},
   {path: 'proveedores', component: ProveedoresComponent},
   {path: 'pedidos', component: PeddidosComponent},
   {path: 'form-pedidos', component: FormPedidosComponent},//FORM-PEDIDOS
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'sedes/producto/:id', component: SedeProductoComponent},
 
   {path: 'compras', component: ComprasComponent},
+  {path: 'compras/:id', component: ComprasComponent},
   {path: 'form/factura', component: FormFacturaComponent},
   {path: 'form/factura/:id', component: FormFacturaComponent},
   

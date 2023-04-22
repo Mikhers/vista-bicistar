@@ -6,6 +6,7 @@ import { EmpleadosService } from '../../services/empleados.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { facturaService } from 'src/app/services/factura.service';
 import { ClientesService } from 'src/app/services/clientes.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ComprasComponent {
 
   fechaDesde!: Date;
   fechaHasta!: Date;
+  seeIdFactura_Sede:any;
 
 
 
@@ -40,10 +42,14 @@ export class ComprasComponent {
 
 
   ngOnInit(): void{
-    this.getPedido();
-    this.getClientes();
-    this.getSede();
-    this.getEmpleado();
+    if(this.seeIdFactura_Sede != null){
+      this.getFacturaSede();
+    }else{
+      this.getPedido();
+    }
+      this.getClientes();
+      this.getSede();
+      this.getEmpleado();
   }
 
   formFechaRango = new FormGroup({
@@ -67,8 +73,11 @@ export class ComprasComponent {
     private _factura: facturaService,
     private _sede: SedeService,
     private _empleado: EmpleadosService,
-    private _cliente: ClientesService
-    ){}
+    private _cliente: ClientesService,
+    private aRouter: ActivatedRoute,
+    ){
+      this.seeIdFactura_Sede = this.aRouter.snapshot.paramMap.get('id')
+    }
 
 
 
@@ -96,6 +105,13 @@ dropPedido(num:number){
       console.log(error)
     }) 
   }
+}
+getFacturaSede(){
+  this._factura.getIdfacturaSede(this.seeIdFactura_Sede).subscribe((data:facturasInterface[])=>{
+    this.facturas = data;
+    this.totalItems = data.length;
+    this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
+  })
 }
 /*                                                                SEDE                                                */  
   getSede(){

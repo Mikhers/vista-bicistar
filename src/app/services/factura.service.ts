@@ -9,6 +9,7 @@ import { facturasInterface } from '../interfaces/bicistar-api.Interface';
 export class facturaService {
 
   urlGetId = 'http://localhost:8000/ver/facturas/';
+  urlGetSede = 'http://localhost:8000/ver/facturas/sede/';
   urlGet = 'http://localhost:8000/ver/facturas';
   urlPost = 'http://localhost:8000/new/factura';
   urlUpdate = 'http://localhost:8000/modify/factura/';
@@ -20,6 +21,9 @@ export class facturaService {
   }
   getIdfactura(id: number): Observable<any>{
     return this.http.get(this.urlGetId + id);
+  }
+  getIdfacturaSede(id: number): Observable<any>{
+    return this.http.get(this.urlGetSede + id);
   }
   postfactura(data: facturasInterface): Observable<any>{
     return this.http.post<facturasInterface>(this.urlPost, data);
