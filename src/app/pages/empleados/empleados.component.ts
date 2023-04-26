@@ -36,7 +36,6 @@ export class EmpleadosComponent {
     this.getSede();
   }
   constructor(
-    private router: Router,
     private toastr: ToastrService,
     private _sede: SedeService,
     private _empleado: EmpleadosService
@@ -70,8 +69,7 @@ export class EmpleadosComponent {
       this.totalItems = data.length;
       this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   postEmpleado(){
@@ -90,8 +88,7 @@ export class EmpleadosComponent {
       this.closeModal();
       this.formEmpleado.reset();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   getId(num: any){
@@ -110,8 +107,7 @@ export class EmpleadosComponent {
         id_sede: data.id_sede?.toString() ?? null
       })
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   putEmpleado(){
@@ -130,8 +126,7 @@ export class EmpleadosComponent {
       this.getEmpleado();
       this.closeModal();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   dropEmpleado(num:any){
@@ -140,13 +135,15 @@ export class EmpleadosComponent {
     this.toastr.error('Empleado Eliminado', 'EMPLEADO ELIMINADO');
     this.getEmpleado();
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
 }
 
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+  console.log(error)
+}
 //SEDE
 getSede(){
   this._sede.getSede().subscribe(data =>{

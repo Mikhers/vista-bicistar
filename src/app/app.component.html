@@ -1,55 +1,22 @@
-<div *ngIf="!existeVariable; else otraPlantilla" class="wrapper  animate__animated animate__fadeIn animate__faster">
-    <!-- <div class="degradado"> -->
-        <div class="mainLogin">
-            <div class="firefly"></div>
-            <div class="firefly"></div>
-            <div class="firefly"></div>
-            <div class="firefly"></div>
-            <div class="firefly"></div>
-            <div class="firefly"></div>
-
-            <div class="area" >
-                <ul class="circles">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                </ul>
-        </div >
-            <main class="content">
-                <app-login></app-login>
-            </main>
-        </div>
-    <!-- </div> -->
-</div>
-
-<ng-template #otraPlantilla>
-    <div class="wrapper  animate__animated animate__fadeIn animate__faster">
-        <!-- sidebar -->
-        <app-sidebar></app-sidebar>
+<div class="wrapper  animate__animated animate__fadeIn animate__faster">
+    <!-- sidebar -->
+    <app-sidebar></app-sidebar>
     
-        <div class="main">
-            
-            <!-- header -->
-            <app-header></app-header>
-    
-            <main class="content">
-                
-                <!-- main -->
-                <router-outlet></router-outlet>
-            
-            </main>
-    
-            <!-- footer -->
-            <app-footer></app-footer>
+    <div class="main">
         
-        </div>
+        <!-- header -->
+        <app-header></app-header>
+
+        <main class="content">
+            
+            <!-- main -->
+            <router-outlet></router-outlet>
+        
+        </main>
+
+        <!-- footer -->
+        <app-footer></app-footer>
     
     </div>
-</ng-template>
+
+</div>

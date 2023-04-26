@@ -62,8 +62,7 @@ export class ClientesComponent {
       this.totalItems = data.length;
       this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   postCliente() {
@@ -81,8 +80,7 @@ export class ClientesComponent {
       this.closeModal();
       this.formCliente.reset();
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   getId(num: any) {
@@ -99,8 +97,7 @@ export class ClientesComponent {
         direccion_cliente: data.direccion_cliente!,
       })
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   putCliente() {
@@ -117,8 +114,7 @@ export class ClientesComponent {
       this.getEmpleado();
       this.closeModal();
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   dropCliente(num: any) {
@@ -127,13 +123,15 @@ export class ClientesComponent {
         this.toastr.warning('Cliente Eliminado', 'CLIENTE ELIMINADO');
         this.getEmpleado();
       }, error => {
-        this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-        console.log(error)
+        this.error(error);
       })
     }
   }
 
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+  console.log(error)
+}
 
   // FUNCIONES DE LA TABLA
   showTable(index: number) {

@@ -90,13 +90,12 @@ getPSede(){
         data2['stock']=data[index].stock;
         this.conStock.push(data2);
       },error=>{
-        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-        console.log(error)
+        this.error(error);
       })
     }
   }, error => {
     // this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
 }
 postSedeProducto(){
@@ -111,8 +110,7 @@ postSedeProducto(){
     this.getPSede();
     this.formSedeProducto.reset();
   }, error=>{
-    this.toastr.error("Tal vez ya tienes este producto o lo eliminaste de esta sede anteriormente", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
 }
 obtenerId(num:any){
@@ -127,12 +125,10 @@ obtenerId(num:any){
         stock: data.stock
       })
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
 }
 putSedePorducto(){
@@ -147,8 +143,7 @@ putSedePorducto(){
     this.showPut = false;
     this.getPSede();
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
 }
 dropSedeProducto(num:any){
@@ -157,8 +152,7 @@ dropSedeProducto(num:any){
     this.toastr.warning('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
     this.getPSede();
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
 }
 }
@@ -171,8 +165,7 @@ getSede(){
   this._sede.getSede().subscribe((data: SedeInterface[]) =>{
     this.sedes=data;
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
 }
 
@@ -181,8 +174,7 @@ getSede(){
     this._producto.getProducto().subscribe((data: productoInteface[]) => {
       this.productos = data;
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
 
@@ -191,8 +183,7 @@ getSede(){
     this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
       this.categorias = data;
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
 
@@ -239,7 +230,10 @@ onClick(event: MouseEvent) {
   }
 }
 
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL");
+  console.log(error)
+}
 
 
 }

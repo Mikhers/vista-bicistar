@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { InfoPaginaService } from './services/info-pagina.service';
-import { Router } from '@angular/router';
+// import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,26 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  existeVariable=false;
 
-  AppComponent(): AppComponent{
-    return this
-  }
 
   constructor(
     public _servise: InfoPaginaService,
-    private router: Router){  }
+    ){ }
   
-  ngOnInit(): void {
-    if (localStorage.getItem('token')) {
-      this.existeVariable = true;
-      this.router.navigate(["inicio"]);
-    }else{
-      this.existeVariable = false;
-      this.router.navigate(["login"]);
-    }
-  }
-  recargarPagina() {
-    location.reload();
-  }
+  ngOnInit(): void {  }
+
 }

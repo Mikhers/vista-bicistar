@@ -15,12 +15,10 @@ export class LoginComponent {
     email_empleado: new FormControl("", [Validators.required, Validators.email]),
     password_empleado: new FormControl("", [Validators.required])
   })
-
   constructor(
     private _empleado: EmpleadosService,
     private toastr: ToastrService,
     private _auth: AuthService
-    // private router: Router
   ){}
 
 
@@ -32,10 +30,8 @@ export class LoginComponent {
       password_empleado: this.formUser.get("password_empleado")?.value ?? "",
     }
     this._empleado.postvalidarEmpleado(DATA).subscribe((data:any[])=>{
-      localStorage.setItem("token", data[0])
+      this._auth.login(data[0]);
       localStorage.setItem("persona", JSON.stringify(data[1]))
-      this._auth.login();
-
     },error=>{
       this.error(error);
     })

@@ -19,7 +19,6 @@ export class SedeComponent implements OnInit {
     this.getSede();
   }
   constructor(
-    private router: Router,
     private toastr: ToastrService,
     private _sede: SedeService
     ){}
@@ -47,7 +46,7 @@ export class SedeComponent implements OnInit {
       this.closeModal();
       this.formSede.reset();
     },error=>{
-      console.log(error)
+      this.error(error);
     })
   }
   getIdSede(num: any){
@@ -74,7 +73,7 @@ export class SedeComponent implements OnInit {
       this.getSede();
       this.closeModal();
     },error=>{
-      console.log(error)
+      this.error(error);
     })
   }
   dropSede(num:any){
@@ -83,7 +82,7 @@ export class SedeComponent implements OnInit {
     this.toastr.error('Sede Eliminada', 'SEDE ELIMINADA');
     this.getSede();
     },error=>{
-      console.log(error)
+      this.error(error);
     })
   }
 }
@@ -109,5 +108,8 @@ export class SedeComponent implements OnInit {
     }
   }
 
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+  console.log(error)
+}
 }

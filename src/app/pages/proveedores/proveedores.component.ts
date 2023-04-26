@@ -61,8 +61,7 @@ export class ProveedoresComponent {
       this.totalItemsP = data.length;
       this.proveedores = data;
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   postProveedores(){
@@ -80,8 +79,7 @@ export class ProveedoresComponent {
       this.closeModal();
       this.formProveedor.reset();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   putProveedor(){
@@ -99,8 +97,7 @@ export class ProveedoresComponent {
       this.getProveedor();
       this.formProveedor.reset();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   obtenerId(id:any, nom:string, dir:string, tel:string, email:string){
@@ -120,8 +117,7 @@ export class ProveedoresComponent {
       this.toastr.warning("Se a eliminado un proveedor", "PROVEEDOR ELIMINADO")
       this.getProveedor();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
 }
@@ -178,5 +174,8 @@ onClick(event: MouseEvent) {
     this.closeModal();
   }
 }
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL");
+  console.log(error)
+}
 }

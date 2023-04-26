@@ -13,7 +13,7 @@ export class EmpleadosService {
   urlUpdate = 'http://localhost:8000/modify/empleado/';
   urlDelete = 'http://localhost:8000/delete/empleado/';
 
-  urlValidar = 'http://localhost:8000/new/validar/empleado';
+  urlValidar = 'http://localhost:8000/validar/empleado';
   constructor(private http: HttpClient) { }
 
   getEmpleado(): Observable<any>{

@@ -61,8 +61,7 @@ export class CategoriasServiciosComponent {
       this.totalItemsP = data.length
       this.itemsLista = Math.ceil(this.totalItemsP / 10 + 1)
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL');
-      console.log(error)
+      this.error(error);
     })
   }
   postCP() {
@@ -76,8 +75,7 @@ export class CategoriasServiciosComponent {
       this.formCategoriaS.reset()
       this.getCP()
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   putCP(id: any) {
@@ -92,8 +90,7 @@ export class CategoriasServiciosComponent {
           this.getCP()
           this.formCategoriaS.reset();
         }, error => {
-          this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-          console.log(error)
+          this.error(error);
         })
     }
   deleteCP(id: any){
@@ -122,8 +119,7 @@ obtenerId(id: any){
     });
 
   }, error => {
-    this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-    console.log(error)
+    this.error(error);
   })
   this.formCategoriaS.reset();
 }
@@ -178,5 +174,8 @@ onClick(event: MouseEvent) {
     this.closeModal();
   }
 }
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL');
+  console.log(error)
+}
 }

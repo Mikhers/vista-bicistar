@@ -5,6 +5,7 @@ import { SedeInterface } from 'src/app/interfaces/bicistar-api.Interface';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AppComponent } from 'src/app/app.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,26 +18,25 @@ export class SidebarComponent  {
   id!: number;
   instanciaDeLaClase!: AppComponent;
 
-
+  
   sedes: SedeInterface[]=[];
+  constructor(
+    private location: Location,
+    // private router: Router,
+    public _servicio: InfoPaginaService,
+    private _sede: SedeService,
+    private _auth: AuthService
+    ){}
   ngOnInit(){
     this.getSede();
-
+  }
+  logout(){
+    this._auth.logout();
   }
   goBack(): void {
     this.location.back();
   }
-  refresh(): void {
-    const currentUrl = this.router.url;
-    const uniqueParam = new Date().getTime();
-    this.router.navigate([currentUrl], { queryParams: { unique: uniqueParam } });
-  }
-  constructor(
-    private location: Location,
-    private router: Router,
-    public _servicio: InfoPaginaService,
-    private _sede: SedeService
-    ){}
+
 
   /*METODOS HTTP*/
   getSede(){

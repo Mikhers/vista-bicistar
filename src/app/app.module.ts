@@ -39,6 +39,11 @@ import { ServiciosComponent } from './pages/servicios/servicios.component';
 import { FormFacturaComponent } from './pages/form-factura/form-factura.component';
 import { AdminModule } from './admin/admin.module';
 
+//interseptor
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +78,13 @@ import { AdminModule } from './admin/admin.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TokenInterceptor,
+        multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

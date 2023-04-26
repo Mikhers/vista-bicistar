@@ -15,11 +15,12 @@ import { AuthService } from '../services/auth.service';
     canActivate(
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this.authService.isLoggedIn()) {
-          return true;
-        } else {
-          // redirigir al usuario a la página de inicio de sesión
-          return false;
+        if (this.authService.isLoggedIn()){
+            this.router.navigate(["/login"]);
+            return false;
         }
+        // redirigir al usuario a la página de inicio de sesión
+        this.router.navigate(["/"]);
+        return true;
     }
   }

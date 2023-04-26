@@ -1,60 +1,97 @@
-<div class="container">
-    <div class="card">
-        <div class="cartd-body">
+<div class="wrapper animate__animated animate__fadeIn animate__faster">
+    <div class="main">
 
-            <form [formGroup]="formUser">
-                <div class="row">
-                    <div class="col-6 p-0">
-                        <div class="sidebar-brand">
-                            <img class="logo-img"
-                                src="assets/img/photos/logo.png" width="100%">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="centrar">
-                            <div class="group">
-                                <input required="" type="text" class="input"
-                                    formControlName="email_empleado">
-                                <span class="highlight"></span>
-                                <span class="bar"></span>
-                                <label>Correo</label>
-                            </div>
-                            <span class="text-danger mb-2"
-                                *ngIf="formUser.get('email_empleado')?.errors?.['maxlength']">
-                                Maximo <strong>100 </strong>Caracteres</span><!-- <-- SPAM -->
-                            <span class="text-danger mb-2"
-                            *ngIf="formUser.get('email_empleado')?.errors?.['email']">
-                                Correo no invalido</span><!-- <-- SPAM -->
-                            <span class="text-danger mb-2"
-                                *ngIf="formUser.get('email_empleado')?.hasError('required')
-                                && formUser.get('email_empleado')?.touched">
-                                El Correo <strong>es obligatorio</strong></span>
-                            <br>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
 
-                            <div class="group mb-2">
-                                <input required="" type="password"
-                                    class="input"
-                                    formControlName="password_empleado">
-                                <span class="highlight"></span>
-                                <span class="bar"></span>
-                                <label>Contraseña</label>
-                            </div>
-                            <span class="text-danger mb-2"   
-                        *ngIf="formUser.get('password_empleado')?.errors?.['maxlength']">
-                        Maximo <strong>50</strong>Caracteres</span><!-- <-- SPAM -->
-                        <span class="text-danger mb-2" *ngIf="formUser.get('password_empleado')?.hasError('required')
-                        && formUser.get('password_empleado')?.touched">
-                        La contraseña del usuario <strong>es obligatoria</strong></span><!-- <-- SPAM -->
-                        </div>
-                    </div>
-
-                    <button class="mt-4 float-end buttonT" type="submit" (click)="accessUser()"
-                        [disabled]="formUser.invalid" routerLink="inicio">Ingresar <i
-                            class="fa-solid
-                            fa-store"></i></button>
-                </div>
-
-            </form>
+        <div class="area">
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
         </div>
+        <main class="content">
+
+            <div class="container">
+                <div class="card">
+                    <div class="cartd-body">
+
+                        <form [formGroup]="formUser">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <div class="sidebar-brand">
+                                        <img class="logo-img"
+                                            src="assets/img/photos/logo.png"
+                                            width="100%">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="centrar">
+                                        <div class="group">
+                                            <input required="" type="text"
+                                                class="input"
+                                                formControlName="email_empleado">
+                                            <span class="highlight"></span>
+                                            <span class="bar"></span>
+                                            <label>Correo</label>
+                                        </div>
+                                        <span class="text-danger mb-2"
+                                            *ngIf="formUser.get('email_empleado')?.errors?.['maxlength']">
+                                            Maximo <strong>100 </strong>Caracteres</span><!-- <-- SPAM -->
+                                        <span class="text-danger mb-2"
+                                            *ngIf="formUser.get('email_empleado')?.errors?.['email']">
+                                            Correo no invalido</span><!-- <-- SPAM -->
+                                        <span class="text-danger mb-2"
+                                            *ngIf="formUser.get('email_empleado')?.hasError('required')
+                                            &&
+                                            formUser.get('email_empleado')?.touched">
+                                            El Correo <strong>es obligatorio</strong></span>
+                                        <br>
+
+                                        <div class="group mb-2">
+                                            <input required="" type="password"
+                                                class="input"
+                                                formControlName="password_empleado">
+                                            <span class="highlight"></span>
+                                            <span class="bar"></span>
+                                            <label>Contraseña</label>
+                                        </div>
+                                        <span class="text-danger mb-2"
+                                            *ngIf="formUser.get('password_empleado')?.errors?.['maxlength']">
+                                            Maximo <strong>50</strong>Caracteres</span><!-- <-- SPAM -->
+                                        <span class="text-danger mb-2"
+                                            *ngIf="formUser.get('password_empleado')?.hasError('required')
+                                            &&
+                                            formUser.get('password_empleado')?.touched">
+                                            La contraseña del usuario <strong>es
+                                                obligatoria</strong></span><!-- <-- SPAM -->
+                                    </div>
+                                </div>
+
+                                <button class="mt-4 float-end buttonT"
+                                    type="submit" (click)="accessUser()"
+                                    [disabled]="formUser.invalid"
+                                    routerLink="inicio">Ingresar <i
+                                        class="fa-solid
+                                        fa-store"></i></button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </div>

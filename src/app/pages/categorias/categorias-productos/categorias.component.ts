@@ -59,8 +59,7 @@ export class CategoriasComponent implements OnInit {
       this.totalItemsP = data.length
       this.itemsLista = Math.ceil(this.totalItemsP / 10 + 1)
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL');
-      console.log(error)
+      this.error(error);
     })
   }
   postCP() {
@@ -74,8 +73,7 @@ export class CategoriasComponent implements OnInit {
       this.formCategoria.reset()
       this.getCP()
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   putCP(id: any) {
@@ -90,8 +88,7 @@ export class CategoriasComponent implements OnInit {
           this.getCP()
           this.formCategoria.reset();
         }, error => {
-          this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-          console.log(error)
+          this.error(error);
         })
     }
   deleteCP(id: any){
@@ -100,8 +97,7 @@ export class CategoriasComponent implements OnInit {
       this.toastr.warning('La categoria fue eliminada exitosamente!', 'CATEGORIA ELIMINADA');
       this.getCP();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.warn(error)
+      this.error(error);
     })
   }
 }
@@ -176,5 +172,8 @@ onClick(event: MouseEvent) {
     this.closeModal();
   }
 }
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
+  console.warn(error)
+}
 }

@@ -72,8 +72,7 @@ formServicio = new FormGroup({
       this.totalItems = this.servicios.length
       this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   agregarservicio(){
@@ -90,8 +89,7 @@ formServicio = new FormGroup({
       this.getP()
       this.formServicio.reset();
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
 
   }
@@ -109,8 +107,7 @@ formServicio = new FormGroup({
         this.getP()
         this.formServicio.reset();
       }, error => {
-        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-        console.log(error)
+        this.error(error);
       })
   }
   dropP(id: any){
@@ -119,8 +116,7 @@ formServicio = new FormGroup({
         this.toastr.warning('El servicio fue eliminado exitosamente!', 'SERVICIO ELIMINADO');
         this.getP()
       }, error => {
-        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-        console.log(error)
+        this.error(error);
       })
       this.formServicio.reset();
     }
@@ -140,8 +136,7 @@ formServicio = new FormGroup({
       });
 
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
     this.formServicio.reset();
   }
@@ -151,8 +146,7 @@ formServicio = new FormGroup({
     this._categoriaS.getCategoria().subscribe((data: CategoriaServicioInterface[]) => {
       this.categorias = data;
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
 
@@ -201,11 +195,8 @@ onClick(event: MouseEvent) {
     this.closeModal();
   }
 }
-
-  
-
-
-
-
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL");
+  console.log(error)
+}
 }

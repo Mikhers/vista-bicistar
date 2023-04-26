@@ -91,8 +91,7 @@ export class FormPedidosComponent {
         id_empleado: data.id_empleado.toString()
       })
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
     this._pedidoProducto.getIdPedidoProducto(this.idPedidoPut).subscribe((data2:PedidoProductoInterface[])=>{
       for (let i = 0; i < data2.length; i++) {
@@ -106,13 +105,11 @@ export class FormPedidosComponent {
           }
           this.productosForm.push(PRODUCTOO)
         },error=>{
-          this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-          console.log(error)
+          this.error(error);
         })
       }
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
 
@@ -152,8 +149,7 @@ postPedido(){
     this.toastr.success("Se ha creado un nuevo pedido", "NUEVO PEDIDO REGISTRADO");
     this.postPedidoProducto()
   },error=>{
-    this.toastr.error("Hubo un error inesérado en el sistema", "ALGO A SALIDO MAL");
-    console.log(error)
+    this.error(error);
   })
 }
 getIdPedido(num:number){
@@ -168,8 +164,7 @@ getIdPedido(num:number){
         id_empleado: data.id_empleado?.toString() ?? null,
     })
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-    console.log(error)
+    this.error(error);
   })
 }
 
@@ -187,8 +182,7 @@ putPedido(){
     this.toastr.info("Se a actualizado el pedido", "PEDIDO ACTUALIZADO")
     this.deleteAllPedidios();
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema","ALGO SALIO MAL")
-    console.log(error)
+    this.error(error);
   })
 }
 /*                                                               PEDIDO-PRODUCTO                                    */
@@ -196,8 +190,7 @@ deleteAllPedidios(){
   this._pedidoProducto.deleteAllPedidos(this.idPedidoPut).subscribe(data=>{
     this.insertAllPedidos();
   },error=>{
-    this.toastr.error("Desde eliminar a todos","ALGO SALIO MAL")
-    console.log(error)
+    this.error(error);
   })
 }
 insertAllPedidos(){
@@ -211,8 +204,7 @@ insertAllPedidos(){
     this._pedidoProducto.postPedidoProducto(PRODUCTO).subscribe(data=>{
       //
     },error=>{
-      this.toastr.error("Desde insertar denuevo","ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
 }
@@ -254,8 +246,7 @@ postPedidoProducto(){
       precio_unitario: this.productosForm[i].precio_unitario
     }
     this._pedidoProducto.postPedidoProducto(PEDIDO_PRODUCTO).subscribe(data=>{ },error=>{
-     this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-     console.log(error)
+      this.error(error);
     })
   }
 
@@ -293,8 +284,7 @@ deletePedidoP(num:number){//Esta funcion borra un articulo cuando se esta creand
     this._proveedor.getProveedor().subscribe((data: ProveedorInterface[])=>{
       this.proveedores = data;
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   /*                                                               PRODUCTO                                              */
@@ -302,8 +292,7 @@ deletePedidoP(num:number){//Esta funcion borra un articulo cuando se esta creand
     this._producto.getProducto().subscribe((data: productoInteface[]) => {
       this.productos = data;
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   /*                                                               EMPLEADO                                              */
@@ -311,8 +300,7 @@ deletePedidoP(num:number){//Esta funcion borra un articulo cuando se esta creand
     this._empleado.getEmpleado().subscribe((data: EmpleadosInterface[])=>{
       this.empleados=data;
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
 /*                                                                SEDE                                                */
@@ -333,5 +321,8 @@ getSede(){
     this.formProductos.reset()
       this.showPut = false;
   }
-
+  error(error:any){
+    this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL");
+    console.log(error)
+  }
 }

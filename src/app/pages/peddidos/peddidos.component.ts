@@ -82,8 +82,7 @@ getPedido(){
 
 
   },error=>{
-    this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-    console.log(error)
+    this.error(error);
   })
 }
 dropPedido(num:number){
@@ -92,8 +91,7 @@ dropPedido(num:number){
      this.toastr.warning("Se ha ELIMINADO el pedido","PEDIDO ELIMINADO")
      this.getPedido();
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
-      console.log(error)
+      this.error(error);
     }) 
   }
 }
@@ -102,8 +100,7 @@ dropPedido(num:number){
     this._proveedor.getProveedor().subscribe((data: ProveedorInterface[])=>{
       this.proveedores = data;
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
 /*                                                                SEDE                                                */  
@@ -111,8 +108,7 @@ dropPedido(num:number){
     this._sede.getSede().subscribe(data =>{
       this.sedes = data;
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
   /*                                                               EMPLEADO                                              */
@@ -120,8 +116,7 @@ dropPedido(num:number){
     this._empleado.getEmpleado().subscribe((data: EmpleadosInterface[])=>{
       this.empleados=data;
     },error=>{
-      this.toastr.error("Hubo un error inesperado en el sistema", "ALGO SALIO MAL")
-      console.log(error)
+      this.error(error);
     })
   }
 
@@ -176,5 +171,9 @@ onClick(event: MouseEvent) {
   if (event.target === this.modal.nativeElement) {
     this.closeModal();
   }
+}
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL")
+  console.log(error)
 }
 }

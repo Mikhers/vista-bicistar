@@ -72,8 +72,7 @@ formProducto = new FormGroup({
       this.totalItems = this.productos.length
       this.itemsLista = Math.ceil(this.totalItems / 20 + 1);
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
   agregarProducto(){
@@ -90,8 +89,7 @@ formProducto = new FormGroup({
       this.getP()
       this.formProducto.reset();
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
 
   }
@@ -109,8 +107,7 @@ formProducto = new FormGroup({
         this.getP()
         this.formProducto.reset();
       }, error => {
-        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-        console.log(error)
+        this.error(error);
       })
   }
   dropP(id: any){
@@ -119,8 +116,7 @@ formProducto = new FormGroup({
         this.toastr.warning('El producto fue eliminado exitosamente!', 'PRODUCTO ELIMINADO');
         this.getP()
       }, error => {
-        this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-        console.log(error)
+        this.error(error);
       })
       this.formProducto.reset();
     }
@@ -140,8 +136,7 @@ formProducto = new FormGroup({
       });
 
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
     this.formProducto.reset();
 
@@ -152,8 +147,7 @@ formProducto = new FormGroup({
     this._categoria.getCategoria().subscribe((data: categoriaInterface[]) => {
       this.categorias = data;
     }, error => {
-      this.toastr.error("Hubo un error inesperado en el sistema", 'ALGO SALIO MAL')
-      console.log(error)
+      this.error(error);
     })
   }
 
@@ -202,11 +196,9 @@ onClick(event: MouseEvent) {
     this.closeModal();
   }
 }
-
-  
-
-
-
-
+error(error:any){
+  this.toastr.error("Hubo un error inesperado en el sistema", "ALGO A SALIDO MAL");
+  console.log(error)
+}
 
 }
